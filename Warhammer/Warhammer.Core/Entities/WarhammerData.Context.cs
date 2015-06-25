@@ -26,5 +26,9 @@ namespace Warhammer.Core.Entities
         }
     
         public virtual DbSet<ChangeLog> ChangeLogs { get; set; }
+        public virtual DbSet<Person> People { get; set; }
+        public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<Session> Sessions { get; set; }
+        public virtual DbSet<SessionLog> SessionLogs { get; set; }
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace Warhammer.Core.Abstract
+﻿using System.Linq;
+using Warhammer.Core.Entities;
+
+namespace Warhammer.Core.Abstract
 {
     /// <summary>
     /// The IRepository interface is the lowest data interface and connects directly to the data source
@@ -8,6 +11,6 @@
     ///  </summary>
     public interface IRepository
     {
-
+        IQueryable<Person> People();
     }
 }

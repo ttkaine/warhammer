@@ -21,10 +21,10 @@ namespace Warhammer.Core.Concrete
             return _entities.ChangeLogs;
         }
 
-        //public IQueryable<Example> Examples()
-        //{
-        //    return _entities.Examples;
-        //}
+        public IQueryable<Person> People()
+        {
+            return _entities.People;
+        }
 
 
         #endregion

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="whModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="whModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ChangeLog">
           <Key>
             <PropertyRef Name="Id" />
@@ -13,11 +13,199 @@
           <Property Name="Comment" Type="nvarchar" MaxLength="50" />
           <Property Name="Applied" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="500" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Image" Type="varbinary(max)" />
+          <Property Name="Modified" Type="datetime" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedByPlayerId" Type="int" Nullable="false" />
+          <Property Name="CreatedByPlayerId" Type="int" Nullable="false" />
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="PersonTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PersonInSession">
+          <Key>
+            <PropertyRef Name="PersonId" />
+            <PropertyRef Name="SessionId" />
+          </Key>
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="SessionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Picture" Type="varbinary(max)" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SessionLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="SessionId" Type="int" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Edited" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Person_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_Player1">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="ModifiedByPlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_Player2">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="CreatedByPlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonInSession_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="PersonInSession" Type="Self.PersonInSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonInSession">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonInSession_Session">
+          <End Role="Session" Type="Self.Session" Multiplicity="1" />
+          <End Role="PersonInSession" Type="Self.PersonInSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Session">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonInSession">
+              <PropertyRef Name="SessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SessionLog_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="SessionLog" Type="Self.SessionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SessionLog">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SessionLog_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="SessionLog" Type="Self.SessionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SessionLog">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SessionLog_Session">
+          <End Role="Session" Type="Self.Session" Multiplicity="1" />
+          <End Role="SessionLog" Type="Self.SessionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Session">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SessionLog">
+              <PropertyRef Name="SessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="whModelStoreContainer">
           <EntitySet Name="ChangeLog" EntityType="Self.ChangeLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonInSession" EntityType="Self.PersonInSession" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SessionLog" EntityType="Self.SessionLog" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Person_Player" Association="Self.FK_Person_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_Player1" Association="Self.FK_Person_Player1">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_Player2" Association="Self.FK_Person_Player2">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonInSession_Person" Association="Self.FK_PersonInSession_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="PersonInSession" EntitySet="PersonInSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonInSession_Session" Association="Self.FK_PersonInSession_Session">
+            <End Role="Session" EntitySet="Session" />
+            <End Role="PersonInSession" EntitySet="PersonInSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SessionLog_Person" Association="Self.FK_SessionLog_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="SessionLog" EntitySet="SessionLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SessionLog_Player" Association="Self.FK_SessionLog_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="SessionLog" EntitySet="SessionLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SessionLog_Session" Association="Self.FK_SessionLog_Session">
+            <End Role="Session" EntitySet="Session" />
+            <End Role="SessionLog" EntitySet="SessionLog" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="whModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -31,7 +219,177 @@
         </EntityType>
         <EntityContainer Name="WarhammerEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ChangeLogs" EntityType="Self.ChangeLog" />
+          <EntitySet Name="People" EntityType="whModel.Person" />
+          <EntitySet Name="Players" EntityType="whModel.Player" />
+          <EntitySet Name="Sessions" EntityType="whModel.Session" />
+          <EntitySet Name="SessionLogs" EntityType="whModel.SessionLog" />
+          <AssociationSet Name="FK_Person_Player" Association="whModel.FK_Person_Player">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_Player1" Association="whModel.FK_Person_Player1">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_Player2" Association="whModel.FK_Person_Player2">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SessionLog_Person" Association="whModel.FK_SessionLog_Person">
+            <End Role="Person" EntitySet="People" />
+            <End Role="SessionLog" EntitySet="SessionLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SessionLog_Player" Association="whModel.FK_SessionLog_Player">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="SessionLog" EntitySet="SessionLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SessionLog_Session" Association="whModel.FK_SessionLog_Session">
+            <End Role="Session" EntitySet="Sessions" />
+            <End Role="SessionLog" EntitySet="SessionLogs" />
+          </AssociationSet>
+          <AssociationSet Name="PersonInSession" Association="whModel.PersonInSession">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Session" EntitySet="Sessions" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Modified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedByPlayerId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedByPlayerId" Type="Int32" Nullable="false" />
+          <Property Name="PlayerId" Type="Int32" Nullable="false" />
+          <Property Name="PersonTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Player" Relationship="whModel.FK_Person_Player" FromRole="Person" ToRole="Player" />
+          <NavigationProperty Name="ModifiedBy" Relationship="whModel.FK_Person_Player1" FromRole="Person" ToRole="Player" />
+          <NavigationProperty Name="itedBy" Relationship="whModel.FK_Person_Player2" FromRole="Person" ToRole="Player" />
+          <NavigationProperty Name="SessionLogs" Relationship="whModel.FK_SessionLog_Person" FromRole="Person" ToRole="SessionLog" />
+          <NavigationProperty Name="Sessions" Relationship="whModel.PersonInSession" FromRole="Person" ToRole="Session" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="People" Relationship="whModel.FK_Person_Player" FromRole="Player" ToRole="Person" />
+          <NavigationProperty Name="People1" Relationship="whModel.FK_Person_Player1" FromRole="Player" ToRole="Person" />
+          <NavigationProperty Name="People2" Relationship="whModel.FK_Person_Player2" FromRole="Player" ToRole="Person" />
+          <NavigationProperty Name="SessionLogs" Relationship="whModel.FK_SessionLog_Player" FromRole="Player" ToRole="SessionLog" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="SessionLogs" Relationship="whModel.FK_SessionLog_Session" FromRole="Session" ToRole="SessionLog" />
+          <NavigationProperty Name="People" Relationship="whModel.PersonInSession" FromRole="Session" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="SessionLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SessionId" Type="Int32" Nullable="false" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="PlayerId" Type="Int32" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Edited" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Person" Relationship="whModel.FK_SessionLog_Person" FromRole="SessionLog" ToRole="Person" />
+          <NavigationProperty Name="Player" Relationship="whModel.FK_SessionLog_Player" FromRole="SessionLog" ToRole="Player" />
+          <NavigationProperty Name="Session" Relationship="whModel.FK_SessionLog_Session" FromRole="SessionLog" ToRole="Session" />
+        </EntityType>
+        <Association Name="FK_Person_Player">
+          <End Type="whModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="whModel.Person" Role="Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_Player1">
+          <End Type="whModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="whModel.Person" Role="Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="ModifiedByPlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_Player2">
+          <End Type="whModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="whModel.Person" Role="Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="CreatedByPlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SessionLog_Person">
+          <End Type="whModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="whModel.SessionLog" Role="SessionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SessionLog">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SessionLog_Player">
+          <End Type="whModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="whModel.SessionLog" Role="SessionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SessionLog">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SessionLog_Session">
+          <End Type="whModel.Session" Role="Session" Multiplicity="1" />
+          <End Type="whModel.SessionLog" Role="SessionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Session">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SessionLog">
+              <PropertyRef Name="SessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PersonInSession">
+          <End Type="whModel.Person" Role="Person" Multiplicity="*" />
+          <End Type="whModel.Session" Role="Session" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -47,7 +405,67 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="whModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="PersonTypeId" ColumnName="PersonTypeId" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="CreatedByPlayerId" ColumnName="CreatedByPlayerId" />
+                <ScalarProperty Name="ModifiedByPlayerId" ColumnName="ModifiedByPlayerId" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="whModel.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sessions">
+            <EntityTypeMapping TypeName="whModel.Session">
+              <MappingFragment StoreEntitySet="Session">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SessionLogs">
+            <EntityTypeMapping TypeName="whModel.SessionLog">
+              <MappingFragment StoreEntitySet="SessionLog">
+                <ScalarProperty Name="Edited" ColumnName="Edited" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="PersonInSession" TypeName="whModel.PersonInSession" StoreEntitySet="PersonInSession">
+            <EndProperty Name="Session">
+              <ScalarProperty Name="Id" ColumnName="SessionId" />
+            </EndProperty>
+            <EndProperty Name="Person">
+              <ScalarProperty Name="Id" ColumnName="PersonId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

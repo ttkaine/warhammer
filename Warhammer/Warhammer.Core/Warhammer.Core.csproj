@@ -60,6 +60,18 @@
     <Compile Include="Entities\ChangeLog.cs">
       <DependentUpon>WarhammerData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Person.cs">
+      <DependentUpon>WarhammerData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Player.cs">
+      <DependentUpon>WarhammerData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Session.cs">
+      <DependentUpon>WarhammerData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SessionLog.cs">
+      <DependentUpon>WarhammerData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\WarhammerData.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
