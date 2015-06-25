@@ -51,11 +51,9 @@
     <Compile Include="Abstract\IAuthenticatedDataProvider.cs" />
     <Compile Include="Abstract\IAuthenticatedUserProvider.cs" />
     <Compile Include="Abstract\IModelFactory.cs" />
-    <Compile Include="Abstract\IPublicDataProvider.cs" />
     <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Concrete\AuthenticatedDataProvider.cs" />
     <Compile Include="Concrete\ModelFactory.cs" />
-    <Compile Include="Concrete\PublicDataProvider.cs" />
     <Compile Include="Concrete\Repository.cs" />
     <Compile Include="Entities\ChangeLog.cs">
       <DependentUpon>WarhammerData.tt</DependentUpon>
