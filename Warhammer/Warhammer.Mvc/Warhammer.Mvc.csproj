@@ -171,14 +171,109 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\bg-large.jpg" />
+    <Content Include="Content\Images\bg-medium.jpg" />
+    <Content Include="Content\Images\bg-small.jpg" />
+    <Content Include="Content\theme.css">
+      <DependentUpon>theme.less</DependentUpon>
+    </Content>
+    <Content Include="Content\theme.min.css">
+      <DependentUpon>theme.css</DependentUpon>
+    </Content>
+    <Content Include="Content\WarhammerStyle.css">
+      <DependentUpon>WarhammerStyle.less</DependentUpon>
+    </Content>
+    <Content Include="Content\WarhammerStyle.min.css">
+      <DependentUpon>WarhammerStyle.css</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\Less\Bootstrap\.csscomb.json" />
+    <Content Include="Content\Less\Bootstrap\.csslintrc" />
+    <Content Include="Content\Less\Bootstrap\alerts.less" />
+    <Content Include="Content\Less\Bootstrap\badges.less" />
+    <Content Include="Content\Less\Bootstrap\bootstrap.less" />
+    <Content Include="Content\Less\Bootstrap\breadcrumbs.less" />
+    <Content Include="Content\Less\Bootstrap\button-groups.less" />
+    <Content Include="Content\Less\Bootstrap\buttons.less" />
+    <Content Include="Content\Less\Bootstrap\carousel.less" />
+    <Content Include="Content\Less\Bootstrap\close.less" />
+    <Content Include="Content\Less\Bootstrap\code.less" />
+    <Content Include="Content\Less\Bootstrap\component-animations.less" />
+    <Content Include="Content\Less\Bootstrap\dropdowns.less" />
+    <Content Include="Content\Less\Bootstrap\forms.less" />
+    <Content Include="Content\Less\Bootstrap\glyphicons.less" />
+    <Content Include="Content\Less\Bootstrap\grid.less" />
+    <Content Include="Content\Less\Bootstrap\input-groups.less" />
+    <Content Include="Content\Less\Bootstrap\jumbotron.less" />
+    <Content Include="Content\Less\Bootstrap\labels.less" />
+    <Content Include="Content\Less\Bootstrap\list-group.less" />
+    <Content Include="Content\Less\Bootstrap\media.less" />
+    <Content Include="Content\Less\Bootstrap\mixins.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\alerts.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\background-variant.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\border-radius.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\buttons.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\center-block.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\clearfix.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\forms.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\gradients.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\grid-framework.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\grid.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\hide-text.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\image.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\labels.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\list-group.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\nav-divider.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\nav-vertical-align.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\opacity.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\pagination.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\panels.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\progress-bar.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\reset-filter.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\reset-text.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\resize.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\responsive-visibility.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\size.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\tab-focus.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\table-row.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\text-emphasis.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\text-overflow.less" />
+    <Content Include="Content\Less\Bootstrap\mixins\vendor-prefixes.less" />
+    <Content Include="Content\Less\Bootstrap\modals.less" />
+    <Content Include="Content\Less\Bootstrap\navbar.less" />
+    <Content Include="Content\Less\Bootstrap\navs.less" />
+    <Content Include="Content\Less\Bootstrap\normalize.less" />
+    <Content Include="Content\Less\Bootstrap\pager.less" />
+    <Content Include="Content\Less\Bootstrap\pagination.less" />
+    <Content Include="Content\Less\Bootstrap\panels.less" />
+    <Content Include="Content\Less\Bootstrap\popovers.less" />
+    <Content Include="Content\Less\Bootstrap\print.less" />
+    <Content Include="Content\Less\Bootstrap\progress-bars.less" />
+    <Content Include="Content\Less\Bootstrap\responsive-embed.less" />
+    <Content Include="Content\Less\Bootstrap\responsive-utilities.less" />
+    <Content Include="Content\Less\Bootstrap\scaffolding.less" />
+    <Content Include="Content\Less\Bootstrap\tables.less" />
+    <Content Include="Content\Less\Bootstrap\theme.less" />
+    <Content Include="Content\Less\Bootstrap\thumbnails.less" />
+    <Content Include="Content\Less\Bootstrap\tooltip.less" />
+    <Content Include="Content\Less\Bootstrap\type.less" />
+    <Content Include="Content\Less\Bootstrap\utilities.less" />
+    <Content Include="Content\Less\Bootstrap\variables.less" />
+    <Content Include="Content\Less\Bootstrap\wells.less" />
+    <Content Include="Content\WarhammerStyle.less" />
+    <Content Include="Content\variables.less" />
+    <Content Include="Content\theme.less" />
+    <Content Include="Content\theme.css.map">
+      <DependentUpon>theme.css</DependentUpon>
+    </Content>
+    <Content Include="Content\WarhammerStyle.css.map">
+      <DependentUpon>WarhammerStyle.css</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
