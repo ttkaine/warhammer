@@ -1,4 +1,6 @@
-﻿body {
+﻿@import "less/Bootstrap/bootstrap.less";
+
+body {
     background: url('images/bg-large.jpg') no-repeat center center fixed;
     background-size: cover;
     padding-top: 80px;
@@ -18,4 +20,35 @@
         background: url('images/bg-small.jpg') no-repeat center center fixed;
         background-size: cover;
     }
+}
+
+.content-wrapper {
+  .make-row(); 
+}
+
+.banner-content{
+  .make-xs-column(12);
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+.main-content {
+  .make-xs-column(9);
+  opacity: 0.8;
+}
+.side-bar {
+  .make-xs-column(3);
+
+  opacity: 0.8;
+}
+
+.content-block {
+    background-color: white;
+    padding: 15px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -moz-box-shadow: #333333 5px 5px 15px ;
+    -webkit-box-shadow: #333333 5px 5px 15px ;
+    box-shadow: #333333 5px 5px 15px ;
 }

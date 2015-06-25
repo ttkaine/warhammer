@@ -180,6 +180,12 @@
     <Content Include="Content\theme.min.css">
       <DependentUpon>theme.css</DependentUpon>
     </Content>
+    <Content Include="Content\variables.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
+    <Content Include="Content\variables.min.css">
+      <DependentUpon>variables.css</DependentUpon>
+    </Content>
     <Content Include="Content\WarhammerStyle.css">
       <DependentUpon>WarhammerStyle.less</DependentUpon>
     </Content>
