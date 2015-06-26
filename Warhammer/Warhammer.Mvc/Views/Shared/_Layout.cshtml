@@ -55,7 +55,8 @@
             editor.on('change', function (e) {
                 $("#saveControls").show(500);
             });
-        }
+        },
+        paste_data_images: true
     });
 
         function myCustomOnChangeHandler(inst) {
@@ -73,7 +74,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Warhammer", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -86,9 +87,8 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year : Software Version: @Assembly.GetExecutingAssembly().GetName().Version</p>
+       <footer>
+            <p class="small">&copy; @DateTime.Now.Year : Software Version: @Assembly.GetExecutingAssembly().GetName().Version</p>
         </footer>
     </div>
 

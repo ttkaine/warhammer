@@ -6808,7 +6808,7 @@ body {
 @media (min-width: 992px) {
   .main-content {
     float: left;
-    width: 75%;
+    width: 66.66666667%;
   }
 }
 .side-bar {
@@ -6822,7 +6822,7 @@ body {
 @media (min-width: 992px) {
   .side-bar {
     float: left;
-    width: 25%;
+    width: 33.33333333%;
   }
 }
 .side-bar ul {
@@ -6868,8 +6868,7 @@ footer {
   color: #000;
   text-shadow: 4px 4px 3px rgba(0, 0, 0, 0.1);
 }
-.profile-image {
-  float: right;
+.content-block img {
   margin: 20px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -6877,6 +6876,9 @@ footer {
   -moz-box-shadow: #333333 5px 5px 15px ;
   -webkit-box-shadow: #333333 5px 5px 15px ;
   box-shadow: #333333 5px 5px 15px ;
+}
+.profile-image {
+  float: right;
 }
 .profile-footer {
   font-size: 21px;
