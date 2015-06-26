@@ -10,6 +10,59 @@
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>    
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+    <link href="http://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+    tinymce.init({
+        selector: "h1.editable",
+        inline: true,
+        toolbar: "undo redo",
+        menubar: false,
+        setup: function (editor) {
+            editor.on('change', function (e) {
+                $("#saveControls").show(500);
+            });
+        }
+    });
+
+    tinymce.init({
+        selector: "h2.editable",
+        inline: true,
+        toolbar: "undo redo",
+        menubar: false,
+        setup: function (editor) {
+            editor.on('change', function (e) {
+                $("#saveControls").show(500);
+            });
+
+        }
+    });
+
+    tinymce.init({
+        selector: "div.editable",
+        relative_urls: false,
+        inline: true,
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ],
+        @*external_plugins: {
+            "moxiemanager": "@Url.Content("~/scripts/moxiemanager/plugin.min.js")"
+        },*@
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        image_advtab: true,
+        setup: function (editor) {
+            editor.on('change', function (e) {
+                $("#saveControls").show(500);
+            });
+        }
+    });
+
+        function myCustomOnChangeHandler(inst) {
+            $("#saveControls").show(500);
+        }
+    </script>
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

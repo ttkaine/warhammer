@@ -26,24 +26,38 @@ body {
   .make-row(); 
 }
 
-.banner-content{
+.banner-content {
   .make-xs-column(12);
+}
+
+.main-content {
+   text-align: justify;
+  .make-xs-column(12);
+  .make-md-column(9);
+}
+
+.side-bar {
+  .make-xs-column(12);
+  .make-md-column(3);
+}
+
+.side-bar ul{
+     list-style-type: none;
+}
+
+.banner-content,
+.main-content,
+.side-bar
+{
+
     opacity: 0.8;
     margin-bottom: 20px;
 }
 
-.main-content {
-  .make-xs-column(9);
-  opacity: 0.8;
-}
-.side-bar {
-  .make-xs-column(3);
 
-  opacity: 0.8;
-}
-
+.header-block,
 .content-block {
-    background-color: white;
+
     padding: 15px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -51,4 +65,56 @@ body {
     -moz-box-shadow: #333333 5px 5px 15px ;
     -webkit-box-shadow: #333333 5px 5px 15px ;
     box-shadow: #333333 5px 5px 15px ;
+}
+.content-block {
+       background-color: white;
+}
+.header-block
+{
+    margin: auto;
+    text-align:center;
+    background-color: black;
+}
+
+footer{
+    opacity: 0.8;
+    font-size: @font-size-small;
+    text-align: center;
+    color:white;
+}
+
+.header-block h1 {
+font: 200 @font-size-h1/0.8 'Great Vibes', Helvetica, sans-serif;
+  color: #fff;
+  text-shadow: 4px 4px 3px rgba(0,0,0,0.1); 
+}
+
+.content-block h2 {
+font: 200 @font-size-h2/0.8 'Great Vibes', Helvetica, sans-serif;
+  color: #000;
+  text-shadow: 4px 4px 3px rgba(0,0,0,0.1); 
+}
+
+.profile-image{
+    float:right;
+    margin: 20px;
+        -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -moz-box-shadow: #333333 5px 5px 15px ;
+    -webkit-box-shadow: #333333 5px 5px 15px ;
+    box-shadow: #333333 5px 5px 15px ;
+}
+
+.profile-footer {
+    font-size: @font-size-small;
+    color: @gray-light;
+    text-align: right;
+}
+
+.edit-controls{
+    position: absolute;
+    top: 30px;
+    left: 30px;
+
 }
