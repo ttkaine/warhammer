@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Warhammer.Mvc.Models.HomePageViewModel
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -8,42 +9,47 @@
       @Html.Hidden("personId", 1)
       <div class="banner-content">
           <div class="header-block">     
-              <h1 id="fullName" class="editable">Carina Kindl</h1>          
+              <h1 id="fullName">West Park Warhammer</h1>          
           </div>
 
       </div>
-      <div class="main-content">
-          <div class="content-block">
-              <img class="profile-image" src="http://warhammer.tycokaine.com/Attachments/Images/Characters/carina.jpg" height="200" width="200" />
-              <h2 id="shortName" class="editable">Carina</h2>
-              <div id="description" class="editable">here
-                  <p>
-                      Carina Kindl is a young, noble Reiklander, born and raised near the Imperial capital of Aldorf. She has a romanticised view of the Wild North and so took up her education in Middenheim (which has a University, can you belive it?), the last bastion of civilization in the Northern Empire.
-                  </p>
-                  <p>
-                      Although quite smart and well educated (she studied as a navigator at Middenhiem's Cartography Institute and speaks Brettonian and Tilean as well as Reikspiel), Carina is naïve and perhaps a little foolhardy.
-                  </p>
-                  <p>
-                      Carina is also a keen archer, but at only five feet tall she struggles to pull a longbow. She prefers using a cavalry bow even though she can't actually ride a horse, because the shallow tail means she can pull a longer string without the bottom catching on the ground.
-                  </p>
-              </div>
-              <div class="profile-footer"><span title="Modifed as 12:38 1/12/205 by Tim">Last Modified: About a minute ago...</span></div>
-          </div>
-      </div>
-      <div class="side-bar">
-          <div class="content-block">
-              <div id="saveControls" style="display: none">
-                  <input type="submit" name="saveAction" class="btn btn-success" value="Save" />
-                  <input type="submit" name="saveAction" class="btn btn-danger" value="Cancel" />
-              </div>
-              <h2>Related</h2>
-              <ul>
-                  <li>Gellner's Ford</li>
-                  <li>Archery Competition</li>
-                  <li>@Html.ActionLink("Add Link", "Edit", "Person", new {personId = 1}, new {@class = "btn btn-success"})</li>
-              </ul>
 
-          </div>
-      </div>
+    <div class="core-content">
+        <div class="content-block">
+            
+            <h2 id="shortName">People</h2>
+            <ul>          
+                @foreach (var page in Model.MyPeople)
+                {
+                    <li><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName <span class="tiny"> Changed by @page.ModifiedBy.DisplayName on @page.Modified</span></a></li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="core-content">
+        <div class="content-block">
+            <h2 id="shortName">I made this</h2>
+            <ul>
+                @foreach (var page in Model.MyStuff)
+                {
+                    <li><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName <span class="tiny"> Changed by @page.ModifiedBy.DisplayName on @page.Modified</span></a></li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="core-content">
+        <div class="content-block">
+            <h2>Recent Changes</h2>
+            <ul>
+                @foreach (var page in Model.RecentChanges)
+                {
+                    <li><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName <span class="tiny"> Changed by @page.ModifiedBy.DisplayName on @page.Modified</span></a></li>
+                }
+            </ul>
+
+        </div>
+    </div>
   }
 </div>

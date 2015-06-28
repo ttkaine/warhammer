@@ -6812,6 +6812,20 @@ body {
     width: 75%;
   }
 }
+.core-content {
+  float: left;
+  width: 100%;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 992px) {
+  .core-content {
+    float: left;
+    width: 33.33333333%;
+  }
+}
 .side-bar {
   float: left;
   width: 100%;
@@ -6829,6 +6843,7 @@ body {
 .side-bar ul {
   list-style-type: none;
 }
+.core-content,
 .banner-content,
 .main-content,
 .side-bar {
@@ -6888,5 +6903,8 @@ footer {
   position: absolute;
   top: 30px;
   left: 30px;
+}
+.tiny {
+  font-size: 12px;
 }
 /*# sourceMappingURL=WarhammerStyle.css.map */

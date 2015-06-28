@@ -37,6 +37,11 @@ body {
       min-height: 300px;
 }
 
+.core-content{
+  .make-xs-column(12);
+  .make-md-column(4);
+}
+
 .side-bar {
   .make-xs-column(12);
   .make-md-column(3);
@@ -46,11 +51,11 @@ body {
      list-style-type: none;
 }
 
+.core-content,
 .banner-content,
 .main-content,
 .side-bar
 {
-
     opacity: 0.8;
     margin-bottom: 20px;
 }
@@ -117,4 +122,9 @@ font: 200 @font-size-h2/0.8 'Great Vibes', Helvetica, sans-serif;
     top: 30px;
     left: 30px;
 
+}
+
+.tiny
+{
+    font-size: @font-size-base*0.5;
 }

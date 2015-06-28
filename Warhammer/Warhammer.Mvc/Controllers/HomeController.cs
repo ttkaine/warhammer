@@ -1,16 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
+using Warhammer.Core.Abstract;
+using Warhammer.Mvc.Models;
 
 namespace Warhammer.Mvc.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        public HomeController(IAuthenticatedDataProvider data) : base(data)
+        {
+        }
+
         public ActionResult Index()
         {
-            return View();
+            HomePageViewModel model = new HomePageViewModel
+            {
+                RecentChanges = DataProvider.RecentPages().ToList(),
+                MyStuff = DataProvider.MyStuff().ToList(),
+                MyPeople = DataProvider.MyPeople().ToList()
+            };
+            return View(model);
         }
 
         public ActionResult About()

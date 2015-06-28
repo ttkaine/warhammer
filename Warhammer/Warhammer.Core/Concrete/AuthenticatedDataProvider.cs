@@ -119,5 +119,30 @@ namespace Warhammer.Core.Concrete
         {
             return _repository.Pages().FirstOrDefault(p => p.Id == id);
         }
+
+        public ICollection<Page> RecentPages()
+        {
+            return _repository.Pages().OrderByDescending(p => p.Modified).Take(20).ToList();
+        }
+
+        public ICollection<Page> MyStuff()
+        {
+            return _repository.Pages().Where(p => p.CreatedById == CurrentPlayer.Id).OrderByDescending(p => p.Created).ToList();
+        }
+
+        public ICollection<Session> Sessions()
+        {
+            return _repository.Pages().OfType<Session>().ToList();
+        }
+
+        public ICollection<Person> People()
+        {
+            return _repository.Pages().OfType<Person>().ToList();
+        }
+
+        public ICollection<SessionLog> Logs()
+        {
+            return _repository.Pages().OfType<SessionLog>().ToList();
+        }
     }
 }

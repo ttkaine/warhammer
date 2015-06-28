@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Warhammer.Core.Entities;
 
@@ -13,5 +14,10 @@ namespace Warhammer.Core.Abstract
         void ChangePicture(int id, byte[] data, string mimeType);
         Page UpdatePageDetails(int id, string shortName, string fullName, string description);    
         Page GetPage(int id);
+        ICollection<Page> RecentPages();
+        ICollection<Page> MyStuff();
+        ICollection<Session> Sessions();
+        ICollection<Person> People();
+        ICollection<SessionLog> Logs();
     }
 }

@@ -1,19 +1,17 @@
 ﻿using System.Web.Mvc;
 using Warhammer.Core.Abstract;
 using Warhammer.Core.Entities;
+using Warhammer.Mvc.Models;
 
 namespace Warhammer.Mvc.Controllers
 {
-    public class CreateController : Controller
+    public class CreateController : BaseController
     {
-        private IAuthenticatedDataProvider _data;
-
-        public CreateController(IAuthenticatedDataProvider data)
+        // GET: Create
+        public CreateController(IAuthenticatedDataProvider data) : base(data)
         {
-            _data = data;
         }
 
-        // GET: Create
         public ActionResult Index()
         {
             return View();
@@ -30,15 +28,33 @@ namespace Warhammer.Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                int personId = _data.AddPerson(person.ShortName, person.FullName, person.Description);
+                int personId = DataProvider.AddPerson(person.ShortName, person.FullName, person.Description);
                 return RedirectToAction("Index", "Page", new {id = personId});
             }
             return View(person);
         }
 
+        public ActionResult GameSession()
+        {
+            Session session = new Session();
+            return View(session);
+        }
+
         public ActionResult SessionLog(int? personid)
         {
-            throw new System.NotImplementedException();
+            CreateSessionLogViewModel model = new CreateSessionLogViewModel
+            {
+                Person = new SelectList(DataProvider.People(), "Id", "ShortName"),
+                Session = new SelectList(DataProvider.Sessions(), "Id", "ShortName")
+                
+            };
+            SessionLog sessionLog = new SessionLog();
+            if (personid.HasValue)
+            {
+                sessionLog.Person = DataProvider.GetPage(personid.Value) as Person;
+            }
+            model.Log = sessionLog;
+            return View(model);
         }
     }
 }
