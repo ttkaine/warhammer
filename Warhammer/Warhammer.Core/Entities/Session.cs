@@ -12,20 +12,16 @@ namespace Warhammer.Core.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Session
+    public partial class Session : Page
     {
         public Session()
         {
             this.SessionLogs = new HashSet<SessionLog>();
-            this.People = new HashSet<Person>();
         }
     
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<System.DateTime> DateTime { get; set; }
+        public Nullable<int> Length { get; set; }
     
         public virtual ICollection<SessionLog> SessionLogs { get; set; }
-        public virtual ICollection<Person> People { get; set; }
     }
 }

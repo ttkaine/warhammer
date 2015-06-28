@@ -1,0 +1,81 @@
+﻿@using System.Activities.Statements
+@using System.Data.Entity.Design.AspNet
+@using Warhammer.Core.Entities
+@using Page = Warhammer.Core.Entities.Page
+@model Warhammer.Core.Entities.Page
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="content-wrapper">
+    @using (Html.BeginForm("Index", "Page"))
+    {
+        @Html.HiddenFor(m => m.Id)
+        <div class="banner-content">
+            <div class="header-block">
+                <h1 id="fullName" class="editable">@Model.FullName</h1>
+            </div>
+
+        </div>
+        <div class="main-content">
+            <div class="content-block">
+                <img class="profile-image" src="@Url.Action("Image", "Page", new { id = Model.Id })" title="@Model.FullName" alt="Picture of @Model.FullName" height="200" width="200" />
+                <h2 id="shortName" class="editable">@Model.ShortName</h2>
+                <div id="description" class="editable">
+                    @Html.Raw(Model.Description)
+                </div>
+                <div class="profile-footer"><span title="Modifed as 12:38 1/12/205 by Tim">Last Modified: @Model.Modified</span></div>
+            </div>
+        </div>
+        <div class="side-bar">
+            <div class="content-block">
+                <div id="saveControls" style="display: none">
+                    <input type="submit" name="saveAction" class="btn btn-success" value="Save" />
+                    <input type="submit" name="saveAction" class="btn btn-danger" value="Cancel" />
+                </div>
+
+                @if (Model is Person)
+                {
+                    Person person = Model as Person;
+
+                    if (person.SessionLogs.Any())
+                    {
+                        <h2>Session Logs</h2>
+                        <ul>
+                            @foreach (SessionLog log in person.SessionLogs)
+                            {
+                                <li>@Html.ActionLink(log.ShortName, "Index", new { id = log.Id })</li>
+                            }
+                        </ul>
+                    }
+
+                    @Html.ActionLink(" + Add Session Log", "SessionLog", "Create", new { personId = Model.Id }, new { @class = "btn btn-default" })
+                }
+
+                @if (Model is SessionLog)
+                {
+                    SessionLog log = Model as SessionLog;
+                    <ul>
+                        <li>
+                            <img src="@Url.Action("Image", "Page", new { id = log.Person.Id })" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" height="200" width="200" />
+                            @Html.ActionLink(log.Person.FullName, "Index", new { id = log.Person.Id })
+                        </li>
+                        <li>@Html.ActionLink(log.Session.FullName, "Index", new { id = log.Session.Id })</li>
+                    </ul>
+                }
+
+                @if (Model.Related.Any())
+                {
+                    <h2>Related</h2>
+                    <ul>
+                        @foreach (Page page in Model.Related)
+                        {
+                            <li>@Html.ActionLink(page.ShortName, "Index", new { id = page.Id })</li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    }
+</div>

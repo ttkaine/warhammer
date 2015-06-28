@@ -64,59 +64,59 @@
     <Compile Include="Concrete\AuthenticatedDataProvider.cs" />
     <Compile Include="Concrete\ModelFactory.cs" />
     <Compile Include="Concrete\Repository.cs" />
-    <Compile Include="Entities\ChangeLog.cs">
-      <DependentUpon>WarhammerData.tt</DependentUpon>
+    <Compile Include="Entities\Page.cs">
+      <DependentUpon>PageEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PageEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PageEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PageEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PageEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PageEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PageEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entities\Person.cs">
-      <DependentUpon>WarhammerData.tt</DependentUpon>
+      <DependentUpon>PageEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Player.cs">
-      <DependentUpon>WarhammerData.tt</DependentUpon>
+      <DependentUpon>PageEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Session.cs">
-      <DependentUpon>WarhammerData.tt</DependentUpon>
+      <DependentUpon>PageEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SessionLog.cs">
-      <DependentUpon>WarhammerData.tt</DependentUpon>
+      <DependentUpon>PageEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\WarhammerData.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WarhammerData.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\WarhammerData.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WarhammerData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\WarhammerData.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WarhammerData.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Entities\_Person.cs" />
+    <Compile Include="Entities\_Session.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EntityDeploy Include="Entities\WarhammerData.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WarhammerData.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config" />
-    <None Include="Entities\WarhammerData.Context.tt">
+    <EntityDeploy Include="Entities\PageEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PageEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entities\PageEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WarhammerData.edmx</DependentUpon>
-      <LastGenOutput>WarhammerData.Context.cs</LastGenOutput>
+      <DependentUpon>PageEntities.edmx</DependentUpon>
+      <LastGenOutput>PageEntities.Context.cs</LastGenOutput>
     </None>
-    <None Include="Entities\WarhammerData.edmx.diagram">
-      <DependentUpon>WarhammerData.edmx</DependentUpon>
+    <None Include="Entities\PageEntities.edmx.diagram">
+      <DependentUpon>PageEntities.edmx</DependentUpon>
     </None>
-    <None Include="Entities\WarhammerData.tt">
+    <None Include="Entities\PageEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WarhammerData.edmx</DependentUpon>
-      <LastGenOutput>WarhammerData.cs</LastGenOutput>
+      <DependentUpon>PageEntities.edmx</DependentUpon>
+      <LastGenOutput>PageEntities.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

@@ -18,10 +18,18 @@ namespace Warhammer.Core.Concrete
             _authenticatedUser = authenticatedUser;
             _repository = repository;
             _factory = factory;
+        }
 
-            if (!_authenticatedUser.UserIsAuthenticated)
+        public Player CurrentPlayer
+        {
+            get
             {
-                throw new Exception("User is not Authenticated");
+
+                if (!_authenticatedUser.UserIsAuthenticated)
+                {
+                    throw new Exception("User is not Authenticated");
+                }
+                return _repository.Players().FirstOrDefault(p => p.UserName == _authenticatedUser.UserName);
             }
         }
 
@@ -30,9 +38,86 @@ namespace Warhammer.Core.Concrete
             return _repository.People().Where(p => p.Player.UserName == _authenticatedUser.UserName).ToList();
         }
 
-        public void AddLog(int sessionId, int personId, string title, string description)
+        public int AddSessionLog(int sessionId, int personId, string title, string description)
         {
-            
+            SessionLog session = new SessionLog
+            {
+                ShortName = title,
+                FullName = title,
+                Description = description,
+                SessionId = sessionId,
+                PersonId = personId
+            };
+            return Save(session);
+        }
+
+        public int AddSession(string title, string name, string description, DateTime date)
+        {
+            Session session = new Session
+            {
+                ShortName = name,
+                FullName = title,
+                Description = description,
+                DateTime = date
+            };
+            return Save(session);
+        }
+
+        public int AddPerson(string shortName, string longName, string description)
+        {
+            Person session = new Person
+            {
+                ShortName = shortName,
+                FullName = longName,
+                Description = description,
+            };
+            return Save(session);
+        }
+
+
+        public void ChangePicture(int id, byte[] data, string mimeType)
+        {
+            Page page = _repository.Pages().FirstOrDefault(p => p.Id == id);
+            if (page != null)
+            {
+                page.ImageData = data;
+                page.ImageMime = mimeType;
+                Save(page);
+            }
+        }
+
+        public Page UpdatePageDetails(int id, string shortName, string fullName, string description)
+        {
+            Page existingPage = _repository.Pages().FirstOrDefault(p => p.Id == id);
+            if (existingPage != null)
+            {
+                existingPage.ShortName = shortName;
+                existingPage.FullName = fullName;
+                existingPage.Description = description;
+            }
+            Save(existingPage);
+            return existingPage;
+        }
+
+        public int Save(Page page)
+        {
+            Page existingPage = _repository.Pages().FirstOrDefault(p => p.Id == page.Id);
+
+            if (existingPage == null)
+            {
+                page.Created = DateTime.Now;
+                page.CreatedById = CurrentPlayer.Id;
+            }
+
+            page.Modified = DateTime.Now;
+            page.ModifedById = CurrentPlayer.Id;
+
+            return _repository.Save(page);
+        }
+
+        public Page GetPage(int id)
+        {
+            return _repository.Pages().FirstOrDefault(p => p.Id == id);
         }
     }
 }

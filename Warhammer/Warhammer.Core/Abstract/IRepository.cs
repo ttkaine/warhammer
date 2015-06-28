@@ -12,5 +12,8 @@ namespace Warhammer.Core.Abstract
     public interface IRepository
     {
         IQueryable<Person> People();
+        IQueryable<Player> Players();
+        int Save(Page page);
+        IQueryable<Page> Pages();
     }
 }

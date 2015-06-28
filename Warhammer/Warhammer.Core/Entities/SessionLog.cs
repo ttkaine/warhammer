@@ -12,19 +12,12 @@ namespace Warhammer.Core.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class SessionLog
+    public partial class SessionLog : Page
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public int SessionId { get; set; }
-        public int PersonId { get; set; }
-        public int PlayerId { get; set; }
-        public System.DateTime Created { get; set; }
-        public System.DateTime Edited { get; set; }
+        public Nullable<int> PersonId { get; set; }
+        public Nullable<int> SessionId { get; set; }
     
         public virtual Person Person { get; set; }
-        public virtual Player Player { get; set; }
         public virtual Session Session { get; set; }
     }
 }

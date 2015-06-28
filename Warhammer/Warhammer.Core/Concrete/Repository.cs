@@ -12,20 +12,44 @@ namespace Warhammer.Core.Concrete
     /// </summary>
     public class Repository : IRepository, IDisposable
     {
-        private readonly WarhammerEntities _entities = new WarhammerEntities();
+        private readonly WarhammerDataEntities _entities = new WarhammerDataEntities();
 
         #region Accessors
 
-        public IQueryable<ChangeLog> ChangeLogs()
-        {
-            return _entities.ChangeLogs;
-        }
+        //public IQueryable<ChangeLog> ChangeLogs()
+        //{
+        //    return _entities.ChangeLogs;
+        //}
 
         public IQueryable<Person> People()
         {
-            return _entities.People;
+            return _entities.Pages.OfType<Person>();
         }
 
+        public IQueryable<Player> Players()
+        {
+            return _entities.Players;
+        }
+
+        public int Save(Page page)
+        {
+            if (page.Id == 0)
+            {
+                _entities.Pages.Add(page);
+            }
+            else
+            {
+                _entities.Entry(page).State = EntityState.Modified;
+            }
+            _entities.SaveChanges();
+
+            return page.Id;
+        }
+
+        public IQueryable<Page> Pages()
+        {
+            return _entities.Pages;
+        }
 
         #endregion
 

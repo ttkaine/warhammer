@@ -16,21 +16,19 @@ namespace Warhammer.Core.Entities
     {
         public Player()
         {
+            this.Pages = new HashSet<Page>();
             this.People = new HashSet<Person>();
-            this.People1 = new HashSet<Person>();
-            this.People2 = new HashSet<Person>();
-            this.SessionLogs = new HashSet<SessionLog>();
+            this.Pages1 = new HashSet<Page>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public byte[] Picture { get; set; }
         public string UserName { get; set; }
+        public string DisplayName { get; set; }
+        public byte[] ImageData { get; set; }
+        public string Description { get; set; }
     
+        public virtual ICollection<Page> Pages { get; set; }
         public virtual ICollection<Person> People { get; set; }
-        public virtual ICollection<Person> People1 { get; set; }
-        public virtual ICollection<Person> People2 { get; set; }
-        public virtual ICollection<SessionLog> SessionLogs { get; set; }
+        public virtual ICollection<Page> Pages1 { get; set; }
     }
 }

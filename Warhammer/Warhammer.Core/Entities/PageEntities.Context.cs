@@ -13,10 +13,10 @@ namespace Warhammer.Core.Entities
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class WarhammerEntities : DbContext
+    public partial class WarhammerDataEntities : DbContext
     {
-        public WarhammerEntities()
-            : base("name=WarhammerEntities")
+        public WarhammerDataEntities()
+            : base("name=WarhammerDataEntities")
         {
         }
     
@@ -25,10 +25,7 @@ namespace Warhammer.Core.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ChangeLog> ChangeLogs { get; set; }
-        public virtual DbSet<Person> People { get; set; }
+        public virtual DbSet<Page> Pages { get; set; }
         public virtual DbSet<Player> Players { get; set; }
-        public virtual DbSet<Session> Sessions { get; set; }
-        public virtual DbSet<SessionLog> SessionLogs { get; set; }
     }
 }

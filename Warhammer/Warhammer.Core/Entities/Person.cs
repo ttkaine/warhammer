@@ -12,30 +12,20 @@ namespace Warhammer.Core.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Person
+    public partial class Person : Page
     {
         public Person()
         {
             this.SessionLogs = new HashSet<SessionLog>();
-            this.Sessions = new HashSet<Session>();
+            this.Pages = new HashSet<Page>();
         }
     
-        public int Id { get; set; }
-        public string FullName { get; set; }
-        public string ShortName { get; set; }
-        public string Description { get; set; }
-        public byte[] Image { get; set; }
-        public System.DateTime Modified { get; set; }
-        public System.DateTime Created { get; set; }
-        public int ModifiedByPlayerId { get; set; }
-        public int CreatedByPlayerId { get; set; }
-        public int PlayerId { get; set; }
-        public int PersonTypeId { get; set; }
+        public bool IsDead { get; set; }
+        public string Obiturary { get; set; }
+        public Nullable<int> PlayerId { get; set; }
     
-        public virtual Player Player { get; set; }
-        public virtual Player ModifiedBy { get; set; }
-        public virtual Player itedBy { get; set; }
         public virtual ICollection<SessionLog> SessionLogs { get; set; }
-        public virtual ICollection<Session> Sessions { get; set; }
+        public virtual ICollection<Page> Pages { get; set; }
+        public virtual Player Player { get; set; }
     }
 }
