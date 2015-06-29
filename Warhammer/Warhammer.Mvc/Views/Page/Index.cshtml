@@ -20,12 +20,16 @@
         </div>
         <div class="main-content">
             <div class="content-block">
-                <img class="profile-image" src="@Url.Action("Image", "Page", new { id = Model.Id })" title="@Model.FullName" alt="Picture of @Model.FullName" height="200" width="200" />
+                
+                @if (Model is Person || (Model.ImageData != null && Model.ImageData.Length > 0 && !string.IsNullOrWhiteSpace(Model.ImageMime)))
+                {
+                    <img class="profile-image" src="@Url.Action("Image", "Page", new {id = Model.Id})" title="@Model.FullName" alt="Picture of @Model.FullName" height="200" width="200" />
+                }
                 <h2 id="shortName" class="editable">@Model.ShortName</h2>
                 <div id="description" class="editable">
                     @Html.Raw(Model.Description)
                 </div>
-                <div class="profile-footer"><span title="Modifed as 12:38 1/12/205 by Tim">Last Modified: @Model.Modified</span></div>
+                <div class="profile-footer"><span title="Modifed at @Model.Modified by @Model.ModifiedBy.DisplayName">Last Modified: @Model.Modified</span></div>
             </div>
         </div>
         <div class="side-bar">
@@ -41,7 +45,7 @@
 
                     if (person.SessionLogs.Any())
                     {
-                        <h2>Session Logs</h2>
+                        <h3>Session Logs</h3>
                         <ul>
                             @foreach (SessionLog log in person.SessionLogs)
                             {
@@ -65,9 +69,44 @@
                     </ul>
                 }
 
+                @if (Model is Session)
+                {
+                    Session session = Model as Session;
+
+                    if (session.People.Any())
+                    {
+                        <h3>People</h3>
+                        <ul>
+                            <li>
+                                @foreach (Person person in session.People)
+                                {
+                                    <img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" height="100" width="100" />
+                                    @Html.ActionLink(person.FullName, "Index", new { id = person.Id })
+                                }
+                            </li>
+
+                        </ul>
+                    }
+
+                    if (session.SessionLogs.Any())
+                    {
+                        <h3>Session Logs</h3>
+                        <ul>
+                            <li>
+                                @foreach (SessionLog log in session.SessionLogs)
+                                {
+                                    <img src="@Url.Action("Image", "Page", new {id = log.Id})" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" height="100" width="100" />
+                                    @Html.ActionLink(log.FullName, "Index", new {id = log.Person.Id})
+                                }
+                            </li>
+                        
+                        </ul>
+                    }
+                }
+
                 @if (Model.Related.Any())
                 {
-                    <h2>Related</h2>
+                    <h3>Related</h3>
                     <ul>
                         @foreach (Page page in Model.Related)
                         {

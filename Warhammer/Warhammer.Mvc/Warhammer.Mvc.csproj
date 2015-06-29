@@ -359,6 +359,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Create\Person.cshtml" />
     <Content Include="Views\Page\Index.cshtml" />
+    <Content Include="Views\Create\SessionLog.cshtml" />
+    <Content Include="Views\Create\GameSession.cshtml" />
     <None Include="Web.WADE.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

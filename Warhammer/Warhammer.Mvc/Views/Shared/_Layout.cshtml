@@ -64,40 +64,45 @@
     </script>
 
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Warhammer", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("New Person", "Person", "Create")</li>
-                            <li>@Html.ActionLink("New Session", "GameSession", "Create")</li>
+    <body>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("Warhammer", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("New Person", "Person", "Create")</li>
+                                    <li>@Html.ActionLink("New Session", "GameSession", "Create")</li>
+                                </ul>
+                            </li>
+
                         </ul>
-                    </li>
-
-                </ul>
-                @Html.Partial("_LoginPartial")
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
             </div>
+        }
+        <div class="container body-content">
+            @RenderBody()
+           @if (User.Identity.IsAuthenticated)
+           {
+               <footer>
+                   <p>&copy; @DateTime.Now.Year : Software Version: @Assembly.GetExecutingAssembly().GetName().Version</p>
+               </footer>
+           }
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-     
-        <footer>
-            <p>&copy; @DateTime.Now.Year : Software Version: @Assembly.GetExecutingAssembly().GetName().Version</p>
-        </footer>
-    </div>
 
-    @RenderSection("scripts", required: false)
-</body>
+        @RenderSection("scripts", required: false)
+    </body>
 </html>

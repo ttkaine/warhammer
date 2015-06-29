@@ -38,11 +38,11 @@ namespace Warhammer.Core.Concrete
             return _repository.People().Where(p => p.Player.UserName == _authenticatedUser.UserName).ToList();
         }
 
-        public int AddSessionLog(int sessionId, int personId, string title, string description)
+        public int AddSessionLog(int sessionId, int personId, string name, string title, string description)
         {
             SessionLog session = new SessionLog
             {
-                ShortName = title,
+                ShortName = name,
                 FullName = title,
                 Description = description,
                 SessionId = sessionId,
