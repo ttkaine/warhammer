@@ -48,6 +48,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -59,9 +60,13 @@
   <ItemGroup>
     <Compile Include="Abstract\IAuthenticatedDataProvider.cs" />
     <Compile Include="Abstract\IAuthenticatedUserProvider.cs" />
+    <Compile Include="Abstract\IImageProcessor.cs" />
     <Compile Include="Abstract\IModelFactory.cs" />
     <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Concrete\AuthenticatedDataProvider.cs" />
+    <Compile Include="Concrete\ConWriter.cs" />
+    <Compile Include="Concrete\ImageProcessor.cs" />
+    <Compile Include="Concrete\InlineHtmlImage.cs" />
     <Compile Include="Concrete\ModelFactory.cs" />
     <Compile Include="Concrete\Repository.cs" />
     <Compile Include="Entities\Page.cs">

@@ -1,5 +1,8 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
+using System.Net.Configuration;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Warhammer.Core.Abstract;
 using Page = Warhammer.Core.Entities.Page;
 
@@ -7,10 +10,12 @@ namespace Warhammer.Mvc.Controllers
 {
     public class PageController : BaseController
     {
+        private IImageProcessor _imageProcessor;
         
         // GET: Page
-        public PageController(IAuthenticatedDataProvider data) : base(data)
+        public PageController(IAuthenticatedDataProvider data, IImageProcessor imageProcessor) : base(data)
         {
+            _imageProcessor = imageProcessor;
         }
 
         public ActionResult Index(int? id)
@@ -28,14 +33,25 @@ namespace Warhammer.Mvc.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult Index(Page page)
+        public ActionResult Index(Page page, string saveAction)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && saveAction == "Save")
             {
                 Page updatedPage = DataProvider.UpdatePageDetails(page.Id, page.ShortName, page.FullName, page.Description);
+                if (updatedPage.ImageData == null)
+                {
+                    Image image = _imageProcessor.GetImageFromHtmlString(updatedPage.Description);
+                    if (image != null)
+                    {
+                        image = _imageProcessor.ResizeImage(image, new Size {Height = 200, Width = 200});
+                        byte[] imageData = _imageProcessor.GetJpegFromImage(image);
+                        
+                        DataProvider.ChangePicture(updatedPage.Id, imageData, "Image/Jpeg");
+                    }
+                }
                 return View(updatedPage);
             }
-            return View(page);
+            return RedirectToAction("index", new { id = page.Id });
         }
 
         public ActionResult Image(int id)
