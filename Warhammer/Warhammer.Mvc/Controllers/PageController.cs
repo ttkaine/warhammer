@@ -72,5 +72,21 @@ namespace Warhammer.Mvc.Controllers
             var defaultImagePath = Path.Combine(defaultDir, "no-image.jpg");
             return File(defaultImagePath, "image/jpeg"); 
         }
+
+        public ActionResult ChangeImage(int? id)
+        {
+            if (id.HasValue)
+            {
+                Page page = DataProvider.GetPage(id.Value);
+                if (page != null)
+                {
+                    return View(page);
+                }               
+            }
+
+
+            return RedirectToAction("index", "home");
+        }
+
     }
 }

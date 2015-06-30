@@ -14,13 +14,13 @@
         @Html.HiddenFor(m => m.Id)
         <div class="banner-content">
             <div class="header-block">
-                <h1 id="fullName" class="editable">@Model.FullName</h1>
+                <h1 id="fullName" class="editable">Change Image For @Model.ShortName</h1>
             </div>
 
         </div>
         <div class="main-content">
             <div class="content-block">
-                
+
                 @if (Model is Person || (Model.ImageData != null && Model.ImageData.Length > 0 && !string.IsNullOrWhiteSpace(Model.ImageMime)))
                 {
                     <img class="profile-image" src="@Url.Action("Image", "Page", new {id = Model.Id})" title="@Model.FullName" alt="Picture of @Model.FullName" height="200" width="200" />
@@ -96,10 +96,10 @@
                                 @foreach (SessionLog log in session.SessionLogs)
                                 {
                                     <img src="@Url.Action("Image", "Page", new {id = log.Id})" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" height="100" width="100" />
-                                    @Html.ActionLink(log.FullName, "Index", new {id = log.Person.Id})
+                                    @Html.ActionLink(log.FullName, "Index", new { id = log.Person.Id })
                                 }
                             </li>
-                        
+
                         </ul>
                     }
                 }
@@ -114,8 +114,8 @@
                         }
                     </ul>
                 }
-                
-                @Html.ActionLink("Change Image", "ChangeImage", new { id = Model.Id }, new { @class="btn btn-default btn-block"});
+
+                @Html.ActionLink("Change Image", "ChangeImage", new { id = Model.Id }, new { @class = "btn btn-default btn-block" });
 
             </div>
         </div>

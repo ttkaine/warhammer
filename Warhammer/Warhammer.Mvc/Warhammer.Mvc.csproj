@@ -361,6 +361,10 @@
     <Content Include="Views\Page\Index.cshtml" />
     <Content Include="Views\Create\SessionLog.cshtml" />
     <Content Include="Views\Create\GameSession.cshtml" />
+    <Content Include="Views\Page\ChangeImage.cshtml" />
+    <None Include="Web.MURRAY.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
     <None Include="Web.WADE.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -387,6 +391,15 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'WADE|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MURRAY|AnyCPU'">
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
