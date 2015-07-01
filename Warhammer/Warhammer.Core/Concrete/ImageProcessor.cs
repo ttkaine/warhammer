@@ -59,6 +59,14 @@ namespace Warhammer.Core.Concrete
             return ToByteArray(image, ImageFormat.Jpeg);
         }
 
+        public Image Crop(Image image, Rectangle cropArea)
+        {
+            Bitmap bmpImage = new Bitmap(image);
+            Bitmap bmpCrop = bmpImage.Clone(cropArea,
+            bmpImage.PixelFormat);
+            return bmpCrop;
+        }
+
         public static byte[] ToByteArray(Image image, ImageFormat format)
         {
             using (MemoryStream ms = new MemoryStream())

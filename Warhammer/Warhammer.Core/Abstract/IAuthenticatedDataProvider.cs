@@ -18,5 +18,7 @@ namespace Warhammer.Core.Abstract
         ICollection<Session> Sessions();
         ICollection<Person> People();
         ICollection<SessionLog> Logs();
+        void RemoveProfileImage(int id);
+        int AddPage(string shortName, string fullName, string description);
     }
 }

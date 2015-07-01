@@ -373,6 +373,7 @@
     <Content Include="Views\Create\SessionLog.cshtml" />
     <Content Include="Views\Create\GameSession.cshtml" />
     <Content Include="Views\Page\ChangeImage.cshtml" />
+    <Content Include="Views\Create\Page.cshtml" />
     <None Include="Web.MURRAY.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using System.IO;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Warhammer.Core.Abstract;
 using Page = Warhammer.Core.Entities.Page;
 
@@ -63,8 +65,6 @@ namespace Warhammer.Mvc.Controllers
                 {
                     return File(page.ImageData, page.ImageMime);
                 }
-                //var imagePath = Path.Combine(defaultDir, page.GetType() + ".jpg");
-                //return File(imagePath, "image/jpeg");
             }
 
             var defaultImagePath = Path.Combine(defaultDir, "no-image.jpg");
@@ -86,5 +86,44 @@ namespace Warhammer.Mvc.Controllers
             return RedirectToAction("index", "home");
         }
 
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult ChangeImage(string saveAction, int id, HttpPostedFileBase profileImageFile, double? y1, double? x1, double? h, double? w)
+        {
+            if (ModelState.IsValid)
+            {
+                if (saveAction == "Save")
+                {
+                    Rectangle cropArea = GetCropArea(y1, x1, h, w);
+                    if (profileImageFile != null)
+                    {
+                        Image theImage = System.Drawing.Image.FromStream(profileImageFile.InputStream, true, true);
+                        Image croppedImage = _imageProcessor.Crop(theImage, cropArea);
+                        croppedImage = _imageProcessor.ResizeImage(croppedImage, new Size {Height = 200, Width = 200});
+                        byte[] imageData = _imageProcessor.GetJpegFromImage(croppedImage);
+
+                        DataProvider.ChangePicture(id, imageData, "Image/Jpeg");
+                        return RedirectToAction("Index", new {id = id});
+                    }
+                }
+                if (saveAction == "Remove Image")
+                {
+                    DataProvider.RemoveProfileImage(id);
+                    return RedirectToAction("Index", new { id = id });
+                }
+            }
+            // there is something wrong with the data values
+            Page model = DataProvider.GetPage(id);
+            return View(model);
+        }
+        private Rectangle GetCropArea(double? y1, double? x1, double? h, double? w)
+        {
+            if (y1.HasValue && x1.HasValue && h.HasValue && w.HasValue)
+            {
+                return new Rectangle((int)x1.Value, (int)y1.Value, (int)w.Value, (int)h.Value);
+            }
+
+            return new Rectangle();
+        }
     }
 }

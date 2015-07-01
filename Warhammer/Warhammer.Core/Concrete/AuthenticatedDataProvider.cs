@@ -65,13 +65,13 @@ namespace Warhammer.Core.Concrete
 
         public int AddPerson(string shortName, string longName, string description)
         {
-            Person session = new Person
+            Person person = new Person
             {
                 ShortName = shortName,
                 FullName = longName,
                 Description = description,
             };
-            return Save(session);
+            return Save(person);
         }
 
 
@@ -143,6 +143,22 @@ namespace Warhammer.Core.Concrete
         public ICollection<SessionLog> Logs()
         {
             return _repository.Pages().OfType<SessionLog>().ToList();
+        }
+
+        public void RemoveProfileImage(int id)
+        {
+            ChangePicture(id, null, null);
+        }
+
+        public int AddPage(string shortName, string fullName, string description)
+        {
+            Page person = new Page
+            {
+                ShortName = shortName,
+                FullName = fullName,
+                Description = description,
+            };
+            return Save(person);
         }
     }
 }

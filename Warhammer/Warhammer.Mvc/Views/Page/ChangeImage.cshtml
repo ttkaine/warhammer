@@ -7,8 +7,9 @@
 }
 
 <div class="content-wrapper">
-    @using (Html.BeginForm("Index", "Page"))
-    {
+@using (Html.BeginForm("ChangeImage", "Page",
+                               FormMethod.Post, new { enctype = "multipart/form-data" })) { 
+    
         @Html.HiddenFor(m => m.Id)
         <div class="banner-content">
             <div class="header-block">
@@ -25,26 +26,24 @@
                     <img src="@Url.Action("Image", "Page", new {id = Model.Id})" title="@Model.FullName" alt="Picture of @Model.FullName"/>
                 }
                 
-                <h2>Image</h2>
-
-                <input type="file" id="profileImageFile" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-                <a href="#" id="fileSelect">Select New Image</a>
+                <input type="file" id="profileImageFile" name="profileImageFile" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+                <a href="#" id="fileSelect"><h2>Select New Image</h2></a>
 
 
                 <div id="preview">
-                    <h2>Preview</h2>
+                    <h3>Choose your square crop</h3>
                 </div>
                 <input type="hidden" id="x1" name="x1" />
-                <input type="hidden" id="x2" name="x2" />
+                <input type="hidden" id="h" name="h" />
                 <input type="hidden" id="y1" name="y1" />
-                <input type="hidden" id="y2" name="y2" />
-                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="hidden" id="w" name="w" />
+                <input type="submit" value="Save" name="saveAction" class="btn btn-success" />
                 <div class="profile-footer"><span title="Modifed at @Model.Modified by @Model.ModifiedBy.DisplayName">Last Modified: @Model.Modified</span></div>
             </div>
         </div>
         <div class="side-bar">
             <div class="content-block">
-                <input type="submit" value="Remove Image" class="btn btn-danger"/>
+                <input type="submit" value="Remove Image" name="saveAction" class="btn btn-danger"/>
             </div>
         </div>
     }
@@ -108,8 +107,8 @@
         function showCoords(c) {
             $('#x1').val(c.x);
             $('#y1').val(c.y);
-            $('#x2').val(c.x2);
-            $('#y2').val(c.y2);
+            $('#h').val(c.h);
+            $('#w').val(c.w);
         };
     </script>
 }

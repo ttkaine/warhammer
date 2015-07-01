@@ -51,8 +51,6 @@
                             }
                         </ul>
                     }
-
-                    @Html.ActionLink(" + Add Session Log", "SessionLog", "Create", new { personId = Model.Id }, new { @class = "btn btn-default" })
                 }
 
                 @if (Model is SessionLog)
@@ -60,10 +58,9 @@
                     SessionLog log = Model as SessionLog;
                     <ul>
                         <li>
-                            <img src="@Url.Action("Image", "Page", new { id = log.Person.Id })" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" height="200" width="200" />
-                            @Html.ActionLink(log.Person.FullName, "Index", new { id = log.Person.Id })
+                            <img class="mini-profile-image" src="@Url.Action("Image", "Page", new { id = log.Person.Id })" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" />
+                            @Html.ActionLink(log.Session.FullName, "Index", new { id = log.Session.Id }) by @Html.ActionLink(log.Person.FullName, "Index", new { id = log.Person.Id })
                         </li>
-                        <li>@Html.ActionLink(log.Session.FullName, "Index", new { id = log.Session.Id })</li>
                     </ul>
                 }
 
@@ -93,7 +90,7 @@
                             <li>
                                 @foreach (SessionLog log in session.SessionLogs)
                                 {
-                                    <img src="@Url.Action("Image", "Page", new {id = log.Id})" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" height="100" width="100" />
+                                    <img class="mini-profile-image" src="@Url.Action("Image", "Page", new {id = log.Id})" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" />
                                     @Html.ActionLink(log.FullName, "Index", new {id = log.Person.Id})
                                 }
                             </li>
@@ -113,6 +110,12 @@
                     </ul>
                 }
                 
+                <h3>Actions</h3>
+                @if (Model is Person)
+                {
+                   @Html.ActionLink(" + Add Session Log", "SessionLog", "Create", new { personId = Model.Id }, new { @class = "btn btn-default btn-block" })
+                }
+
                 @Html.ActionLink("Change Image", "ChangeImage", new { id = Model.Id }, new { @class="btn btn-default btn-block"})
 
             </div>

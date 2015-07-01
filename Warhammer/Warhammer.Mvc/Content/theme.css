@@ -6820,6 +6820,7 @@ body {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  font-size: 18px;
 }
 @media (min-width: 992px) {
   .core-content {
@@ -6841,6 +6842,7 @@ body {
     width: 25%;
   }
 }
+.core-content ul,
 .side-bar ul {
   list-style-type: none;
 }
@@ -6885,17 +6887,25 @@ footer {
   color: #000;
   text-shadow: 4px 4px 3px rgba(0, 0, 0, 0.1);
 }
+.mini-profile-image,
 .profile-image {
   float: right;
-  margin: 20px;
-  width: 200px;
-  height: 200px;
   -moz-border-radius: 100px;
   -webkit-border-radius: 100px;
   border-radius: 100px;
   -moz-box-shadow: #333333 5px 5px 15px ;
   -webkit-box-shadow: #333333 5px 5px 15px ;
   box-shadow: #333333 5px 5px 15px ;
+}
+.mini-profile-image {
+  width: 80px;
+  height: 80px;
+  margin: 8px;
+}
+.profile-image {
+  width: 200px;
+  height: 200px;
+  margin: 20px;
 }
 .profile-footer {
   font-size: 12px;
@@ -6908,6 +6918,6 @@ footer {
   left: 30px;
 }
 .tiny {
-  font-size: 7px;
+  font-size: 11.2px;
 }
 /*# sourceMappingURL=theme.css.map */

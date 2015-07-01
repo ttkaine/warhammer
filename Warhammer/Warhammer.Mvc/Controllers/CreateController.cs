@@ -25,14 +25,31 @@ namespace Warhammer.Mvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult Person(Person person)
+        public ActionResult Page(Page page)
         {
             if (ModelState.IsValid)
             {
-                int personId = DataProvider.AddPerson(person.ShortName, person.FullName, person.Description);
+                int personId = DataProvider.AddPage(page.ShortName, page.FullName, page.Description);
                 return RedirectToAction("Index", "Page", new {id = personId});
             }
-            return View(person);
+            return View(page);
+        }
+
+        public ActionResult Page()
+        {
+            Page page = new Page();
+            return View(page);
+        }
+
+        [HttpPost]
+        public ActionResult Person(Page page)
+        {
+            if (ModelState.IsValid)
+            {
+                int pageId = DataProvider.AddPerson(page.ShortName, page.FullName, page.Description);
+                return RedirectToAction("Index", "Page", new { id = pageId });
+            }
+            return View(page);
         }
 
         public ActionResult GameSession()
