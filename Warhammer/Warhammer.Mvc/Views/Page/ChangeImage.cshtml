@@ -12,20 +12,27 @@
         @Html.HiddenFor(m => m.Id)
         <div class="banner-content">
             <div class="header-block">
-                <h1 id="fullName" class="editable">Change Image For @Model.ShortName</h1>
+                <h1 id="fullName" class="">Change Image For @Model.ShortName</h1>
             </div>
 
         </div>
         <div class="main-content">
             <div class="content-block">
 
-                @if (Model is Person || (Model.ImageData != null && Model.ImageData.Length > 0 && !string.IsNullOrWhiteSpace(Model.ImageMime)))
+                @if (Model.ImageData != null && Model.ImageData.Length > 0 && !string.IsNullOrWhiteSpace(Model.ImageMime))
                 {
-                    <img class="profile-image" src="@Url.Action("Image", "Page", new {id = Model.Id})" title="@Model.FullName" alt="Picture of @Model.FullName" height="200" width="200" />
+                    <h2>Current Image</h2>
+                    <img src="@Url.Action("Image", "Page", new {id = Model.Id})" title="@Model.FullName" alt="Picture of @Model.FullName"/>
                 }
-                <h2 id="shortName" class="editable">@Model.ShortName</h2>
-                <div id="description" class="editable">
-                    @Html.Raw(Model.Description)
+                
+                <h2>Image</h2>
+
+                <input type="file" id="profileImageFile" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+                <a href="#" id="fileSelect">Select New Image</a>
+
+
+                <div id="preview">
+                    <h2>Preview</h2>
                 </div>
                 <div class="profile-footer"><span title="Modifed at @Model.Modified by @Model.ModifiedBy.DisplayName">Last Modified: @Model.Modified</span></div>
             </div>
@@ -37,85 +44,48 @@
                     <input type="submit" name="saveAction" class="btn btn-danger" value="Cancel" />
                 </div>
 
-                @if (Model is Person)
-                {
-                    Person person = Model as Person;
-
-                    if (person.SessionLogs.Any())
-                    {
-                        <h3>Session Logs</h3>
-                        <ul>
-                            @foreach (SessionLog log in person.SessionLogs)
-                            {
-                                <li>@Html.ActionLink(log.ShortName, "Index", new { id = log.Id })</li>
-                            }
-                        </ul>
-                    }
-
-                    @Html.ActionLink(" + Add Session Log", "SessionLog", "Create", new { personId = Model.Id }, new { @class = "btn btn-default" })
-                }
-
-                @if (Model is SessionLog)
-                {
-                    SessionLog log = Model as SessionLog;
-                    <ul>
-                        <li>
-                            <img src="@Url.Action("Image", "Page", new { id = log.Person.Id })" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" height="200" width="200" />
-                            @Html.ActionLink(log.Person.FullName, "Index", new { id = log.Person.Id })
-                        </li>
-                        <li>@Html.ActionLink(log.Session.FullName, "Index", new { id = log.Session.Id })</li>
-                    </ul>
-                }
-
-                @if (Model is Session)
-                {
-                    Session session = Model as Session;
-
-                    if (session.People.Any())
-                    {
-                        <h3>People</h3>
-                        <ul>
-                            <li>
-                                @foreach (Person person in session.People)
-                                {
-                                    <img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" height="100" width="100" />
-                                    @Html.ActionLink(person.FullName, "Index", new { id = person.Id })
-                                }
-                            </li>
-
-                        </ul>
-                    }
-
-                    if (session.SessionLogs.Any())
-                    {
-                        <h3>Session Logs</h3>
-                        <ul>
-                            <li>
-                                @foreach (SessionLog log in session.SessionLogs)
-                                {
-                                    <img src="@Url.Action("Image", "Page", new {id = log.Id})" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" height="100" width="100" />
-                                    @Html.ActionLink(log.FullName, "Index", new { id = log.Person.Id })
-                                }
-                            </li>
-
-                        </ul>
-                    }
-                }
-
-                @if (Model.Related.Any())
-                {
-                    <h3>Related</h3>
-                    <ul>
-                        @foreach (Page page in Model.Related)
-                        {
-                            <li>@Html.ActionLink(page.ShortName, "Index", new { id = page.Id })</li>
-                        }
-                    </ul>
-                }
-
-                @Html.ActionLink("Change Image", "ChangeImage", new { id = Model.Id }, new { @class = "btn btn-default btn-block" });
+                <input type="submit" value="Remove Image" class="btn btn-danger"/>
 
             </div>
         </div>
     }
 </div>
+
+@section Scripts
+{
+<script src="@Url.Content("~/scripts/jquery.Jcrop.min.js")"></script>
+    <script>
+        var fileSelect = document.getElementById("fileSelect"),
+            fileElem = document.getElementById("profileImageFile");
+        fileSelect.addEventListener("click", function(e) {
+            if (fileElem) {
+                fileElem.click();
+            }
+            e.preventDefault(); // prevent navigation to "#"
+        }, false);
+
+        function handleFiles(files) {
+
+
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var imageType = /^image\//;
+                if (!imageType.test(file.type)) {
+
+                    continue;
+                }
+
+                var img = document.createElement("img");
+                img.classList.add("obj");
+                img.file = file;
+                img.id = "PreviewImage";
+
+                $('#preview').append(img); // Assuming that "preview" is the div output where the content will be displayed.
+                var reader = new FileReader();
+                reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+                reader.readAsDataURL(file);
+                $(img).Jcrop();
+            }
+        }
+    </script>
+}

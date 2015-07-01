@@ -204,6 +204,12 @@
     <Content Include="Content\Less\Bootstrap\variables.min.css">
       <DependentUpon>variables.css</DependentUpon>
     </Content>
+    <Content Include="Content\Less\jcrop.css">
+      <DependentUpon>jcrop.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Less\jcrop.min.css">
+      <DependentUpon>jcrop.css</DependentUpon>
+    </Content>
     <Content Include="Content\theme.css">
       <DependentUpon>theme.less</DependentUpon>
     </Content>
@@ -310,10 +316,15 @@
     <Content Include="Content\WarhammerStyle.css.map">
       <DependentUpon>WarhammerStyle.css</DependentUpon>
     </Content>
+    <Content Include="Content\Less\jcrop.less" />
+    <Content Include="Content\Less\jcrop.css.map">
+      <DependentUpon>jcrop.css</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.Jcrop.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
