@@ -73,7 +73,6 @@
     <Compile Include="Abstract\IModelFactory.cs" />
     <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Concrete\AuthenticatedDataProvider.cs" />
-    <Compile Include="Concrete\ConWriter.cs" />
     <Compile Include="Concrete\ImageProcessor.cs" />
     <Compile Include="Concrete\InlineHtmlImage.cs" />
     <Compile Include="Concrete\ModelFactory.cs" />
