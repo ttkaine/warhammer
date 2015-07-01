@@ -34,18 +34,17 @@
                 <div id="preview">
                     <h2>Preview</h2>
                 </div>
+                <input type="hidden" id="x1" name="x1" />
+                <input type="hidden" id="x2" name="x2" />
+                <input type="hidden" id="y1" name="y1" />
+                <input type="hidden" id="y2" name="y2" />
+                <input type="submit" value="Save" class="btn btn-success" />
                 <div class="profile-footer"><span title="Modifed at @Model.Modified by @Model.ModifiedBy.DisplayName">Last Modified: @Model.Modified</span></div>
             </div>
         </div>
         <div class="side-bar">
             <div class="content-block">
-                <div id="saveControls" style="display: none">
-                    <input type="submit" name="saveAction" class="btn btn-success" value="Save" />
-                    <input type="submit" name="saveAction" class="btn btn-danger" value="Cancel" />
-                </div>
-
                 <input type="submit" value="Remove Image" class="btn btn-danger"/>
-
             </div>
         </div>
     }
@@ -53,8 +52,9 @@
 
 @section Scripts
 {
-<script src="@Url.Content("~/scripts/jquery.Jcrop.min.js")"></script>
+    <script src="@Url.Content("~/scripts/jquery.Jcrop.min.js")"></script>
     <script>
+        var jcrop_api;
         var fileSelect = document.getElementById("fileSelect"),
             fileElem = document.getElementById("profileImageFile");
         fileSelect.addEventListener("click", function(e) {
@@ -82,10 +82,34 @@
 
                 $('#preview').append(img); // Assuming that "preview" is the div output where the content will be displayed.
                 var reader = new FileReader();
-                reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
-                reader.readAsDataURL(file);
-                $(img).Jcrop();
-            }
+                reader.onload = (function(aImg) {
+                    return function(e) {
+                        aImg.src = e.target.result;
+                        $(aImg).Jcrop({
+                            boxWidth: 500,
+                            boxHeight: 400,
+                            aspectRatio: 1,
+                            onChange: showCoords,
+                            onSelect: showCoords
+                            },
+
+                        function() {
+
+                            jcrop_api = this;
+                            jcrop_api.animateTo([50, 0, 400, 400]);
+                        });
+                };
+            })
+        (img);
+        reader.readAsDataURL(file);
         }
+        }
+
+        function showCoords(c) {
+            $('#x1').val(c.x);
+            $('#y1').val(c.y);
+            $('#x2').val(c.x2);
+            $('#y2').val(c.y2);
+        };
     </script>
 }
