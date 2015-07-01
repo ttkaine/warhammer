@@ -364,6 +364,7 @@
     <Content Include="Views\Page\ChangeImage.cshtml" />
     <None Include="Web.MURRAY.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.WADE.config">
       <DependentUpon>Web.config</DependentUpon>

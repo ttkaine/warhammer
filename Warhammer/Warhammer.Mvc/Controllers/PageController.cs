@@ -1,8 +1,6 @@
 ﻿using System.Drawing;
 using System.IO;
-using System.Net.Configuration;
 using System.Web.Mvc;
-using System.Web.Routing;
 using Warhammer.Core.Abstract;
 using Page = Warhammer.Core.Entities.Page;
 
