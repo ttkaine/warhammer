@@ -6921,6 +6921,9 @@ footer {
 .tiny {
   font-size: 11.2px;
 }
+select {
+  max-width: 100%;
+}
 /* jquery.Jcrop.css v0.9.12 - MIT License */
 /*
   The outer-most container in a typical Jcrop instance
