@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Warhammer.Core.Entities;
 
@@ -20,5 +21,7 @@ namespace Warhammer.Core.Abstract
         ICollection<SessionLog> Logs();
         void RemoveProfileImage(int id);
         int AddPage(string shortName, string fullName, string description);
+        ICollection<Place> Places();
+        int AddPlace(string fullName, string shortName, string description, int? parentId);
     }
 }

@@ -110,7 +110,9 @@
     <Compile Include="Entities\SessionLog.cs">
       <DependentUpon>PageEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\_Page.cs" />
     <Compile Include="Entities\_Person.cs" />
+    <Compile Include="Entities\_Place.cs" />
     <Compile Include="Entities\_Session.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

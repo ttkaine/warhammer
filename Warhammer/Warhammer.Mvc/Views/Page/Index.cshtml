@@ -19,7 +19,7 @@
         <div class="main-content">
             <div class="content-block">
                 
-                @if (Model is Person || (Model.ImageData != null && Model.ImageData.Length > 0 && !string.IsNullOrWhiteSpace(Model.ImageMime)))
+                @if (Model is Person || Model.HasImage)
                 {
                     <img class="profile-image" src="@Url.Action("Image", "Page", new {id = Model.Id})" title="@Model.FullName" alt="Picture of @Model.FullName" height="200" width="200" />
                 }
@@ -59,7 +59,7 @@
                     <ul>
                         <li>
                             <img class="mini-profile-image" src="@Url.Action("Image", "Page", new { id = log.Person.Id })" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" />
-                            @Html.ActionLink(log.Session.FullName, "Index", new { id = log.Session.Id }) by @Html.ActionLink(log.Person.FullName, "Index", new { id = log.Person.Id })
+                            @Html.ActionLink(log.FullName, "Index", new { id = log.Session.Id }) by @Html.ActionLink(log.Person.FullName, "Index", new { id = log.Person.Id })
                         </li>
                     </ul>
                 }
@@ -86,16 +86,18 @@
                     if (session.SessionLogs.Any())
                     {
                         <h3>Session Logs</h3>
-                        <ul>
-                            <li>
-                                @foreach (SessionLog log in session.SessionLogs)
-                                {
-                                    <img class="mini-profile-image" src="@Url.Action("Image", "Page", new {id = log.Id})" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" />
-                                    @Html.ActionLink(log.FullName, "Index", new {id = log.Person.Id})
-                                }
-                            </li>
-                        
-                        </ul>
+    <ul>
+        <li>
+            @foreach (SessionLog log in session.SessionLogs)
+            {
+                <img class="mini-profile-image" src="@Url.Action("Image", "Page", new {id = log.Id})" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" />
+                @Html.ActionLink(log.FullName, "Index", new { id = log.Id })
+                <text>by</text>
+                @Html.ActionLink(log.Person.FullName, "Index", new { id = log.Person.Id })
+            }
+        </li>
+
+    </ul>
                     }
                 }
 

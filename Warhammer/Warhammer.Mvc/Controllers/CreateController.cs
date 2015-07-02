@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Warhammer.Core.Abstract;
 using Warhammer.Core.Entities;
@@ -114,5 +115,25 @@ namespace Warhammer.Mvc.Controllers
             return View(model);
         }
 
+        public ActionResult Place()
+        {
+            CreatePlaceViewModel model = new CreatePlaceViewModel();
+            model.Place = new Place();
+            model.ParentPlace = new SelectList(DataProvider.Places().OrderBy(l => l.Breadcrumb), "Id", "Breadcrumb");
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Place(CreatePlaceViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                int placeId = DataProvider.AddPlace(model.Place.ShortName, model.Place.ShortName, model.Place.Description, model.ParentId);
+                return RedirectToAction("Index", "Page", new { id = placeId });
+            }
+
+            model.ParentPlace = new SelectList(DataProvider.Places().OrderBy(l => l.Breadcrumb), "Id", "Breadcrumb");
+            return View(model);
+        }
     }
 }

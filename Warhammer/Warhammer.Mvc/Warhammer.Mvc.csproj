@@ -186,6 +186,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CreatePlaceViewModel.cs" />
     <Compile Include="Models\CreateSessionLogViewModel.cs" />
     <Compile Include="Models\HomePageViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -198,6 +199,12 @@
     <Content Include="Content\Images\bg-medium.jpg" />
     <Content Include="Content\Images\bg-small.jpg" />
     <Content Include="Content\Images\no-image.jpg" />
+    <Content Include="Content\Less\Bootstrap\mixins\border-radius.css">
+      <DependentUpon>border-radius.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Less\Bootstrap\mixins\border-radius.min.css">
+      <DependentUpon>border-radius.css</DependentUpon>
+    </Content>
     <Content Include="Content\Less\Bootstrap\variables.css">
       <DependentUpon>variables.less</DependentUpon>
     </Content>
@@ -320,6 +327,15 @@
     <Content Include="Content\Less\jcrop.css.map">
       <DependentUpon>jcrop.css</DependentUpon>
     </Content>
+    <Content Include="Content\Less\Bootstrap\mixins\border-radius.css.map">
+      <DependentUpon>border-radius.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Less\Bootstrap\variables.css.map">
+      <DependentUpon>variables.css</DependentUpon>
+    </Content>
+    <Content Include="Content\variables.css.map">
+      <DependentUpon>variables.css</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -374,6 +390,8 @@
     <Content Include="Views\Create\GameSession.cshtml" />
     <Content Include="Views\Page\ChangeImage.cshtml" />
     <Content Include="Views\Create\Page.cshtml" />
+    <Content Include="Views\Create\Index.cshtml" />
+    <Content Include="Views\Create\Place.cshtml" />
     <None Include="Web.MURRAY.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

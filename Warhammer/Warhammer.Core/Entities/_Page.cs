@@ -1,15 +1,13 @@
 ﻿using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Warhammer.Core.Entities
 {
     [GeneratedCode("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "9.0.0.0")]
-    public partial class Person
+    public partial class Page
     {
-        public IEnumerable<Session> Sessions
+        public bool HasImage
         {
-            get { return Related.OfType<Session>(); }
+            get { return ImageData != null && ImageData.Length > 50 && !string.IsNullOrWhiteSpace(ImageMime); }
         }
     }
 }

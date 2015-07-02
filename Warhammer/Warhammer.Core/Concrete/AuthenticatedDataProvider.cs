@@ -160,5 +160,22 @@ namespace Warhammer.Core.Concrete
             };
             return Save(person);
         }
+
+        public ICollection<Place> Places()
+        {
+            return _repository.Pages().OfType<Place>().ToList(); 
+        }
+
+        public int AddPlace(string fullName, string shortName, string description, int? parentId)
+        {
+            Place place = new Place
+            {
+                ShortName = shortName,
+                FullName = fullName,
+                Description = description,
+                IsWithin = parentId
+            };
+            return Save(place);
+        }
     }
 }
