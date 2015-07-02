@@ -1,6 +1,7 @@
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Warhammer.Mvc.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Warhammer.Mvc.App_Start.NinjectWebCommon), "Stop")]
 
+// ReSharper disable once CheckNamespace
 namespace Warhammer.Mvc.App_Start
 {
     using System;

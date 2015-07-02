@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Web;
-using Sample.Core.Abstract;
+using Warhammer.Core.Abstract;
 
 namespace Warhammer.Mvc.Concrete
 {

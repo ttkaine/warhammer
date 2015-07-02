@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Sample.Core.Abstract
+namespace Warhammer.Core.Abstract
 {
     /// <summary>
     /// The IAuthenticatedUserProvider is declared in the CORE project but is implemented by UI projects which use the CORE.
