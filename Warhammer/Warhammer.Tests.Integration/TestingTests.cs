@@ -1,41 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
-using Warhammer.Core.Entities;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
 
 namespace Warhammer.Tests.Integration
 {
     [TestFixture]
     public class TestingTests
     {
-        [Test]
-        [Ignore]
-        public void TestPuttingPlaceInDb()
+        private IWebDriver _driver;
+        private readonly TestSettings _settings = new TestSettings();
+        private WebDriverWait wait;
+        [TestFixtureSetUp]
+        public void SetUp()
         {
+            Assert.IsTrue(_settings.LoadSettings(),"If we can't load the settings we're not going to get far...");
+            _driver = new FirefoxDriver();
+            wait = new WebDriverWait(_driver,new TimeSpan(0,0,10));
+            _driver.Navigate().GoToUrl(_settings.BaseUrl);
+            wait.Until(ExpectedConditions.ElementExists(By.Id("Email")));
+            IWebElement email = _driver.FindElement(By.Id("Email"));
+            IWebElement password = _driver.FindElement(By.Id("Password"));
+            email.SendKeys(_settings.Username);
+            password.SendKeys(_settings.Password);
+            password.Submit();
+        }
 
-            WarhammerDataEntities entities = new WarhammerDataEntities();
-          
-            Person person = new Person
-            {
-                FullName = "My Name", ShortName = "aaaaaaaaaaaaaanananana", IsDead = true
-            , Created = DateTime.Now,
-            Modified = DateTime.Now
-            };
-            person.Related.Add(new Session
-            {
-                FullName = "Where the bears rooooooooooom",
-                ShortName = "Session 01",
-                Created = DateTime.Now,
-                Modified = DateTime.Now,
-                DateTime = DateTime.Now
-            });
+        [TestFixtureTearDown]
+        public void TearDown()
+        {
+            _driver.Quit();
+        }
 
-            entities.Pages.Add(person);
-
-            entities.SaveChanges();
+        [Test]
+        public void HitHomePage()
+        {
+            _driver.Navigate().GoToUrl(_settings.BaseUrl);
+            Assert.IsTrue(_driver.PageSource.Contains("Warhammer"));
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -24,29 +23,25 @@ namespace Warhammer.Core.Concrete
     /// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     /// GNU General Public License for more details.
     ///
-    /// The GNU General Public License: <http://www.gnu.org/licenses/>.
+    /// The GNU General Public License: http://www.gnu.org/licenses/
 
     /// </summary>
     class ConvertHtml
     {
-        Regex imagePat = new Regex("(<img [^>]+|image: *url[^)]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-        Regex imageSrcPat = new Regex("src=(\"[^\"]+\"|'[^']+'| *[^ ]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-        Regex imageUrlPat = new Regex(@"url\(([^)]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        readonly Regex _imagePat = new Regex("(<img [^>]+|image: *url[^)]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        readonly Regex _imageSrcPat = new Regex("src=(\"[^\"]+\"|'[^']+'| *[^ ]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        readonly Regex _imageUrlPat = new Regex(@"url\(([^)]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         public ConvertHtml()
         {
-            okayToOverwrite = false;
+            OkayToOverwrite = false;
         }
 
-        public bool okayToOverwrite
+        public bool OkayToOverwrite
         {
             get;
             set;
         }
-
-  
-
-
 
         /// <summary>
         /// Convert base 64 data to an image.
@@ -65,51 +60,26 @@ namespace Warhammer.Core.Concrete
             return image;
         }
 
-        /// <summary>
-        /// Return image type (extension) from ImageFormat.
-        /// </summary>
-        const string sUnknownImageType = "unk";
-        private static string GetImageType(ImageFormat imageFormat)
-        {
-            if (ImageFormat.Bmp.Equals(imageFormat))
-                return "bmp";
-            else if (ImageFormat.Jpeg.Equals(imageFormat))
-                return "jpg";
-            else if (ImageFormat.Png.Equals(imageFormat))
-                return "png";
-            else if (ImageFormat.Gif.Equals(imageFormat))
-                return "gif";
-            else if (ImageFormat.Tiff.Equals(imageFormat))
-                return "tiff";
-            else if (ImageFormat.Wmf.Equals(imageFormat))
-                return "wmf";
-
-            return sUnknownImageType;
-        }
-
         public Image ExtractImagesInHtml(string text)
         {
-            Image myImage = null;
             try
             {
-                Match mImg;
                 const char separator1 = ',';
                 char separator2 = char.MinValue;
 
-             //   Dictionary<ImageInfo, List<ImageUse>> imageCntDic = new Dictionary<ImageInfo, List<ImageUse>>();
-
-                foreach (Match match in imagePat.Matches(text))
+                foreach (Match match in _imagePat.Matches(text))
                 {
                     int pos = match.Index;
                     string imgStr = text.Substring(pos, match.Length);
+                    Match mImg;
                     switch (char.ToLower(imgStr[0]))
                     {
                         case 'i':   // background-image: url(foo.png);
-                            mImg = imageUrlPat.Match(imgStr);
+                            mImg = _imageUrlPat.Match(imgStr);
                             separator2 = char.MinValue;
                             break;
                         case '<':
-                            mImg = imageSrcPat.Match(imgStr);
+                            mImg = _imageSrcPat.Match(imgStr);
                             separator2 = '\n';
                             break;
                         default:
@@ -136,7 +106,8 @@ namespace Warhammer.Core.Concrete
                                     return image;
                                 }
                             }
-                            catch (Exception ex1)
+// ReSharper disable once EmptyGeneralCatchClause
+                            catch (Exception)
                             {
                             }
                         }
@@ -148,18 +119,20 @@ namespace Warhammer.Core.Concrete
                                 return bmp;
 
                             }
-                            catch (Exception ex1)
+// ReSharper disable once EmptyGeneralCatchClause
+                            catch (Exception)
                             {
                             }
                         }
                     }
                 }
             }
-            catch (Exception ex)
+// ReSharper disable once EmptyGeneralCatchClause
+            catch (Exception)
             {
             }
 
-            return myImage;
+            return null;
         }
     }
 }
