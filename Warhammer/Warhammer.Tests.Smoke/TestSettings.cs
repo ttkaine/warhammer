@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 
-namespace Warhammer.Tests.Integration
+namespace Warhammer.Tests.Smoke
 {
     public class TestSettings
     {
         private readonly Dictionary<string, string> _settings = new Dictionary<string, string>();
 
-        public string UpdateUrl
-        {
-            get { return _settings["UpdateUrl"]; }
-        }
-
         public string BaseUrl
         {
             get { return _settings["BaseUrl"]; }
+        }
+
+        public string UpdateUrl
+        {
+            get { return _settings["UpdateUrl"]; }
         }
 
         public string Username
