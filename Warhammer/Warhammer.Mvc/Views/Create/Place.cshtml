@@ -3,19 +3,20 @@
 @{
     ViewBag.Title = "Add Location or Place";
 }
+<div class="content-wrapper">
 
-<h2>Add a Place in the Warhammer World</h2>
-<p>Just put in the basics here to create the place. You can add more details and pictures and formatting etc once the log has been added.</p>
+    <div class="main-content">
+        <div class="content-block">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+            <h2>Add a Place in the Warhammer World</h2>
+            <p>Just put in the basics here to create the place. You can add more details and pictures and formatting etc once the log has been added.</p>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
 
-    <div class="content-wrapper">
 
-        <div class="main-content">
-            <div class="content-block">
 
                 <div class="form-horizontal">
                     <h1>Add a Location or Place</h1>
@@ -23,23 +24,23 @@
 
 
 
-                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
                     <div class="form-group">
-                        @Html.Label("Is this place part of a larger place? Pick something appropriate here so we know where this is:", htmlAttributes: new {@class = "control-label col-md-4"})
+                        @Html.Label("Is this place part of a larger place? Pick something appropriate here so we know where this is:", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
                             @Html.DropDownListFor(m => m.ParentId, Model.ParentPlace, "-", new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.ParentId, "", new {@class = "text-danger"})
+                            @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
 
                     <div class="form-group">
-                        @Html.Label("Tell us the name of the place or location:", htmlAttributes: new {@class = "control-label col-md-4"})
+                        @Html.Label("Tell us the name of the place or location:", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.Place.ShortName, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.Place.ShortName, "", new {@class = "text-danger"})
+                            @Html.EditorFor(model => model.Place.ShortName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Place.ShortName, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
@@ -49,17 +50,18 @@
                         </div>
                     </div>
                 </div>
+            }
             </div>
         </div>
 
-        <div class="side-bar">
-            <div class="content-block">
-                <p>Location and Places.</p>
-                <p>HAve you been somewhere worth noting down? This is the place for such places.</p>
+                <div class="side-bar">
+                    <div class="content-block">
+                        <p>Location and Places.</p>
+                        <p>Have you been somewhere worth noting down? This is the place for such places.</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-}
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }

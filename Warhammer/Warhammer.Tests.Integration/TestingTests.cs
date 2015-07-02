@@ -42,7 +42,9 @@ namespace Warhammer.Tests.Integration
         public void HitHomePage()
         {
             _driver.Navigate().GoToUrl(_settings.BaseUrl);
-            Assert.IsTrue(_driver.PageSource.Contains("Warhammer"));
+            IWebElement element = _driver.FindElement(By.Id("fullName"));
+
+            Assert.AreEqual("Warhammer",element.Text);
         }
     }
 }
