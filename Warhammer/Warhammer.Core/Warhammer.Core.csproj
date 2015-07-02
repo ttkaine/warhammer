@@ -98,6 +98,9 @@
     <Compile Include="Entities\Person.cs">
       <DependentUpon>PageEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Place.cs">
+      <DependentUpon>PageEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Player.cs">
       <DependentUpon>PageEntities.tt</DependentUpon>
     </Compile>

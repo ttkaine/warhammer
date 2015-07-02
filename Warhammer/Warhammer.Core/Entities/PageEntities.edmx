@@ -37,6 +37,14 @@
           <Property Name="SessionId" Type="int" Nullable="false" />
           <Property Name="PersonId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="IsWithin" Type="int" />
+          <Property Name="PlaceType" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Player">
           <Key>
             <PropertyRef Name="Id" />
@@ -135,6 +143,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Place_Page">
+          <End Role="Page" Type="Self.Page" Multiplicity="1" />
+          <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Page">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
+          <End Role="Place1" Type="Self.Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Place1">
+              <PropertyRef Name="IsWithin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Session_Page">
           <End Role="Page" Type="Self.Page" Multiplicity="1" />
           <End Role="Session" Type="Self.Session" Multiplicity="0..1" />
@@ -187,6 +219,7 @@
           <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonAtSession" EntityType="Self.PersonAtSession" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SessionLog" EntityType="Self.SessionLog" Schema="dbo" store:Type="Tables" />
@@ -213,6 +246,14 @@
           <AssociationSet Name="FK_PersonAtSession_Session" Association="Self.FK_PersonAtSession_Session">
             <End Role="Page" EntitySet="Page" />
             <End Role="PersonAtSession" EntitySet="PersonAtSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_Page" Association="Self.FK_Place_Page">
+            <End Role="Page" EntitySet="Page" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_Place" Association="Self.FK_Place_Place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="Place1" EntitySet="Place" />
           </AssociationSet>
           <AssociationSet Name="FK_Session_Page" Association="Self.FK_Session_Page">
             <End Role="Page" EntitySet="Page" />
@@ -265,6 +306,10 @@
           <AssociationSet Name="FK_Page_Person1" Association="WarhammerModel.FK_Page_Person1">
             <End Role="Player" EntitySet="Players" />
             <End Role="Page" EntitySet="Pages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_Place" Association="WarhammerModel.FK_Place_Place">
+            <End Role="Place" EntitySet="Pages" />
+            <End Role="Place1" EntitySet="Pages" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Page">
@@ -394,6 +439,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Place" BaseType="WarhammerModel.Page">
+          <Property Name="IsWithin" Type="Int32" />
+          <Property Name="PlaceType" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Children" Relationship="WarhammerModel.FK_Place_Place" FromRole="Place" ToRole="Place1" />
+          <NavigationProperty Name="Parent" Relationship="WarhammerModel.FK_Place_Place" FromRole="Place1" ToRole="Place" />
+        </EntityType>
+        <Association Name="FK_Place_Place">
+          <End Type="WarhammerModel.Place" Role="Place" Multiplicity="0..1" />
+          <End Type="WarhammerModel.Place" Role="Place1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Place1">
+              <PropertyRef Name="IsWithin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -435,6 +498,13 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PersonId" ColumnName="PersonId" />
                 <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(WarhammerModel.Place)">
+              <MappingFragment StoreEntitySet="Place">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsWithin" ColumnName="IsWithin" />
+                <ScalarProperty Name="PlaceType" ColumnName="PlaceType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
