@@ -23,7 +23,7 @@
                 {
                     <img class="profile-image" src="@Url.Action("Image", "Page", new {id = Model.Id})" title="@Model.FullName" alt="Picture of @Model.FullName" height="200" width="200" />
                 }
-                <h2 id="shortName" class="editable">@Model.ShortName</h2>
+                <h2 id="shortName" class="editable page-content-heading">@Model.ShortName</h2>
                 <div id="description" class="editable">
                     @Html.Raw(Model.Description)
                 </div>

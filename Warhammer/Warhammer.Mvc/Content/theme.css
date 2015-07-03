@@ -6879,14 +6879,17 @@ footer {
   color: white;
 }
 .header-block h1 {
-  font: 200 36px/0.8 'Great Vibes', Helvetica, sans-serif;
+  font: 800 42px 'Great Vibes', Helvetica, sans-serif;
   color: #fff;
   text-shadow: 4px 4px 3px rgba(0, 0, 0, 0.1);
 }
 .content-block h2 {
-  font: 200 30px/0.8 'Great Vibes', Helvetica, sans-serif;
+  font: 800 30px 'Great Vibes', Helvetica, sans-serif;
   color: #000;
   text-shadow: 4px 4px 3px rgba(0, 0, 0, 0.1);
+}
+.content-block h2.page-content-heading {
+  font: 600 36px 'Great Vibes', Helvetica, sans-serif;
 }
 .mini-profile-image,
 .profile-image {
