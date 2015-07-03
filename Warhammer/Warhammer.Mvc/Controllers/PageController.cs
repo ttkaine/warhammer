@@ -1,20 +1,25 @@
 ﻿using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Warhammer.Core.Abstract;
+using Warhammer.Mvc.Abstract;
+using Warhammer.Mvc.Models;
 using Page = Warhammer.Core.Entities.Page;
 
 namespace Warhammer.Mvc.Controllers
 {
     public class PageController : BaseController
     {
-        private IImageProcessor _imageProcessor;
+        private readonly IImageProcessor _imageProcessor;
+        private readonly ILinkGenerator _linkGenerator;
         
         // GET: Page
-        public PageController(IAuthenticatedDataProvider data, IImageProcessor imageProcessor) : base(data)
+        public PageController(IAuthenticatedDataProvider data, IImageProcessor imageProcessor, ILinkGenerator linkGenerator) : base(data)
         {
             _imageProcessor = imageProcessor;
+            _linkGenerator = linkGenerator;
         }
 
         public ActionResult Index(int? id)
@@ -24,6 +29,10 @@ namespace Warhammer.Mvc.Controllers
                 Page page = DataProvider.GetPage(id.Value);
                 if (page != null)
                 {
+                    if (!IsEditMode)
+                    {
+                        page.Description = _linkGenerator.CreoleLinksToHtml(page.Description);
+                    }
                     return View(page);
                 }
             }
@@ -36,7 +45,7 @@ namespace Warhammer.Mvc.Controllers
         {
             if (ModelState.IsValid && saveAction == "Save")
             {
-                Page updatedPage = DataProvider.UpdatePageDetails(page.Id, page.ShortName, page.FullName, page.Description);
+                Page updatedPage = DataProvider.UpdatePageDetails(page.Id, page.ShortName, page.FullName, _linkGenerator.ResolveCreoleLinks(page.Description));
                 if (updatedPage.ImageData == null)
                 {
                     Image image = _imageProcessor.GetImageFromHtmlString(updatedPage.Description);
@@ -52,6 +61,18 @@ namespace Warhammer.Mvc.Controllers
             }
             return RedirectToAction("index", new { id = page.Id });
         }
+
+        [HttpPost]
+        public ActionResult DeleteLink(int id, int linkToDeleteId)
+        {
+            if (ModelState.IsValid)
+            {
+                DataProvider.RemoveLink(id, linkToDeleteId);
+                return RedirectToAction("EditLinks", new { id = id });
+            }
+            return RedirectToAction("index", new { id = id });
+        }
+        
 
         public ActionResult Image(int id)
         {
@@ -84,6 +105,47 @@ namespace Warhammer.Mvc.Controllers
 
             return RedirectToAction("index", "home");
         }
+
+        public ActionResult EditLinks(int? id)
+        {
+            if (id.HasValue)
+            {
+                Page page = DataProvider.GetPage(id.Value);
+                if (page != null)
+                {
+                    EditLinksViewModel model = new EditLinksViewModel
+                    {
+                        Page = page,
+                        CurrentLinks = page.Related.ToList(),
+                        LinkToList = new SelectList(DataProvider.PossibleLinks(page.Id), "Id", "ShortName")
+                    };
+
+
+                    return View(model);
+                }               
+            }
+            return RedirectToAction("index", "home");
+        }
+
+        [HttpPost]
+        public ActionResult EditLinks(EditLinksViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Page page = DataProvider.GetPage(model.Page.Id);
+
+                if (page != null)
+                {
+                    DataProvider.AddLink(model.Page.Id, model.AddLinkTo);
+                    model.Page = page;
+                    model.CurrentLinks = page.Related.ToList();
+                    model.LinkToList = new SelectList(DataProvider.PossibleLinks(page.Id), "Id", "ShortName");
+                    return View(model);
+                }
+            }
+            return RedirectToAction("index", "home");
+        }
+        
 
         [HttpPost]
         [ValidateInput(false)]

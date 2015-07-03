@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Warhammer.Core.Entities;
 
@@ -22,5 +23,8 @@ namespace Warhammer.Core.Abstract
         int AddPage(string shortName, string fullName, string description);
         ICollection<Place> Places();
         int AddPlace(string fullName, string shortName, string description, int? parentId);
+        ICollection<Page> PossibleLinks(int id);
+        void AddLink(int id, int addLinkTo);
+        void RemoveLink(int id, int linkToDeleteId);
     }
 }

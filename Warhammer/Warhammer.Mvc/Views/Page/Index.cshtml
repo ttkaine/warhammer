@@ -111,15 +111,18 @@
                         }
                     </ul>
                 }
-                
-                <h3>Actions</h3>
-                @if (Model is Person)
+                @if (ViewBag.EditMode)
                 {
-                   @Html.ActionLink(" + Add Session Log", "SessionLog", "Create", new { personId = Model.Id }, new { @class = "btn btn-default btn-block" })
+                    <h3>Actions</h3>
+                    if (Model is Person)
+                    {
+                       @Html.ActionLink(" + Add Session Log", "SessionLog", "Create", new { personId = Model.Id }, new { @class = "btn btn-default btn-block" })
+                    }
+
+                    @Html.ActionLink("Change Image", "ChangeImage", new { id = Model.Id }, new { @class="btn btn-default btn-block"})
+                
+                    @Html.ActionLink("Edit Links", "EditLinks", new { id = Model.Id }, new { @class = "btn btn-default btn-block" })
                 }
-
-                @Html.ActionLink("Change Image", "ChangeImage", new { id = Model.Id }, new { @class="btn btn-default btn-block"})
-
             </div>
         </div>
     }

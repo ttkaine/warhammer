@@ -19,6 +19,18 @@ namespace Warhammer.Mvc.Controllers
             return View();
         }
 
+        public ActionResult EditMode(string returnUrl)
+        {
+            Session["EditMode"] = true;
+            return Redirect(returnUrl);
+        }
+
+        public ActionResult ReadOnlyMode(string returnUrl)
+        {
+            Session["EditMode"] = false;
+            return Redirect(returnUrl);
+        }
+
         public ActionResult Person()
         {
             Person person = new Person();

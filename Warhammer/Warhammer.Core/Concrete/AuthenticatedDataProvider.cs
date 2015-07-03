@@ -176,5 +176,29 @@ namespace Warhammer.Core.Concrete
             };
             return Save(place);
         }
+
+        public ICollection<Page> PossibleLinks(int id)
+        {
+            Page page = GetPage(id);
+            List<int> relatedIds = page.Related.Select(p => p.Id).ToList();
+            List<Page> linkPages = _repository.Pages().Where(p => !relatedIds.Contains(p.Id)).ToList();
+            return linkPages;
+        }
+
+        public void AddLink(int id, int addLinkTo)
+        {
+            Page page = GetPage(id);
+            Page linkTo = GetPage(addLinkTo);
+            page.Related.Add(linkTo);
+            Save(page);
+        }
+
+        public void RemoveLink(int id, int linkToDeleteId)
+        {
+            Page page = GetPage(id);
+            Page linkTo = GetPage(linkToDeleteId);
+            page.Related.Remove(linkTo);
+            Save(page);
+        }
     }
 }

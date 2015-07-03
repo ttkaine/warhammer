@@ -11,76 +11,82 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
     <link href="http://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
-    <script type="text/javascript">
+    
+    @if (ViewBag.EditMode)
+    {
 
-        var formmodified = 0;
+        <script type="text/javascript">
 
-        tinymce.init({
-            selector: "h1.editable",
-            inline: true,
-            toolbar: "undo redo",
-            menubar: false,
-            setup: function (editor) {
-                editor.on('change', function (e) {
-                    $("#saveControls").show(500);
-                });
-            }
-        });
+            var formmodified = 0;
 
-        tinymce.init({
-            selector: "h2.editable",
-            inline: true,
-            toolbar: "undo redo",
-            menubar: false,
-            setup: function (editor) {
-                editor.on('change', function (e) {
-                    $("#saveControls").show(500);
-                });
+            tinymce.init({
+                selector: "h1.editable",
+                inline: true,
+                toolbar: "undo redo",
+                menubar: false,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        $("#saveControls").show(500);
+                    });
+                }
+            });
 
-            }
-        });
+            tinymce.init({
+                selector: "h2.editable",
+                inline: true,
+                toolbar: "undo redo",
+                menubar: false,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        $("#saveControls").show(500);
+                    });
 
-        tinymce.init({
-            selector: "div.editable",
-            relative_urls: false,
-            inline: true,
-            plugins: [
-                "advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table contextmenu paste"
-            ],
-            @*external_plugins: {
+                }
+            });
+
+            tinymce.init({
+                selector: "div.editable",
+                relative_urls: false,
+                inline: true,
+                plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste"
+                ],
+                @*external_plugins: {
             "moxiemanager": "@Url.Content("~/scripts/moxiemanager/plugin.min.js")"
         },*@
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-            image_advtab: true,
-            paste_data_images: true,
-            setup: function (editor) {
-                editor.on('change', function (e) {
-                    formmodified = 1;
-                    $("#saveControls").show(500);
-                });
-            }
-        });
-
-        $(document).ready(function () {
-            window.onbeforeunload = confirmExit;
-            function confirmExit() {
-                if (formmodified == 1) {
-                    return "New information not saved. Do you wish to leave the page?";
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+                image_advtab: true,
+                paste_data_images: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        formmodified = 1;
+                        $("#saveControls").show(500);
+                    });
                 }
-            }
-            $("input[name='saveAction']").click(function () {
-                formmodified = 0;
             });
-        });
+
+            $(document).ready(function() {
+                window.onbeforeunload = confirmExit;
+
+                function confirmExit() {
+                    if (formmodified == 1) {
+                        return "New information not saved. Do you wish to leave the page?";
+                    }
+                }
+
+                $("input[name='saveAction']").click(function() {
+                    formmodified = 0;
+                });
+            });
 
 
-        function myCustomOnChangeHandler(inst) {
-            $("#saveControls").show(500);
-        }
-    </script>
-
+            function myCustomOnChangeHandler(inst) {
+                $("#saveControls").show(500);
+            }
+        </script>
+    }
 </head>
     <body>
         @if (User.Identity.IsAuthenticated)
@@ -97,17 +103,27 @@
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("New Person", "Person", "Create")</li>
-                                    <li>@Html.ActionLink("New Session", "GameSession", "Create")</li>
-                                    <li>@Html.ActionLink("New Session Log", "SessionLog", "Create")</li>
-                                    <li>@Html.ActionLink("Place / Location", "Place", "Create")</li>
-                                    <li>@Html.ActionLink("Page", "Page", "Create")</li>
-                                </ul>
-                            </li>
-
+                            @if (Request != null && Request.Url != null)
+                            {
+                                if (ViewBag.EditMode)
+                                 {
+                                     <li class="dropdown">
+                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create<span class="caret"></span></a>
+                                         <ul class="dropdown-menu">
+                                             <li>@Html.ActionLink("New Person", "Person", "Create")</li>
+                                             <li>@Html.ActionLink("New Session", "GameSession", "Create")</li>
+                                             <li>@Html.ActionLink("New Session Log", "SessionLog", "Create")</li>
+                                             <li>@Html.ActionLink("Place / Location", "Place", "Create")</li>
+                                             <li>@Html.ActionLink("Page", "Page", "Create")</li>
+                                         </ul>
+                                     </li>
+                                     <li>@Html.ActionLink("Switch to Read Only Mode", "ReadOnlyMode", "Create",   new {returnUrl = Request.Url.AbsoluteUri}, null)</li>
+                                 }
+                                 else
+                                 {
+                                     <li>@Html.ActionLink("Switch to Edit Mode", "EditMode", "Create", new { returnUrl = Request.Url.AbsoluteUri }, null)</li>
+                                 }
+                            }
                         </ul>
                         @Html.Partial("_LoginPartial")
                     </div>
