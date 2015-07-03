@@ -13,6 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Warhammer.Mvc", "Warhammer.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8CFAF995-3411-422B-810E-011C4B5C1118}"
 	ProjectSection(SolutionItems) = preProject
+		Warhammer.sln.DotSettings = Warhammer.sln.DotSettings
 		WebEssentials-Settings.json = WebEssentials-Settings.json
 	EndProjectSection
 EndProject
