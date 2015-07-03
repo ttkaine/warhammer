@@ -68,12 +68,27 @@
                 {
                     Session session = Model as Session;
 
-                    if (session.People.Any())
+                    if (session.PlayerCharacters.Any())
                     {
-                        <h3>People</h3>
+                        <h3>Player Characters</h3>
                         <ul>
                             <li>
-                                @foreach (Person person in session.People)
+                                @foreach (Person person in session.PlayerCharacters)
+                                {
+                                    <img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" height="100" width="100" />
+                                    @Html.ActionLink(person.FullName, "Index", new { id = person.Id })
+                                }
+                            </li>
+
+                        </ul>
+                    }
+
+                    if (session.Npcs.Any())
+                    {
+                        <h3>Player Characters</h3>
+                        <ul>
+                            <li>
+                                @foreach (Person person in session.Npcs)
                                 {
                                     <img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" height="100" width="100" />
                                     @Html.ActionLink(person.FullName, "Index", new { id = person.Id })
@@ -100,6 +115,47 @@
     </ul>
                     }
                 }
+                
+                
+                @if (Model is Place)
+                {
+                    Place place = Model as Place;
+                    Place parent = place.Parent;
+                    if (parent != null)
+                     {
+                         <h3>Is within</h3>
+                         <ul>
+                             @while (parent != null)
+                             {
+                                 <li>@Html.ActionLink(parent.FullName, "Index", new { id = parent.Id })</li>
+                                 parent = parent.Parent;
+                             }
+                         </ul>
+                     }
+                    if (place.Children.Any())
+                    {
+                        <h3>Contains these places</h3>
+                        <ul>
+                            @foreach (Place childPlace in place.Children)
+                            {
+                                <li>
+                                    @Html.ActionLink(childPlace.FullName, "Index", new { id = childPlace.Id })
+                                    @if (childPlace.Children.Any())
+                                    {
+                                        <ul>
+                                            @foreach (Place grandchildPlace in childPlace.Children)
+                                            {
+                                                <li>@Html.ActionLink(grandchildPlace.FullName, "Index", new { id = grandchildPlace.Id })</li>
+                                            }
+                                        </ul>
+                                    }
+
+                                </li>
+                            }
+                        </ul>
+                    }
+                }
+                
 
                 @if (Model.Related.Any())
                 {

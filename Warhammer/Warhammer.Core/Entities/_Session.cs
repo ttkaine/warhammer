@@ -11,5 +11,15 @@ namespace Warhammer.Core.Entities
         {
             get { return Related.OfType<Person>(); }
         }
+
+        public IEnumerable<Person> Npcs
+        {
+            get { return People.Where(p => !p.PlayerId.HasValue); }
+        }
+
+        public IEnumerable<Person> PlayerCharacters
+        {
+            get { return People.Where(p => p.PlayerId.HasValue); }
+        }
     }
 }
