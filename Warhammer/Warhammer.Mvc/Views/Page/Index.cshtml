@@ -45,7 +45,7 @@
                     {
                         <h3>Session Logs</h3>
                         <ul>
-                            @foreach (SessionLog log in person.SessionLogs)
+                            @foreach (SessionLog log in person.SessionLogs.OrderByDescending(s => s.Session.DateTime))
                             {
                                 <li>@Html.ActionLink(log.ShortName, "Index", new { id = log.Id })</li>
                             }
