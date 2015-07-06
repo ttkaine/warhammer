@@ -75,7 +75,7 @@
                             <li>
                                 @foreach (Person person in session.PlayerCharacters)
                                 {
-                                    <img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" height="100" width="100" />
+                                    <img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" class="mini-profile-image" />
                                     @Html.ActionLink(person.FullName, "Index", new { id = person.Id })
                                 }
                             </li>

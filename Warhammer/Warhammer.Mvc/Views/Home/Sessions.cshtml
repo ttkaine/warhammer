@@ -21,7 +21,22 @@
                 <ul>
                     @foreach (Session session in Model)
                     {
-                        <li><a href="@Url.Action("Index", "Page", new { id = session.Id })">@session.FullName <span class="tiny"> Changed by @session.ModifiedBy.DisplayName on @session.Modified</span></a></li>
+                        <li>
+                            <a href="@Url.Action("Index", "Page", new { id = session.Id })">@session.FullName <span class="tiny">@session.ShortName</span></a>
+                            @if (session.PlayerCharacters.Any())
+                            {
+                                <ul>
+                                    <li>
+                                        @foreach (Person person in session.PlayerCharacters)
+                                        {
+                                            <img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" class="mini-profile-image" />
+                                            @Html.ActionLink(person.FullName, "Index", new { id = person.Id })
+                                        }
+                                    </li>
+
+                                </ul>
+                            }
+                        </li>
                     }
                 </ul>
             </div>
