@@ -59,7 +59,7 @@
                     <ul>
                         <li>
                             <img class="mini-profile-image" src="@Url.Action("Image", "Page", new { id = log.Person.Id })" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" />
-                            @Html.ActionLink(log.FullName, "Index", new { id = log.Session.Id }) by @Html.ActionLink(log.Person.FullName, "Index", new { id = log.Person.Id })
+                            @Html.ActionLink(log.Session.FullName, "Index", new { id = log.Session.Id }) (@Html.ActionLink(log.Session.ShortName, "Index", new { id = log.Person.Id }))
                         </li>
                     </ul>
                 }
@@ -85,7 +85,7 @@
 
                     if (session.Npcs.Any())
                     {
-                        <h3>Player Characters</h3>
+                        <h3>NPCs</h3>
                         <ul>
                             <li>
                                 @foreach (Person person in session.Npcs)

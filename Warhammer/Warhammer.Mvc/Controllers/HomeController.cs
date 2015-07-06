@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Warhammer.Core.Abstract;
+using Warhammer.Core.Entities;
 using Warhammer.Mvc.Models;
 
 namespace Warhammer.Mvc.Controllers
@@ -22,6 +24,13 @@ namespace Warhammer.Mvc.Controllers
             };
             return View(model);
         }
+
+        public ActionResult Sessions()
+        {
+            List<Session> sessions = DataProvider.Sessions().OrderByDescending(s => s.DateTime).ToList();
+            return View(sessions);
+        }
+
 
         public ActionResult About()
         {

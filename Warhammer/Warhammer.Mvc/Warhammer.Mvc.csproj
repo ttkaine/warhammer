@@ -400,6 +400,7 @@
     <Content Include="Views\Create\Place.cshtml" />
     <Content Include="Views\Admin\DbUpdate.cshtml" />
     <Content Include="Views\Page\EditLinks.cshtml" />
+    <Content Include="Views\Home\Sessions.cshtml" />
     <None Include="Web.MURRAY.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

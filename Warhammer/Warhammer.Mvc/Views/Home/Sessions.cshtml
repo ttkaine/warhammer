@@ -1,0 +1,36 @@
+﻿@using Warhammer.Core.Entities
+@model IEnumerable<Session>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="content-wrapper">
+
+        @Html.Hidden("personId", 1)
+        <div class="banner-content">
+            <div class="header-block">
+                <h1 id="fullName">Warhammer</h1>
+            </div>
+
+        </div>
+
+        <div class="main-content">
+            <div class="content-block">
+
+                <h3 id="shortName">Sessions</h3>
+                <ul>
+                    @foreach (Session session in Model)
+                    {
+                        <li><a href="@Url.Action("Index", "Page", new { id = session.Id })">@session.FullName <span class="tiny"> Changed by @session.ModifiedBy.DisplayName on @session.Modified</span></a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="side-bar">
+            <div class="content-block">
+
+            </div>
+        </div>
+
+</div>
