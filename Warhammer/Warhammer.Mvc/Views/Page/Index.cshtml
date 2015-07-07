@@ -50,6 +50,7 @@
                                 <li>@Html.ActionLink(log.ShortName, "Index", new { id = log.Id })</li>
                             }
                         </ul>
+                        <div class="clearfix"></div>
                     }
                 }
 
@@ -58,12 +59,13 @@
                     SessionLog log = Model as SessionLog;
                     <ul>
                         <li>
-                            
-                                <a href="@Url.Action("Index", new { id = log.Person.Id })"><img src="@Url.Action("Image", "Page", new { id = log.Person.Id })" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" class="mini-profile-image" /></a>
-                                @Html.ActionLink(log.Session.FullName, "Index", new { id = log.Session.Id }) (@Html.ActionLink(log.Session.ShortName, "Index", new { id = log.Session.Id }))
-                            
+
+                            <a href="@Url.Action("Index", new { id = log.Person.Id })"><img src="@Url.Action("Image", "Page", new { id = log.Person.Id })" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" class="mini-profile-image" /></a>
+                            @Html.ActionLink(log.Session.FullName, "Index", new { id = log.Session.Id }) (@Html.ActionLink(log.Session.ShortName, "Index", new { id = log.Session.Id }))
+
                         </li>
                     </ul>
+                    <div class="clearfix"></div>
                 }
 
                 @if (Model is Session)
@@ -73,7 +75,7 @@
                     if (session.PlayerCharacters.Any())
                     {
                         <h3>Player Characters</h3>
-                        <ul>                 
+                        <ul>
                             @foreach (Person person in session.PlayerCharacters)
                             {
                                 <li>
@@ -87,35 +89,37 @@
                     {
                         <h3>NPCs</h3>
                         <ul>
-                            
-                    @foreach (Person person in session.Npcs)
-                    {
-                        <li>
-                            <a href="@Url.Action("Index", new { id = person.Id })"><img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" class="mini-profile-image" /></a>
-                        </li>
+
+                            @foreach (Person person in session.Npcs)
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index", new { id = person.Id })"><img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" class="mini-profile-image" /></a>
+                                </li>
+                            }
+                        </ul>
+                        <div class="clearfix"></div>
                     }
-                    </ul>
-                    }
-                    <div class="clearfix"></div>
+
                     if (session.SessionLogs.Any())
                     {
                         <h3>Session Logs</h3>
                         <ul>
-                            
-                                @foreach (SessionLog log in session.SessionLogs)
-                                {
-                                    <li>
-                                        <div class="profile-container">
-                                            <a href="@Url.Action("Index", new{ id = log.Person.Id })"><img class="mini-profile-image" src="@Url.Action("Image", "Page", new {id = log.Person.Id})" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" /></a>
-                                            @Html.ActionLink(log.FullName, "Index", new { id = log.Id })
-                                            by
-                                            @Html.ActionLink(log.Person.FullName, "Index", new { id = log.Person.Id })
-                                        </div>
-                                    </li>
-                                }
-                                   
+
+                            @foreach (SessionLog log in session.SessionLogs)
+                            {
+                                <li>
+                                    <div class="profile-container">
+                                        <a href="@Url.Action("Index", new{ id = log.Person.Id })"><img class="mini-profile-image" src="@Url.Action("Image", "Page", new {id = log.Person.Id})" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" /></a>
+                                        @Html.ActionLink(log.FullName, "Index", new { id = log.Id })
+                                        by
+                                        @Html.ActionLink(log.Person.FullName, "Index", new { id = log.Person.Id })
+                                    </div>
+                                </li>
+                            }
+
 
                         </ul>
+                        <div class="clearfix"></div>
                     }
                 }
 
@@ -134,6 +138,7 @@
                                 parent = parent.Parent;
                             }
                         </ul>
+                        <div class="clearfix"></div>
                     }
                     if (place.Children.Any())
                     {
@@ -156,6 +161,7 @@
                                 </li>
                             }
                         </ul>
+                        <div class="clearfix"></div>
                     }
                 }
 
@@ -169,6 +175,7 @@
                             <li>@Html.ActionLink(page.ShortName, "Index", new { id = page.Id })</li>
                         }
                     </ul>
+                    <div class="clearfix"></div>
                 }
                 @if (ViewBag.EditMode)
                 {
