@@ -20,7 +20,10 @@ namespace Warhammer.Mvc.Concrete
 
         public string ResolveCreoleLinks(string htmlContent)
         {
-            
+            if (string.IsNullOrWhiteSpace(htmlContent))
+            {
+                return htmlContent;
+            }
 
             foreach (Match match in _regex.Matches(htmlContent))
             {
@@ -56,6 +59,10 @@ namespace Warhammer.Mvc.Concrete
 
         public string CreoleLinksToHtml(string htmlContent)
         {
+            if (string.IsNullOrWhiteSpace(htmlContent))
+            {
+                return htmlContent;
+            }
             foreach (Match match in _regex.Matches(htmlContent))
             {
                 string pageName;
