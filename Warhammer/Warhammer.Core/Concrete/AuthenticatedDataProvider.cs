@@ -181,7 +181,7 @@ namespace Warhammer.Core.Concrete
         {
             Page page = GetPage(id);
             List<int> relatedIds = page.Related.Select(p => p.Id).ToList();
-            List<Page> linkPages = _repository.Pages().Where(p => !relatedIds.Contains(p.Id)).ToList();
+            List<Page> linkPages = _repository.Pages().Where(p => !relatedIds.Contains(p.Id)).OrderBy(s => s.ShortName).ToList();
             return linkPages;
         }
 
@@ -190,15 +190,25 @@ namespace Warhammer.Core.Concrete
             Page page = GetPage(id);
             Page linkTo = GetPage(addLinkTo);
             page.Related.Add(linkTo);
+            linkTo.Related.Add(page);
             Save(page);
+            Save(linkTo);
         }
 
         public void RemoveLink(int id, int linkToDeleteId)
         {
             Page page = GetPage(id);
             Page linkTo = GetPage(linkToDeleteId);
-            page.Related.Remove(linkTo);
-            Save(page);
+            if (page.Related.Contains(linkTo))
+            {
+                page.Related.Remove(linkTo);
+                Save(page);
+            }
+            if (linkTo.Related.Contains(page))
+            {
+                linkTo.Related.Remove(page);
+                Save(linkTo);       
+            }     
         }
     }
 }
