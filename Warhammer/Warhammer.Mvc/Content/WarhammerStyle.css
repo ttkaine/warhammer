@@ -6933,6 +6933,9 @@ footer {
 select {
   max-width: 100%;
 }
+.missing-link {
+  color: #d9534f;
+}
 /* jquery.Jcrop.css v0.9.12 - MIT License */
 /*
   The outer-most container in a typical Jcrop instance

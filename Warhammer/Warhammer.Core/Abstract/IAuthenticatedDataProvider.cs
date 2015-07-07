@@ -7,6 +7,7 @@ namespace Warhammer.Core.Abstract
 {
     public interface IAuthenticatedDataProvider
     {
+        string VersionInfo();
         ICollection<Person> MyPeople();
         int AddSessionLog(int sessionId, int personId, string name, string title, string description);
         int AddSession(string title, string name, string description, DateTime dateTime);

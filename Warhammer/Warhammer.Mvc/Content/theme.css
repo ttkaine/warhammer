@@ -6933,4 +6933,7 @@ footer {
 select {
   max-width: 100%;
 }
+.missing-link {
+  color: #d9534f;
+}
 /*# sourceMappingURL=theme.css.map */
