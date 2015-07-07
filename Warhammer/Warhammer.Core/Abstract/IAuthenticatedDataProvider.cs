@@ -27,5 +27,8 @@ namespace Warhammer.Core.Abstract
         void AddLink(int id, int addLinkTo);
         void RemoveLink(int id, int linkToDeleteId);
         void DeletePage(int id);
+        bool PageExists(string shortName, string fullName);
+        bool PageExists(string shortName);
+        Page GetPage(string shortName);
     }
 }

@@ -224,5 +224,20 @@ namespace Warhammer.Core.Concrete
                 _repository.Delete(page);
             }
         }
+
+        public bool PageExists(string shortName)
+        {
+            return _repository.Pages().Any(p => p.ShortName == shortName);
+        }
+
+        public Page GetPage(string shortName)
+        {
+            return _repository.Pages().FirstOrDefault(p => p.ShortName == shortName);
+        }
+
+        public bool PageExists(string shortName, string fullName)
+        {
+            return _repository.Pages().Any(p => p.ShortName == shortName && p.FullName == fullName);
+        }
     }
 }
