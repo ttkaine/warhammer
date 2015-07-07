@@ -1,25 +1,21 @@
-﻿using System;
-using System.Net;
-using System.Security.Policy;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using Warhammer.Core.Abstract;
 using Warhammer.Core.Entities;
 using Warhammer.Mvc.Abstract;
-using System.Net.Http;
+
 namespace Warhammer.Mvc.Concrete
 {
     public class LinkGenerator : ILinkGenerator
     {
         private readonly IAuthenticatedDataProvider _data;
         readonly Regex _regex = new Regex(@"\[\[.*?\|??.*?\]\]");
-        private readonly UrlHelper urlHelper;
+        private readonly UrlHelper _urlHelper;
         public LinkGenerator(IAuthenticatedDataProvider data)
         {
             _data = data;
-            this.urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            _urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
         }
 
         public string ResolveCreoleLinks(string htmlContent)
@@ -30,7 +26,7 @@ namespace Warhammer.Mvc.Concrete
             {
                 string pageName;
                 string linkName;
-                var link = GetLinkDetails(match, out pageName, out linkName);
+                GetLinkDetails(match, out pageName, out linkName);
                 Page page = _data.GetPage(pageName);
                 if (page != null)
                 {
@@ -78,12 +74,12 @@ namespace Warhammer.Mvc.Concrete
                 string anchorHtml;
                 if (page != null)
                 {
-                    string anchorHref = urlHelper.Action("Index", "page", new {id = page.Id});
+                    string anchorHref = _urlHelper.Action("Index", "page", new {id = page.Id});
                     anchorHtml = string.Format("<a href=\"{0}\">{1}</a>", anchorHref, linkName);
                 }
                 else
                 {
-                    string anchorHref = urlHelper.Action("Index", "Create");
+                    string anchorHref = _urlHelper.Action("Index", "Create");
                     anchorHtml = string.Format("<a class=\"missing-link\" href=\"{0}\">{1}</a>", anchorHref, linkName);     
                 }
                 htmlContent = htmlContent.Replace(link, anchorHtml);
