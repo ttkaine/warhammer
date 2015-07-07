@@ -15,5 +15,6 @@ namespace Warhammer.Core.Abstract
         IQueryable<Player> Players();
         int Save(Page page);
         IQueryable<Page> Pages();
+        void Delete(Page page);
     }
 }

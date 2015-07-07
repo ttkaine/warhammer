@@ -188,6 +188,11 @@
                     @Html.ActionLink("Change Image", "ChangeImage", new { id = Model.Id }, new { @class = "btn btn-default btn-block" })
 
                     @Html.ActionLink("Edit Links", "EditLinks", new { id = Model.Id }, new { @class = "btn btn-default btn-block" })
+
+                    if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Delete", "DeletePage", "Admin", new { id = Model.Id }, new { @class = "btn btn-danger btn-block" })
+                    }
                 }
             </div>
         </div>

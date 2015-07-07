@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
+using System.Web.UI;
 using Warhammer.Core.Abstract;
 
 namespace Warhammer.Mvc.Controllers
@@ -19,6 +21,37 @@ namespace Warhammer.Mvc.Controllers
             string folder = Server.MapPath(Url.Content("~/Content/DbUpdateScripts/"));
             bool did = _databaseUpdate.PerformUpdates(folder);
             return View(did);
+        }
+
+        public ActionResult DeletePage(int id)
+        {
+            Core.Entities.Page page = DataProvider.GetPage(id);
+            if (page == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View(page);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeletePage(Core.Entities.Page page)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    DataProvider.DeletePage(page.Id);
+                }
+                catch (Exception ex)
+                {
+                    return View("DeleteError", ex);
+                }
+                
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

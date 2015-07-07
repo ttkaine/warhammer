@@ -210,5 +210,19 @@ namespace Warhammer.Core.Concrete
                 Save(linkTo);       
             }     
         }
+
+        public void DeletePage(int id)
+        {
+            Page page = GetPage(id);
+
+            if (page != null)
+            {
+                foreach (Page relatedPage in page.Related)
+                {
+                    RemoveLink(page.Id, relatedPage.Id);
+                }
+                _repository.Delete(page);
+            }
+        }
     }
 }

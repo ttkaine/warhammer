@@ -26,5 +26,6 @@ namespace Warhammer.Core.Abstract
         ICollection<Page> PossibleLinks(int id);
         void AddLink(int id, int addLinkTo);
         void RemoveLink(int id, int linkToDeleteId);
+        void DeletePage(int id);
     }
 }

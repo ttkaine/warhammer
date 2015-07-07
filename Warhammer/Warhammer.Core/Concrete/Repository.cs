@@ -51,6 +51,12 @@ namespace Warhammer.Core.Concrete
             return _entities.Pages;
         }
 
+        public void Delete(Page page)
+        {
+            _entities.Pages.Remove(page);
+            _entities.SaveChanges();
+        }
+
         #endregion
 
         #region Save
