@@ -191,7 +191,10 @@
 
                     if (User.IsInRole("Admin"))
                     {
+                        <div class="clearfix"></div>
+                        <h3>Admin Funtions</h3>
                         @Html.ActionLink("Delete", "DeletePage", "Admin", new { id = Model.Id }, new { @class = "btn btn-danger btn-block" })
+                        <div class="clearfix"></div>
                     }
                 }
             </div>
