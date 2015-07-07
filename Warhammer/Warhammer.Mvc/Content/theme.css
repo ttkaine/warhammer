@@ -6797,6 +6797,10 @@ body {
   padding-left: 15px;
   padding-right: 15px;
 }
+div.profile-container {
+  margin-top: 20px;
+  float: left;
+}
 .main-content {
   text-align: justify;
   float: left;
