@@ -116,6 +116,7 @@
     <Compile Include="Entities\_Person.cs" />
     <Compile Include="Entities\_Place.cs" />
     <Compile Include="Entities\_Session.cs" />
+    <Compile Include="Entities\_SessionLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

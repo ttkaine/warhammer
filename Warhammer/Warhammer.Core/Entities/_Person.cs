@@ -11,5 +11,17 @@ namespace Warhammer.Core.Entities
         {
             get { return Related.OfType<Session>(); }
         }
+
+        public new int PointsValue
+        {
+            get
+            {
+                int logValue = SessionLogs.Sum(p => p.PointsValue);
+                double recentBonus = AgeInMonths < 10 ? 10 - AgeInMonths : 0;
+                double linkValue = (Related.Count + Related1.Count) / 3.0;
+
+                return (int) (logValue + recentBonus + linkValue);
+            }
+        }
     }
 }
