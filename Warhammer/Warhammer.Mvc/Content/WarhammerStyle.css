@@ -6852,6 +6852,9 @@ div.profile-container {
 .side-bar ul {
   list-style-type: none;
 }
+.session-block ul {
+  font-size: 12px;
+}
 .core-content,
 .banner-content,
 .main-content,

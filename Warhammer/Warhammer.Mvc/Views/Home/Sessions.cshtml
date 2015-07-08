@@ -23,7 +23,7 @@
                             <h2><a href="@Url.Action("Index", "Page", new { id = session.Id })">@session.FullName <span class="tiny">@session.ShortName</span></a></h2>
                             @if (session.People.Any())
                             {
-                                <h2>People</h2>
+                                <h3>People</h3>
                                 <ul>
                                     <li>
                                         @foreach (Person person in session.People)
