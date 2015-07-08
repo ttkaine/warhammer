@@ -6847,6 +6847,7 @@ div.profile-container {
     width: 25%;
   }
 }
+.session-block ul,
 .core-content ul,
 .side-bar ul {
   list-style-type: none;

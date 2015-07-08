@@ -1,7 +1,7 @@
 ﻿@using Warhammer.Core.Entities
 @model IEnumerable<Session>
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Sessions";
 }
 
 <div class="content-wrapper">
@@ -9,32 +9,49 @@
         @Html.Hidden("personId", 1)
         <div class="banner-content">
             <div class="header-block">
-                <h1 id="fullName">Warhammer</h1>
+                <h1 id="fullName">Sessions</h1>
             </div>
 
         </div>
 
         <div class="main-content">
-            <div class="content-block">
-
-                <h3 id="shortName">Sessions</h3>
+            <div class="content-block session-block">
                 <ul>
                     @foreach (Session session in Model)
                     {
                         <li>
-                            <a href="@Url.Action("Index", "Page", new { id = session.Id })">@session.FullName <span class="tiny">@session.ShortName</span></a>
-                            @if (session.PlayerCharacters.Any())
+                            <h2><a href="@Url.Action("Index", "Page", new { id = session.Id })">@session.FullName <span class="tiny">@session.ShortName</span></a></h2>
+                            @if (session.People.Any())
                             {
+                                <h2>People</h2>
                                 <ul>
                                     <li>
-                                        @foreach (Person person in session.PlayerCharacters)
+                                        @foreach (Person person in session.People)
                                         {
-                                            <img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" class="mini-profile-image" />
-                                            @Html.ActionLink(person.FullName, "Index", new { id = person.Id })
+                                            <div class="profile-container">
+                                                <a href="@Url.Action("Index", new { id = person.Id })"><img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" class="mini-profile-image" /></a>
+                                                @if (person.SessionLogs.Any(l => l.SessionId == session.Id))
+                                                {
+                                                    SessionLog log = person.SessionLogs.FirstOrDefault(l => l.SessionId == session.Id);
+                                                    if (log != null)
+                                                    {
+                                                        @Html.ActionLink(log.FullName, "Index", new {id = log.Id})
+                                                        <text>by</text>
+                                                        @Html.ActionLink(log.Person.FullName, "Index", new {id = log.Person.Id})
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (person.PlayerId.HasValue)
+                                                    {
+                                                        @Html.ActionLink("Create Log", "SessionLog", "Create", new { sessionId = session.Id, personId = person.Id }, new { @class = "btn btn-success" })
+                                                    }
+                                                }
+                                            </div>
                                         }
                                     </li>
-
                                 </ul>
+                                <div class="clearfix"></div>
                             }
                         </li>
                     }

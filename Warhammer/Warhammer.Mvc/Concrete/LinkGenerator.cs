@@ -20,8 +20,6 @@ namespace Warhammer.Mvc.Concrete
 
         public string ResolveCreoleLinks(string htmlContent)
         {
-            
-
             foreach (Match match in _regex.Matches(htmlContent))
             {
                 string pageName;
