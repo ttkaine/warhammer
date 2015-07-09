@@ -16,7 +16,7 @@ namespace Warhammer.Core.Entities
         {
             get
             {
-                double bonus = base.ActivityBonus;
+                double bonus = base.ActivityBonus * 5;
                 bonus = bonus + Sessions.Sum(s => s.ActivityBonus);
                 bonus = bonus + SessionLogs.Sum(s => s.ActivityBonus);
                 return bonus;
