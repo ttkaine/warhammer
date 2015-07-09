@@ -11,6 +11,10 @@ namespace Warhammer.Core.Entities
         {
             get
             {
+                if (string.IsNullOrWhiteSpace(Description))
+                {
+                    return -1;
+                }
                 string theContent = Description.Trim();
                 while (theContent.Contains("  "))
                 {
