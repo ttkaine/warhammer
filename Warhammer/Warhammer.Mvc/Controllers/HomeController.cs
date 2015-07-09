@@ -31,6 +31,12 @@ namespace Warhammer.Mvc.Controllers
             return View(sessions);
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult CharacterLeague()
+        {
+            List<Person> people = DataProvider.People().OrderByDescending(s => s.PointsValue).ToList();
+            return View(people);
+        }
 
         public ActionResult About()
         {

@@ -11,6 +11,10 @@ namespace Warhammer.Core.Entities
         {
             get
             {
+                if (Created < new DateTime(2015, 7, 7))
+                {
+                    return 0;
+                }
                 return AgeInMonths < 1 ? 1 : 1/AgeInMonths;
             } 
         }

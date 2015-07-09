@@ -31,6 +31,10 @@ namespace Warhammer.Core.Entities
                 score = score + Related.Where(s => !SessionLogs.Contains(s)).Sum(l => l.BaseScore);
                 score = score + Related1.Where(s => !SessionLogs.Contains(s)).Sum(l => l.BaseScore);
                 score = score + SessionLogs.Sum(l => l.BaseScore);
+                if (HasImage)
+                {
+                    score = score + 10;
+                }
                 return score;
             }
         }

@@ -6800,6 +6800,7 @@ body {
 div.profile-container {
   margin-top: 20px;
   float: left;
+  width: 100%;
 }
 .main-content {
   text-align: justify;
@@ -6900,6 +6901,7 @@ footer {
 .content-block h2.page-content-heading {
   font: 600 36px 'Great Vibes', Helvetica, sans-serif;
 }
+.score-box,
 .mini-profile-image,
 .profile-image {
   float: right;
@@ -6910,6 +6912,7 @@ footer {
   -webkit-box-shadow: #333333 5px 5px 15px ;
   box-shadow: #333333 5px 5px 15px ;
 }
+.score-box,
 .mini-profile-image {
   width: 80px;
   height: 80px;
@@ -6920,6 +6923,12 @@ footer {
   width: 200px;
   height: 200px;
   margin: 20px;
+}
+.score-box {
+  text-align: center;
+  padding-top: 10px;
+  background-color: paleturquoise;
+  font-size: 42px;
 }
 .profile-footer {
   font-size: 12px;

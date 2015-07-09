@@ -124,6 +124,10 @@
                                      <li>@Html.ActionLink("Switch to Edit Mode", "EditMode", "Create", new { returnUrl = Request.Url.AbsoluteUri }, null)</li>
                                  }
                                 <li>@Html.ActionLink("Sessions", "Sessions", "Home")</li>
+                                if (User.IsInRole("Admin"))
+                                 {
+                                     <li>@Html.ActionLink("Character Leauge", "CharacterLeague", "Home")</li> 
+                                 }
                             }
                         </ul>
                         @Html.Partial("_LoginPartial")
