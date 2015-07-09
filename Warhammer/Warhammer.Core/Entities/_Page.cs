@@ -7,7 +7,7 @@ namespace Warhammer.Core.Entities
     public partial class Page
     {
 
-        public double ActivityBonus
+        public virtual double ActivityBonus
         {
             get
             {
@@ -19,7 +19,7 @@ namespace Warhammer.Core.Entities
             } 
         }
 
-        public double BaseScore
+        public virtual double BaseScore
         {
             get { return 0.25; }
         }
@@ -53,7 +53,7 @@ namespace Warhammer.Core.Entities
             get { return ImageData != null && ImageData.Length > 50 && !string.IsNullOrWhiteSpace(ImageMime); }
         }
 
-        public int PointsValue
+        public virtual int PointsValue
         {
             get { return (int) (BaseScore + ActivityBonus); }
         }

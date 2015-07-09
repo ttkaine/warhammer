@@ -12,7 +12,7 @@ namespace Warhammer.Core.Entities
             get { return Related.OfType<Session>(); }
         }
 
-        public new double ActivityBonus
+        public override double ActivityBonus
         {
             get
             {
@@ -23,7 +23,7 @@ namespace Warhammer.Core.Entities
             }
         }
 
-        public new double BaseScore
+        public override double BaseScore
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Warhammer.Core.Entities
             }
         }
 
-        public new int PointsValue
+        public override int PointsValue
         {
             get { return (int) BaseScore + (int) ActivityBonus; }
         }
