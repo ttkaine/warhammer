@@ -34,7 +34,7 @@ namespace Warhammer.Mvc.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult CharacterLeague()
         {
-            List<Person> people = DataProvider.People().OrderByDescending(s => s.PointsValue).ToList();
+            List<Person> people = DataProvider.People().OrderByDescending(s => s.PointsValue).ThenByDescending(s => s.Modified).ToList();
             return View(people);
         }
 
