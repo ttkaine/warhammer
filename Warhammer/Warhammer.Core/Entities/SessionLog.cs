@@ -10,7 +10,8 @@
 namespace Warhammer.Core.Entities
 {
     using System;
-
+    using System.Collections.Generic;
+    
     public partial class SessionLog : Page
     {
         public Nullable<int> PersonId { get; set; }

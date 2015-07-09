@@ -17,7 +17,7 @@ namespace Warhammer.Core.Entities
 
         public double BaseScore
         {
-            get { return 0; }
+            get { return 0.25; }
         }
 
         public double AgeInMonths

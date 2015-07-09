@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8ff36b70a42743f1b29c097509174022" Name="Diagram1">
+      <Diagram DiagramId="8ff36b70a42743f1b29c097509174022" Name="Diagram1" ZoomLevel="93">
         <EntityTypeShape EntityType="WarhammerModel.Page" Width="1.5" PointX="0.75" PointY="1" />
         <EntityTypeShape EntityType="WarhammerModel.Person" Width="1.5" PointX="4.25" PointY="5" />
         <InheritanceConnector EntityType="WarhammerModel.Person" />

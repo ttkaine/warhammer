@@ -7,6 +7,13 @@ namespace Warhammer.Core.Entities
     [GeneratedCode("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "9.0.0.0")]
     public partial class Session
     {
+        public new double BaseScore
+        {
+            get
+            {
+                return 1.0;
+            }     
+        }
         public IEnumerable<Person> People
         {
             get { return Related.OfType<Person>(); }

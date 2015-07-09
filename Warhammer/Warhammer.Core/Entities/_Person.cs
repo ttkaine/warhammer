@@ -28,9 +28,9 @@ namespace Warhammer.Core.Entities
             get
             {
                 double score = base.BaseScore;
-                score = score + Sessions.Count();
+                score = score + Related.Where(s => !SessionLogs.Contains(s)).Sum(l => l.BaseScore);
+                score = score + Related1.Where(s => !SessionLogs.Contains(s)).Sum(l => l.BaseScore);
                 score = score + SessionLogs.Sum(l => l.BaseScore);
-                score = score + (Related.Count + Related1.Count) / 3.0;
                 return score;
             }
         }
