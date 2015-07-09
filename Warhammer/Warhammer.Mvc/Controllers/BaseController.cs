@@ -18,7 +18,7 @@ namespace Warhammer.Mvc.Controllers
             get { return _data; }
         }
 
-        public BaseController(IAuthenticatedDataProvider data)
+        protected BaseController(IAuthenticatedDataProvider data)
         {
             _data = data;
         }

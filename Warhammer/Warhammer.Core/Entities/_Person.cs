@@ -23,14 +23,16 @@ namespace Warhammer.Core.Entities
             }
         }
 
-        public override double BaseScore
+        private double PersonScore
         {
             get
             {
                 double score = base.BaseScore;
-                score = score + Related.Where(s => !SessionLogs.Contains(s)).Sum(l => l.BaseScore);
-                score = score + Related1.Where(s => !SessionLogs.Contains(s)).Sum(l => l.BaseScore);
-                score = score + SessionLogs.Sum(l => l.BaseScore);
+                List<SessionLog> logs = SessionLogs.ToList();
+                List<Page> relatedPages = Related.ToList();
+                relatedPages.AddRange(Related1.ToList());
+                score = score + relatedPages.Where(s => !logs.Contains(s)).Sum(l => l.BaseScore);
+                score = score + logs.Sum(l => l.BaseScore);
                 if (HasImage)
                 {
                     score = score + 10;
@@ -41,7 +43,7 @@ namespace Warhammer.Core.Entities
 
         public override int PointsValue
         {
-            get { return (int) BaseScore + (int) ActivityBonus; }
+            get { return (int) PersonScore + (int) BaseScore + (int) ActivityBonus; }
         }
     }
 }

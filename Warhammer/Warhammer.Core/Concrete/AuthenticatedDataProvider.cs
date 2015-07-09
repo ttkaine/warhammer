@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Warhammer.Core.Abstract;
 using Warhammer.Core.Entities;
 
@@ -34,7 +35,7 @@ namespace Warhammer.Core.Concrete
 
         public string VersionInfo()
         {
-            return string.Empty;
+            return string.Format("Software Version: {0}", Assembly.GetExecutingAssembly().GetName().Version);
         }
 
         public ICollection<Person> MyPeople()
