@@ -7,7 +7,7 @@ namespace Warhammer.Core.Entities
        [GeneratedCode("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "9.0.0.0")]
     public partial class SessionLog
     {
-        public double BaseScore
+        public new double BaseScore
         {
             get
             {

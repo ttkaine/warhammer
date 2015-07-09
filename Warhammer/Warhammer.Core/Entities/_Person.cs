@@ -12,16 +12,32 @@ namespace Warhammer.Core.Entities
             get { return Related.OfType<Session>(); }
         }
 
-        public new int PointsValue
+        public new double ActivityBonus
         {
             get
             {
-                int logValue = SessionLogs.Sum(p => p.PointsValue);
-                double recentBonus = AgeInMonths < 10 ? 10 - AgeInMonths : 0;
-                double linkValue = (Related.Count + Related1.Count) / 3.0;
-
-                return (int) (logValue + recentBonus + linkValue);
+                double bonus = base.ActivityBonus;
+                bonus = bonus + Sessions.Sum(s => s.ActivityBonus);
+                bonus = bonus + SessionLogs.Sum(s => s.ActivityBonus);
+                return bonus;
             }
+        }
+
+        public new double BaseScore
+        {
+            get
+            {
+                double score = base.BaseScore;
+                score = score + Sessions.Count();
+                score = score + SessionLogs.Sum(l => l.BaseScore);
+                score = score + (Related.Count + Related1.Count) / 3.0;
+                return score;
+            }
+        }
+
+        public new int PointsValue
+        {
+            get { return (int) BaseScore + (int) ActivityBonus; }
         }
     }
 }

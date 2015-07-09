@@ -6,6 +6,20 @@ namespace Warhammer.Core.Entities
     [GeneratedCode("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "9.0.0.0")]
     public partial class Page
     {
+
+        public double ActivityBonus
+        {
+            get
+            {
+                return AgeInMonths < 1 ? 1 : 1/AgeInMonths;
+            } 
+        }
+
+        public double BaseScore
+        {
+            get { return 0; }
+        }
+
         public double AgeInMonths
         {
             get { return DateTime.Now.Subtract(Created).Days/(365.25/12); }           
@@ -37,7 +51,7 @@ namespace Warhammer.Core.Entities
 
         public int PointsValue
         {
-            get { return Related.Count; }
+            get { return (int) (BaseScore + ActivityBonus); }
         }
     }
 }
