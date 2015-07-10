@@ -6797,10 +6797,22 @@ body {
   padding-left: 15px;
   padding-right: 15px;
 }
+div.session-container,
 div.profile-container {
   margin-top: 20px;
   float: left;
   width: 100%;
+}
+div.session-container {
+  margin-top: 40px;
+  background-color: #d9edf7;
+  padding: 20px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  -moz-box-shadow: #333333 5px 5px 15px ;
+  -webkit-box-shadow: #333333 5px 5px 15px ;
+  box-shadow: #333333 5px 5px 15px ;
 }
 .main-content {
   text-align: justify;
@@ -6816,7 +6828,7 @@ div.profile-container {
 @media (min-width: 992px) {
   .main-content {
     float: left;
-    width: 75%;
+    width: 66.66666667%;
   }
 }
 .core-content {
@@ -6845,13 +6857,17 @@ div.profile-container {
 @media (min-width: 992px) {
   .side-bar {
     float: left;
-    width: 25%;
+    width: 33.33333333%;
   }
+}
+.session-block {
+  font-size: 18px;
 }
 .session-block ul,
 .core-content ul,
 .side-bar ul {
   list-style-type: none;
+  padding: 0;
 }
 .session-block ul {
   font-size: 12px;
@@ -6924,6 +6940,18 @@ footer {
   height: 200px;
   margin: 20px;
 }
+.micro-profile-image {
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  -moz-box-shadow: #333333 5px 5px 5px ;
+  -webkit-box-shadow: #333333 5px 5px 5px ;
+  box-shadow: #333333 5px 5px 5px ;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
 .score-box {
   text-align: center;
   padding-top: 10px;
@@ -6948,5 +6976,20 @@ select {
 }
 .missing-link {
   color: #d9534f;
+}
+.session-block .log-box,
+.session-block .people-box {
+  display: inline-block;
+  vertical-align: top;
+}
+.session-block .log-box {
+  width: 65%;
+  padding-left: 10px;
+}
+.session-block .people-box {
+  width: 30%;
+}
+.session-block .log-box li {
+  padding-bottom: 10px;
 }
 /*# sourceMappingURL=theme.css.map */

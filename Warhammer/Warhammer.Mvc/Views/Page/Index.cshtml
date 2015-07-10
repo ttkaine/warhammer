@@ -114,7 +114,7 @@
                             {
                                 <li>
                                     <div class="profile-container">
-                                        <a href="@Url.Action("Index", new{ id = log.Person.Id })"><img class="mini-profile-image" src="@Url.Action("Image", "Page", new {id = log.Person.Id})" title="@log.Person.FullName" alt="Picture of @log.Person.FullName" /></a>
+                                      
                                         @Html.ActionLink(log.FullName, "Index", new { id = log.Id })
                                         by
                                         @Html.ActionLink(log.Person.FullName, "Index", new { id = log.Person.Id })

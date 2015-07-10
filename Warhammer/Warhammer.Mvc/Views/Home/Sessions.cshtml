@@ -20,39 +20,58 @@
                     @foreach (Session session in Model)
                     {
                         <li>
-                            <h2><a href="@Url.Action("Index", "Page", new { id = session.Id })">@session.FullName <span class="tiny">@session.ShortName</span></a></h2>
-                            @if (session.People.Any())
-                            {
-                                <h3>People</h3>
-                                <ul>
-                                    <li>
-                                        @foreach (Person person in session.People)
-                                        {
-                                            <div class="profile-container">
-                                                <a href="@Url.Action("Index", new { id = person.Id })"><img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" class="mini-profile-image" /></a>
-                                                @if (person.SessionLogs.Any(l => l.SessionId == session.Id))
+                            <div class="session-container">
+                                <h1><a href="@Url.Action("Index", "Page", new { id = session.Id })">@session.ShortName</a></h1>
+                                <h2>@session.FullName</h2>
+                                <div class="people-box">
+                                    @if (session.People.Any())
+                                    {
+                                        <ul>
+                                            <li>
+                                                @foreach (Person person in session.People)
                                                 {
-                                                    SessionLog log = person.SessionLogs.FirstOrDefault(l => l.SessionId == session.Id);
-                                                    if (log != null)
+                                                    <a href="@Url.Action("Index", "Page", new {id = person.Id})"><img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" class="mini-profile-image" /></a>
+                                                }
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    }
+                                </div>
+                                <div class="log-box">
+                                    @if (session.People.Any())
+                                    {
+                                        <ul>
+                                           
+                                                @foreach (Person person in session.People)
+                                                {
+                                                    if (person.SessionLogs.Any(l => l.SessionId == session.Id))
                                                     {
-                                                        @Html.ActionLink(log.FullName, "Index", new {id = log.Id})
-                                                        <text>by</text>
-                                                        @Html.ActionLink(log.Person.FullName, "Index", new {id = log.Person.Id})
+                                                       
+                                                            SessionLog log = person.SessionLogs.FirstOrDefault(l => l.SessionId == session.Id);
+                                                            if (log != null)
+                                                            {
+                                                                <li>
+                                                                    <a href="@Url.Action("Index","Page", new {id = person.Id})"><img src="@Url.Action("Image", "Page", new {id = person.Id})" title="@person.FullName" alt="Picture of @person.FullName" class="micro-profile-image" /></a>
+                                                                    @Html.ActionLink(log.FullName, "Index", "Page", new { id = log.Id }, null)
+                                                                </li>
+                                                            }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (ViewBag.EditMode && person.PlayerId.HasValue && person.Player.UserName == User.Identity.Name)
+                                                        {
+                                                            <li>
+                                                                @Html.ActionLink("Create Log For " + person.FullName, "SessionLog", "Create", new { sessionId = session.Id, personId = person.Id }, new { @class = "btn btn-success" })
+                                                            </li>
+                                                        }
                                                     }
                                                 }
-                                                else
-                                                {
-                                                    if (person.PlayerId.HasValue)
-                                                    {
-                                                        @Html.ActionLink("Create Log", "SessionLog", "Create", new { sessionId = session.Id, personId = person.Id }, new { @class = "btn btn-success" })
-                                                    }
-                                                }
-                                            </div>
-                                        }
-                                    </li>
-                                </ul>
-                                <div class="clearfix"></div>
-                            }
+                                           
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    }
+                                </div>
+                            </div>
                         </li>
                     }
                 </ul>

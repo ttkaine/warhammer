@@ -27,10 +27,24 @@
                         <h2>Pick a Person</h2>
                         @Html.DropDownListFor(m => m.SelectedPersonId, Model.Person)
                     }
-
-                    <h2>Pick a Session</h2>
-                    @Html.DropDownListFor(m => m.SelectedSessionId, Model.Session)
-
+                    
+                    @if (Model.Log.Session != null)
+                    {
+                        <h3><strong>@Model.Log.Session.ShortName</strong></h3>
+                        @Html.HiddenFor(m => m.SelectedSessionId)
+                    }
+                    else
+                    {
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.Label("Pick a Session", htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(m => m.SelectedSessionId, Model.Session)
+                                @Html.ValidationMessageFor(model => model.SelectedSessionId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    }
+                        
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
                         @Html.Label("Add a quick name that says what it is", htmlAttributes: new { @class = "control-label col-md-4" })

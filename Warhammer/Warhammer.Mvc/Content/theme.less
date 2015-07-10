@@ -30,6 +30,7 @@ body {
   .make-xs-column(12);
 }
 
+div.session-container,
 div.profile-container
 {
     margin-top: 20px;
@@ -37,10 +38,26 @@ div.profile-container
     width: 100%;
 }
 
+
+
+div.session-container{
+        margin-top: 40px;
+   
+    background-color: @alert-info-bg;
+    padding: 20px;
+    
+        -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -moz-box-shadow: #333333 5px 5px 15px ;
+    -webkit-box-shadow: #333333 5px 5px 15px ;
+    box-shadow: #333333 5px 5px 15px ;
+
+}
 .main-content {
    text-align: justify;
   .make-xs-column(12);
-  .make-md-column(9);
+  .make-md-column(8);
   min-height: 300px;
   font-size: @font-size-large;
 }
@@ -53,13 +70,18 @@ div.profile-container
 
 .side-bar {
   .make-xs-column(12);
-  .make-md-column(3);
+  .make-md-column(4);
 }
 
+.session-block
+{
+    font-size: @font-size-large;
+}
 .session-block ul,
 .core-content ul,
 .side-bar ul{
      list-style-type: none;
+     padding: 0
 }
 
 .session-block ul{
@@ -147,6 +169,19 @@ font: 800 @font-size-h2 'Great Vibes', Helvetica, sans-serif;
 
 }
 
+.micro-profile-image{
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    -moz-box-shadow: #333333 5px 5px 5px ;
+    -webkit-box-shadow: #333333 5px 5px 5px ;
+    box-shadow: #333333 5px 5px 5px ;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
 .score-box
 {
     text-align: center;
@@ -180,4 +215,22 @@ select
 
 .missing-link{
     color: @brand-danger;
+}
+
+.session-block .log-box,
+.session-block .people-box {
+                           display: inline-block;
+                           vertical-align: top;
+                       }
+.session-block .log-box {
+    width: 65%;
+    padding-left: 10px;
+}
+.session-block .people-box 
+{
+    width: 30%;
+}
+
+.session-block .log-box li {
+    padding-bottom: 10px;
 }

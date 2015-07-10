@@ -105,7 +105,7 @@ namespace Warhammer.Mvc.Controllers
             return View(session);
         }
 
-        public ActionResult SessionLog(int? personid)
+        public ActionResult SessionLog(int? personid, int? sessionId)
         {
             CreateSessionLogViewModel model = new CreateSessionLogViewModel
             {
@@ -123,6 +123,29 @@ namespace Warhammer.Mvc.Controllers
                     model.SelectedPersonId = sessionLog.Person.Id;
                 }
             }
+
+            if (sessionId.HasValue)
+            {
+                sessionLog.Session = DataProvider.GetPage(sessionId.Value) as Session;
+
+                if (sessionLog.Session != null)
+                {
+                    model.SelectedSessionId = sessionLog.Session.Id;
+                }
+            }
+
+            string defaultName = string.Empty;
+            if (sessionLog.Person != null && sessionLog.Session != null)
+            {
+                defaultName = string.Format("{0} Log for {1}", sessionLog.Person.ShortName, sessionLog.Session.ShortName);
+            }
+
+            if (sessionLog.Person != null && sessionLog.Session == null)
+            {
+                defaultName = string.Format("{0} Log for Session {1}", sessionLog.Person.ShortName, "???");
+            }
+            sessionLog.ShortName = defaultName;
+
             model.Log = sessionLog;
             return View(model);
         }
