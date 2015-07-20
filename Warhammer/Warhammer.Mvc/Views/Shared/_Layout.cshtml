@@ -123,6 +123,7 @@
                                  {
                                      <li>@Html.ActionLink("Switch to Edit Mode", "EditMode", "Create", new { returnUrl = Request.Url.AbsoluteUri }, null)</li>
                                  }
+                                 @Html.Action("PinnedItems", "Home")
                                 <li>@Html.ActionLink("Sessions", "Sessions", "Home")</li>
                                 if (User.IsInRole("Admin"))
                                  {

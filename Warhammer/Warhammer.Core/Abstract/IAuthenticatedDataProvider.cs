@@ -31,5 +31,7 @@ namespace Warhammer.Core.Abstract
         bool PageExists(string shortName, string fullName);
         bool PageExists(string shortName);
         Page GetPage(string shortName);
+        ICollection<Page> PinnedPages();
+        void PinPage(int id);
     }
 }

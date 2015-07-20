@@ -19,6 +19,9 @@
           <Property Name="Modified" Type="datetime" Nullable="false" />
           <Property Name="CreatedById" Type="int" Nullable="false" />
           <Property Name="ModifedById" Type="int" Nullable="false" />
+          <Property Name="SignificantUpdateById" Type="int" Nullable="false" />
+          <Property Name="SignificantUpdate" Type="datetime" Nullable="false" />
+          <Property Name="Pinned" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -330,6 +333,9 @@
           <NavigationProperty Name="Related1" Relationship="WarhammerModel.PersonAtSession" FromRole="Page1" ToRole="Page" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
           <NavigationProperty Name="CreatedBy" Relationship="WarhammerModel.FK_Page_Player" FromRole="Page" ToRole="Player" />
           <NavigationProperty Name="ModifiedBy" Relationship="WarhammerModel.FK_Page_Person1" FromRole="Page" ToRole="Player" />
+          <Property Name="SignificantUpdateById" Type="Int32" Nullable="false" />
+          <Property Name="SignificantUpdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Pinned" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Person" BaseType="WarhammerModel.Page">
           <Property Name="IsDead" Type="Boolean" Nullable="false" />
@@ -466,6 +472,9 @@
           <EntitySetMapping Name="Pages">
             <EntityTypeMapping TypeName="IsTypeOf(WarhammerModel.Page)">
               <MappingFragment StoreEntitySet="Page">
+                <ScalarProperty Name="Pinned" ColumnName="Pinned" />
+                <ScalarProperty Name="SignificantUpdate" ColumnName="SignificantUpdate" />
+                <ScalarProperty Name="SignificantUpdateById" ColumnName="SignificantUpdateById" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ModifedById" ColumnName="ModifedById" />
                 <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />

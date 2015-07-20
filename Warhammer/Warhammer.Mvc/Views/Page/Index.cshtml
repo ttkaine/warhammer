@@ -87,7 +87,7 @@
                                 </li>
                             }
                         </ul>
-                    <div class="clearfix"></div>
+                        <div class="clearfix"></div>
                     }
 
                     if (session.Npcs.Any())
@@ -114,7 +114,7 @@
                             {
                                 <li>
                                     <div class="profile-container">
-                                      
+
                                         @Html.ActionLink(log.FullName, "Index", new { id = log.Id })
                                         by
                                         @Html.ActionLink(log.Person.FullName, "Index", new { id = log.Person.Id })
@@ -198,7 +198,20 @@
                     {
                         <div class="clearfix"></div>
                         <h3>Admin Funtions</h3>
+
+                        if (Model.Pinned)
+                        {
+                            @Html.ActionLink("Unpin", "PinPage", "Admin", new { id = Model.Id }, new { @class = "btn btn-default btn-block" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Pin", "PinPage", "Admin", new { id = Model.Id }, new { @class = "btn btn-default btn-block" })
+                        }
+
+                        <hr/>
+                    
                         @Html.ActionLink("Delete", "DeletePage", "Admin", new { id = Model.Id }, new { @class = "btn btn-danger btn-block" })
+
                         <div class="clearfix"></div>
                     }
                 }

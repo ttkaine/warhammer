@@ -241,6 +241,21 @@ namespace Warhammer.Core.Concrete
             return _repository.Pages().FirstOrDefault(p => p.ShortName == shortName);
         }
 
+        public ICollection<Page> PinnedPages()
+        {
+            return _repository.Pages().Where(p => p.Pinned).ToList();
+        }
+
+        public void PinPage(int id)
+        {
+            Page page = _repository.Pages().FirstOrDefault(p => p.Id == id);
+            if (page != null)
+            {
+                page.Pinned = !page.Pinned;
+                Save(page);
+            }
+        }
+
         public bool PageExists(string shortName, string fullName)
         {
             return _repository.Pages().Any(p => p.ShortName == shortName && p.FullName == fullName);

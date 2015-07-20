@@ -31,6 +31,12 @@ namespace Warhammer.Mvc.Controllers
             return View(sessions);
         }
 
+        public PartialViewResult PinnedItems()
+        {
+            List<Page> pages = DataProvider.PinnedPages().OrderBy(p => p.FullName).ToList();
+            return PartialView(pages);
+        }
+
         [Authorize(Roles = "Admin")]
         public ActionResult CharacterLeague()
         {

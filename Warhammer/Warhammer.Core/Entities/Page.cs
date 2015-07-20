@@ -30,6 +30,9 @@ namespace Warhammer.Core.Entities
         public System.DateTime Modified { get; set; }
         public int CreatedById { get; set; }
         public int ModifedById { get; set; }
+        public int SignificantUpdateById { get; set; }
+        public System.DateTime SignificantUpdate { get; set; }
+        public bool Pinned { get; set; }
     
         public virtual ICollection<Page> Related { get; set; }
         internal virtual ICollection<Page> Related1 { get; set; }

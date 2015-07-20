@@ -23,6 +23,39 @@ namespace Warhammer.Mvc.Controllers
             return View(did);
         }
 
+
+        public ActionResult PinPage(int id)
+        {
+            Core.Entities.Page page = DataProvider.GetPage(id);
+            if (page == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View(page);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult PinPage(Core.Entities.Page page)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    DataProvider.PinPage(page.Id);
+                }
+                catch (Exception ex)
+                {
+                    return View("Pinning Error", ex);
+                }
+
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+
         public ActionResult DeletePage(int id)
         {
             Core.Entities.Page page = DataProvider.GetPage(id);
