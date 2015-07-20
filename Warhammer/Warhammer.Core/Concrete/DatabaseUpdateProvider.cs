@@ -34,10 +34,10 @@ namespace Warhammer.Core.Concrete
                                 commands.Add(fileId, File.ReadAllText(fileInfo.FullName));
                             }
                         }
-                        if (!Debugger.IsAttached)
-                        {
-                            File.Delete(fileInfo.FullName);
-                        }
+                        //if (!Debugger.IsAttached)
+                        //{
+                        //    File.Delete(fileInfo.FullName);
+                        //}
                     }
 
                     List<string> orderedCommands = commands.OrderBy(c => c.Key).Select(c => c.Value).ToList();
