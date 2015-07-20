@@ -79,6 +79,9 @@
     <Compile Include="Concrete\InlineHtmlImage.cs" />
     <Compile Include="Concrete\ModelFactory.cs" />
     <Compile Include="Concrete\Repository.cs" />
+    <Compile Include="Entities\ChangeLog.cs">
+      <DependentUpon>PageEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Page.cs">
       <DependentUpon>PageEntities.tt</DependentUpon>
     </Compile>
@@ -96,6 +99,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PageEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PageView.cs">
+      <DependentUpon>PageEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Person.cs">
       <DependentUpon>PageEntities.tt</DependentUpon>

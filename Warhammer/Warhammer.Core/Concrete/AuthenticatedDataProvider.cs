@@ -104,7 +104,7 @@ namespace Warhammer.Core.Concrete
             return existingPage;
         }
 
-        public int Save(Page page)
+        private int Save(Page page)
         {
             Page existingPage = _repository.Pages().FirstOrDefault(p => p.Id == page.Id);
 
@@ -112,10 +112,22 @@ namespace Warhammer.Core.Concrete
             {
                 page.Created = DateTime.Now;
                 page.CreatedById = CurrentPlayer.Id;
+                page.SignificantUpdate = DateTime.Now;
+                page.SignificantUpdateById = CurrentPlayer.Id;
+            }
+            else
+            {
+                if (page.Description.Length > existingPage.Description.Length + 500)
+                {
+                    page.SignificantUpdate = DateTime.Now;
+                    page.SignificantUpdateById = CurrentPlayer.Id;                   
+                }
             }
 
             page.Modified = DateTime.Now;
             page.ModifedById = CurrentPlayer.Id;
+
+
 
             return _repository.Save(page);
         }
@@ -246,6 +258,16 @@ namespace Warhammer.Core.Concrete
             return _repository.Pages().Where(p => p.Pinned).ToList();
         }
 
+        public ICollection<Page> NewPages()
+        {
+            return _repository.Pages().Where(p => p.PageViews.All(v => v.PlayerId != CurrentPlayer.Id)).ToList();
+        }
+
+        public ICollection<Page> ModifiedPages()
+        {
+            return _repository.Pages().Where(p => p.PageViews.Any(v => v.PlayerId == CurrentPlayer.Id && v.Viewed < p.SignificantUpdate)).ToList();
+        }
+
         public void PinPage(int id)
         {
             Page page = _repository.Pages().FirstOrDefault(p => p.Id == id);
@@ -253,6 +275,24 @@ namespace Warhammer.Core.Concrete
             {
                 page.Pinned = !page.Pinned;
                 Save(page);
+            }
+        }
+
+        public void MarkAsSeen(int id)
+        {
+            Page page = _repository.Pages().FirstOrDefault(p => p.Id == id);
+            if (page != null)
+            {
+                PageView pageView = page.PageViews.FirstOrDefault(p => p.PlayerId == CurrentPlayer.Id);
+                if (pageView != null)
+                {
+                    pageView.Viewed = DateTime.Now;
+                }
+                else
+                {
+                    page.PageViews.Add(new PageView{ PageId = page.Id, PlayerId = CurrentPlayer.Id, Viewed = DateTime.Now });
+                }
+                _repository.Save(page);
             }
         }
 

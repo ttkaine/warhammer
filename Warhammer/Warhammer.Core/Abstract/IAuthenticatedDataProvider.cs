@@ -32,6 +32,9 @@ namespace Warhammer.Core.Abstract
         bool PageExists(string shortName);
         Page GetPage(string shortName);
         ICollection<Page> PinnedPages();
+        ICollection<Page> NewPages();
+        ICollection<Page> ModifiedPages();
         void PinPage(int id);
+        void MarkAsSeen(int id);
     }
 }

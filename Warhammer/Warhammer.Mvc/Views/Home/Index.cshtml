@@ -45,6 +45,22 @@
 
     <div class="core-content">
         <div class="content-block">
+            <h3>New Pages</h3>
+            <ul>
+                @foreach (var page in Model.NewPages)
+                {
+                    <li><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName</a></li>
+                }
+            </ul>
+
+            <h3>Updated Pages</h3>
+            <ul>
+                @foreach (var page in Model.UpdatedPages)
+                {
+                    <li><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName <span class="tiny"> Changed by @page.ModifiedBy.DisplayName on @page.Modified</span></a></li>
+                }
+            </ul>           
+
             <h3>Recent Changes</h3>
             <ul>
                 @foreach (var page in Model.RecentChanges)

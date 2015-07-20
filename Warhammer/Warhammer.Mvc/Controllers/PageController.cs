@@ -33,6 +33,7 @@ namespace Warhammer.Mvc.Controllers
                     {
                         page.Description = _linkGenerator.CreoleLinksToHtml(page.Description);
                     }
+                    DataProvider.MarkAsSeen(page.Id);
                     return View(page);
                 }
             }

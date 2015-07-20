@@ -17,6 +17,8 @@ namespace Warhammer.Mvc.Controllers
         {
             HomePageViewModel model = new HomePageViewModel
             {
+                NewPages = DataProvider.NewPages().OrderByDescending(p => p.SignificantUpdate),
+                UpdatedPages = DataProvider.ModifiedPages().OrderByDescending(p => p.SignificantUpdate),
                 RecentChanges = DataProvider.RecentPages().ToList(),
                 MyStuff = DataProvider.MyStuff().ToList(),
                 MyPeople = DataProvider.MyPeople().ToList(),

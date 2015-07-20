@@ -23,6 +23,10 @@
         <EntityTypeShape EntityType="WarhammerModel.Place" Width="1.5" PointX="3.25" PointY="1" />
         <AssociationConnector Association="WarhammerModel.FK_Place_Place" />
         <InheritanceConnector EntityType="WarhammerModel.Place" />
+        <EntityTypeShape EntityType="WarhammerModel.ChangeLog" Width="1.5" PointX="3.375" PointY="8.75" />
+        <EntityTypeShape EntityType="WarhammerModel.PageView" Width="1.5" PointX="6.5" PointY="5.625" />
+        <AssociationConnector Association="WarhammerModel.FK_PageView_Page" />
+        <AssociationConnector Association="WarhammerModel.FK_PageView_Player" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

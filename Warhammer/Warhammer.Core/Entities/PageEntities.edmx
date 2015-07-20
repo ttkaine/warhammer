@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="WarhammerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChangeLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="Page">
           <Key>
             <PropertyRef Name="Id" />
@@ -22,6 +30,15 @@
           <Property Name="SignificantUpdateById" Type="int" Nullable="false" />
           <Property Name="SignificantUpdate" Type="datetime" Nullable="false" />
           <Property Name="Pinned" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PageView">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PageId" Type="int" Nullable="false" />
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="Viewed" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -95,6 +112,30 @@
             </Principal>
             <Dependent Role="Page">
               <PropertyRef Name="CreatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PageView_Page">
+          <End Role="Page" Type="Self.Page" Multiplicity="1" />
+          <End Role="PageView" Type="Self.PageView" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Page">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PageView">
+              <PropertyRef Name="PageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PageView_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="PageView" Type="Self.PageView" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PageView">
+              <PropertyRef Name="PlayerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -219,7 +260,9 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="WarhammerModelStoreContainer">
+          <EntitySet Name="ChangeLog" EntityType="Self.ChangeLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PageView" EntityType="Self.PageView" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonAtSession" EntityType="Self.PersonAtSession" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
@@ -233,6 +276,14 @@
           <AssociationSet Name="FK_Page_Player" Association="Self.FK_Page_Player">
             <End Role="Player" EntitySet="Player" />
             <End Role="Page" EntitySet="Page" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PageView_Page" Association="Self.FK_PageView_Page">
+            <End Role="Page" EntitySet="Page" />
+            <End Role="PageView" EntitySet="PageView" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PageView_Player" Association="Self.FK_PageView_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="PageView" EntitySet="PageView" />
           </AssociationSet>
           <AssociationSet Name="FK_Person_Page" Association="Self.FK_Person_Page">
             <End Role="Page" EntitySet="Page" />
@@ -314,6 +365,16 @@
             <End Role="Place" EntitySet="Pages" />
             <End Role="Place1" EntitySet="Pages" />
           </AssociationSet>
+          <EntitySet Name="ChangeLogs" EntityType="WarhammerModel.ChangeLog" />
+          <EntitySet Name="PageViews" EntityType="WarhammerModel.PageView" />
+          <AssociationSet Name="FK_PageView_Page" Association="WarhammerModel.FK_PageView_Page">
+            <End Role="Page" EntitySet="Pages" />
+            <End Role="PageView" EntitySet="PageViews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PageView_Player" Association="WarhammerModel.FK_PageView_Player">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="PageView" EntitySet="PageViews" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Page">
           <Key>
@@ -336,6 +397,7 @@
           <Property Name="SignificantUpdateById" Type="Int32" Nullable="false" />
           <Property Name="SignificantUpdate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Pinned" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PageViews" Relationship="WarhammerModel.FK_PageView_Page" FromRole="Page" ToRole="PageView" />
         </EntityType>
         <EntityType Name="Person" BaseType="WarhammerModel.Page">
           <Property Name="IsDead" Type="Boolean" Nullable="false" />
@@ -396,6 +458,7 @@
           <NavigationProperty Name="Pages" Relationship="WarhammerModel.FK_Page_Player" FromRole="Player" ToRole="Page" />
           <NavigationProperty Name="People" Relationship="WarhammerModel.FK_Person_Player" FromRole="Player" ToRole="Person" />
           <NavigationProperty Name="Pages1" Relationship="WarhammerModel.FK_Page_Person1" FromRole="Player" ToRole="Page" />
+          <NavigationProperty Name="PageViews" Relationship="WarhammerModel.FK_PageView_Player" FromRole="Player" ToRole="PageView" />
         </EntityType>
         <Association Name="FK_Page_Person">
           <End Type="WarhammerModel.Person" Role="Person" Multiplicity="1" />
@@ -460,6 +523,49 @@
             </Principal>
             <Dependent Role="Place1">
               <PropertyRef Name="IsWithin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ChangeLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Comment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PageView">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PageId" Type="Int32" Nullable="false" />
+          <Property Name="PlayerId" Type="Int32" Nullable="false" />
+          <Property Name="Viewed" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Page" Relationship="WarhammerModel.FK_PageView_Page" FromRole="PageView" ToRole="Page" />
+          <NavigationProperty Name="Player" Relationship="WarhammerModel.FK_PageView_Player" FromRole="PageView" ToRole="Player" />
+        </EntityType>
+        <Association Name="FK_PageView_Page">
+          <End Type="WarhammerModel.Page" Role="Page" Multiplicity="1" />
+          <End Type="WarhammerModel.PageView" Role="PageView" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Page">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PageView">
+              <PropertyRef Name="PageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PageView_Player">
+          <End Type="WarhammerModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="WarhammerModel.PageView" Role="PageView" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PageView">
+              <PropertyRef Name="PlayerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -532,6 +638,25 @@
                 <ScalarProperty Name="ImageData" ColumnName="ImageData" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChangeLogs">
+            <EntityTypeMapping TypeName="WarhammerModel.ChangeLog">
+              <MappingFragment StoreEntitySet="ChangeLog">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PageViews">
+            <EntityTypeMapping TypeName="WarhammerModel.PageView">
+              <MappingFragment StoreEntitySet="PageView">
+                <ScalarProperty Name="Viewed" ColumnName="Viewed" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
