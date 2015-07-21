@@ -46,6 +46,20 @@ namespace Warhammer.Mvc.Controllers
             return View(people);
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult Graveyard()
+        {
+            List<Person> people = DataProvider.People().Where(p => p.IsDead).OrderBy(s => s.FullName).ToList();
+            return View(people);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult People()
+        {
+            List<Person> people = DataProvider.People().OrderBy(s => s.FullName).ToList();
+            return View(people);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

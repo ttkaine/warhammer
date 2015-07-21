@@ -21,11 +21,11 @@
             <ul>          
                 @foreach (var page in Model.MyPeople)
                 {
-                    <li><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName <span class="tiny"> Changed by @page.ModifiedBy.DisplayName on @page.Modified</span></a></li>
+                    <li class="@(Model.NewPages.Contains(page) ? "page-new" : "" )"><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName <span class="tiny"> Changed by @page.ModifiedBy.DisplayName on @page.Modified</span></a></li>
                 }
                 @foreach (var page in Model.AllPeople)
                 {
-                    <li><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName <span class="tiny"> Changed by @page.ModifiedBy.DisplayName on @page.Modified</span></a></li>
+                    <li class="@(Model.NewPages.Contains(page) ? "page-new" : "" )"><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName <span class="tiny"> Changed by @page.ModifiedBy.DisplayName on @page.Modified</span></a></li>
                 }
             </ul>
         </div>
@@ -37,7 +37,7 @@
             <ul>
                 @foreach (var page in Model.MyStuff)
                 {
-                    <li><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName <span class="tiny"> Last changed by @page.ModifiedBy.DisplayName on @page.Modified</span></a></li>
+                    <li class="@(Model.NewPages.Contains(page) ? "page-new" : "" )"><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName <span class="tiny"> Last changed by @page.ModifiedBy.DisplayName on @page.Modified</span></a></li>
                 }
             </ul>
         </div>
@@ -69,7 +69,7 @@
             <ul>
                 @foreach (var page in Model.RecentChanges)
                 {
-                    <li><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName <span class="tiny"> Changed by @page.ModifiedBy.DisplayName on @page.Modified</span></a></li>
+                    <li class="@(Model.NewPages.Contains(page) ? "page-new" : "" )"><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName <span class="tiny"> Changed by @page.ModifiedBy.DisplayName on @page.Modified</span></a></li>
                 }
             </ul>
 

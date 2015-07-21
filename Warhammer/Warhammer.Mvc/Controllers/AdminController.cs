@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.UI;
 using Warhammer.Core.Abstract;
@@ -21,6 +22,46 @@ namespace Warhammer.Mvc.Controllers
             string folder = Server.MapPath(Url.Content("~/Content/DbUpdateScripts/"));
             bool did = _databaseUpdate.PerformUpdates(folder);
             return View(did);
+        }
+
+        public ActionResult KillPerson(int id)
+        {
+            Core.Entities.Person person = DataProvider.People().FirstOrDefault(p => p.Id == id);
+            if (person == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View(person);
+            }
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult KillPerson(Core.Entities.Person person)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (person.IsDead)
+                    {
+                        DataProvider.ResurrectPerson(person.Id);
+                    }
+                    else
+                    {
+                        DataProvider.KillPerson(person.Id, person.Obiturary);
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+                    return View("Killing Error", ex);
+                }
+
+            }
+            return RedirectToAction("Graveyard", "Home");
         }
 
 

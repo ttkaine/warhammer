@@ -293,6 +293,29 @@ namespace Warhammer.Core.Concrete
             }
         }
 
+        public void ResurrectPerson(int id)
+        {
+            Person person = _repository.People().FirstOrDefault(p => p.Id == id);
+            if (person != null)
+            {
+                person.IsDead = false;
+                Save(person);
+            }
+        }
+
+        public void KillPerson(int id, string obiturary)
+        {
+            Person person = _repository.People().FirstOrDefault(p => p.Id == id);
+            if (person != null)
+            {
+                person.IsDead = true;
+                person.Obiturary = obiturary;
+                person.SignificantUpdate = DateTime.Now;
+                person.SignificantUpdateById = CurrentPlayer.Id;
+                Save(person);
+            }
+        }
+
         public bool PageExists(string shortName, string fullName)
         {
             return _repository.Pages().Any(p => p.ShortName == shortName && p.FullName == fullName);

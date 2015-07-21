@@ -208,6 +208,22 @@
                             @Html.ActionLink("Pin", "PinPage", "Admin", new { id = Model.Id }, new { @class = "btn btn-default btn-block" })
                         }
 
+
+                        if (Model is Person)
+                        {
+                            Person person = Model as Person;
+                            if (person.IsDead)
+                            {
+                               @Html.ActionLink("Resurrect", "KillPerson", "Admin", new { id = Model.Id }, new { @class = "btn btn-warning btn-block" }) 
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Kill", "KillPerson", "Admin", new { id = Model.Id }, new { @class = "btn btn-warning btn-block" })
+                            }
+                            
+                        }
+
+                        
                         <hr/>
                     
                         @Html.ActionLink("Delete", "DeletePage", "Admin", new { id = Model.Id }, new { @class = "btn btn-danger btn-block" })

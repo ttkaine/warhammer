@@ -208,6 +208,7 @@
     <Content Include="Content\Images\bg-large.jpg" />
     <Content Include="Content\Images\bg-medium.jpg" />
     <Content Include="Content\Images\bg-small.jpg" />
+    <Content Include="Content\Images\graveyard.jpg" />
     <Content Include="Content\Images\no-image.jpg" />
     <Content Include="Content\Less\Bootstrap\mixins\border-radius.css">
       <DependentUpon>border-radius.less</DependentUpon>
@@ -355,6 +356,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\list.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -410,6 +412,9 @@
     <Content Include="Views\Home\CharacterLeague.cshtml" />
     <Content Include="Views\Home\PinnedItems.cshtml" />
     <Content Include="Views\Admin\PinPage.cshtml" />
+    <Content Include="Views\Home\Graveyard.cshtml" />
+    <Content Include="Views\Admin\KillPerson.cshtml" />
+    <Content Include="Views\Home\People.cshtml" />
     <None Include="Web.MURRAY.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

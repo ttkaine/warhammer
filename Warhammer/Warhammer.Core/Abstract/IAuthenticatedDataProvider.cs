@@ -36,5 +36,7 @@ namespace Warhammer.Core.Abstract
         ICollection<Page> ModifiedPages();
         void PinPage(int id);
         void MarkAsSeen(int id);
+        void ResurrectPerson(int id);
+        void KillPerson(int id, string obiturary);
     }
 }
