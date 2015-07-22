@@ -43,5 +43,19 @@ namespace Warhammer.Tests.Smoke
             _driver.Navigate().GoToUrl(_settings.BaseUrl);
             Assert.IsTrue(_driver.PageSource.Contains("Warhammer"));
         }
+
+        [Test]
+        public void HitSessions()
+        {
+            _driver.Navigate().GoToUrl(_settings.BaseUrl + "/Home/Sessions");
+            Assert.IsTrue(_driver.PageSource.Contains("Sessions"));
+        }
+
+        [Test]
+        public void HitGraveyard()
+        {
+            _driver.Navigate().GoToUrl(_settings.BaseUrl + "/Home/Graveyard");
+            Assert.IsTrue(_driver.PageSource.Contains("The Graveyard"));
+        }
     }
 }
