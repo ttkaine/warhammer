@@ -66,7 +66,7 @@
                 </ul>
             }
             <h3>Recent Changes</h3>
-            <ul>
+            <ul id="recentChangesList">
                 @foreach (var page in Model.RecentChanges)
                 {
                     <li class="@(Model.NewPages.Contains(page) ? "page-new" : "" )"><a href="@Url.Action("Index", "Page", new { id = page.Id} )">@page.FullName <span class="tiny"> Changed by @page.ModifiedBy.DisplayName on @page.Modified</span></a></li>
