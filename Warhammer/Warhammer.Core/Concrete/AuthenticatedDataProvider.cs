@@ -96,11 +96,20 @@ namespace Warhammer.Core.Concrete
             Page existingPage = _repository.Pages().FirstOrDefault(p => p.Id == id);
             if (existingPage != null)
             {
-                if (description.Length > existingPage.Description.Length + 200)
+                int changedLength = description.Length;
+                int originalLength = 0;
+
+                if (!string.IsNullOrWhiteSpace(existingPage.Description))
+                {
+                    originalLength = existingPage.Description.Length;
+                }
+
+                if (changedLength > (originalLength + 200))
                 {
                     existingPage.SignificantUpdate = DateTime.Now;
                     existingPage.SignificantUpdateById = CurrentPlayer.Id;
-                }
+                } 
+
                 existingPage.ShortName = shortName;
                 existingPage.FullName = fullName;
                 existingPage.Description = description;
