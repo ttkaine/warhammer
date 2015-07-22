@@ -16,12 +16,12 @@
 
     <div class="main-content">
         <div class="content-block session-block">
-            <ul>
+            <ul id="characterLeagueList">
                 @foreach (Person person in Model)
                 {
                     <li>
                         <div class="profile-container">
-                            <a href="@Url.Action("Index", "Page", new { id = person.Id })"><img src="@Url.Action("Image", "Page", new {id = person.Id}, null)" title="@person.FullName" alt="Picture of @person.FullName" class="mini-profile-image" /></a>
+                            <a id="personLink_@person.Id" href="@Url.Action("Index", "Page", new { id = person.Id })"><img src="@Url.Action("Image", "Page", new {id = person.Id}, null)" title="@person.FullName" alt="Picture of @person.FullName" class="mini-profile-image" /></a>
                             <div class="score-box" title="@person.FullName">@person.PointsValue</div>
                             @person.FullName
                         </div>
