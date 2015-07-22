@@ -39,21 +39,18 @@ namespace Warhammer.Mvc.Controllers
             return PartialView(pages);
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult CharacterLeague()
         {
             List<Person> people = DataProvider.People().OrderByDescending(s => s.PointsValue).ThenByDescending(s => s.Modified).ToList();
             return View(people);
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult Graveyard()
         {
             List<Person> people = DataProvider.People().Where(p => p.IsDead).OrderBy(s => s.FullName).ToList();
             return View(people);
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult People()
         {
             List<Person> people = DataProvider.People().OrderBy(s => s.FullName).ToList();
