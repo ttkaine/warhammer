@@ -29,11 +29,12 @@ namespace Warhammer.Mvc.Controllers
                 Page page = DataProvider.GetPage(id.Value);
                 if (page != null)
                 {
+                    DataProvider.MarkAsSeen(page.Id);
                     if (!IsEditMode)
                     {
                         page.Description = _linkGenerator.CreoleLinksToHtml(page.Description);
                     }
-                    DataProvider.MarkAsSeen(page.Id);
+
                     return View(page);
                 }
             }
