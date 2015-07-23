@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Warhammer.Core.Abstract;
@@ -322,6 +323,90 @@ namespace Warhammer.Core.Concrete
                 person.SignificantUpdate = DateTime.Now;
                 person.SignificantUpdateById = CurrentPlayer.Id;
                 Save(person);
+            }
+        }
+
+        public Trophy GetTrophy(int id)
+        {
+            return _repository.Trophies().FirstOrDefault(t => t.Id == id);
+        }
+
+        public int AddTrophy(string name, string description, int pointsValue, byte[] imageData, string mimeType)
+        {
+            Trophy trophy = new Trophy();
+            trophy.Name = name;
+            trophy.Description = description;
+            trophy.PointsValue = pointsValue;
+            trophy.ImageData = imageData;
+            trophy.MimeType = mimeType;
+            return _repository.Save(trophy);       
+        }
+
+        public void UpdateTrophy(int id, string name, string description, int pointsValue, byte[] imageData, string mimeType)
+        {
+            Trophy trophy = GetTrophy(id);
+            if (trophy != null)
+            {
+                trophy.Name = name;
+                trophy.Description = description;
+                trophy.PointsValue = pointsValue;
+                trophy.ImageData = imageData;
+                trophy.MimeType = mimeType;
+                _repository.Save(trophy);
+            }
+        }
+
+        public void UpdateTrophy(int id, string name, string description, int pointsValue)
+        {
+            Trophy trophy = GetTrophy(id);
+            if (trophy != null)
+            {
+                trophy.Name = name;
+                trophy.Description = description;
+                trophy.PointsValue = pointsValue;
+                _repository.Save(trophy);
+            }
+        }
+
+        public ICollection<Trophy> Trophies()
+        {
+            return _repository.Trophies().OrderByDescending(t => t.PointsValue).ThenBy(t => t.Name).ToList();
+        }
+
+        public void AwardTrophy(int personId, int trophyId, string reason)
+        {
+            Person person = GetPerson(personId);
+            Trophy trophy = GetTrophy(trophyId);
+            if (person != null && trophy != null)
+            {
+                Award award = new Award
+                {
+                    Trophy = trophy,
+                    Reason = reason,
+                    AwardedOn = DateTime.Now,
+                    NominatedBy = CurrentPlayer
+                };
+                person.Awards.Add(award);
+                Save(person);
+            }
+        }
+
+        private Person GetPerson(int personId)
+        {
+            Person person = _repository.People().FirstOrDefault(p => p.Id == personId);
+            return person;
+        }
+
+        public void RemoveAward(int personId, int awardId)
+        {
+            Person person = GetPerson(personId);
+            if (person != null)
+            {
+                Award award = person.Awards.FirstOrDefault(a => a.Id == awardId);
+                if (award != null)
+                {
+                    _repository.Delete(award);
+                }
             }
         }
 

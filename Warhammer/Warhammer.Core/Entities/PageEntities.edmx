@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="WarhammerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Award">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="TrophyId" Type="int" Nullable="false" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="500" />
+          <Property Name="AwardedOn" Type="datetime" Nullable="false" />
+          <Property Name="NominatedById" Type="int" />
+          <Property Name="NominatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="ChangeLog">
           <Key>
             <PropertyRef Name="Id" />
@@ -48,6 +60,8 @@
           <Property Name="IsDead" Type="bit" Nullable="false" />
           <Property Name="Obiturary" Type="nvarchar(max)" />
           <Property Name="PlayerId" Type="int" />
+          <Property Name="CauseOfDeath" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsInMainParty" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PersonAtSession">
           <Key>
@@ -91,6 +105,53 @@
           <Property Name="PersonId" Type="int" />
           <Property Name="SessionId" Type="int" />
         </EntityType>
+        <EntityType Name="Trophy">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="ImageData" Type="varbinary(max)" />
+          <Property Name="MimeType" Type="nvarchar" MaxLength="150" />
+          <Property Name="PointsValue" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Award_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Award" Type="Self.Award" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Award">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Award_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Award" Type="Self.Award" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Award">
+              <PropertyRef Name="NominatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Award_Trophy">
+          <End Role="Trophy" Type="Self.Trophy" Multiplicity="1" />
+          <End Role="Award" Type="Self.Award" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trophy">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Award">
+              <PropertyRef Name="TrophyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Page_Person">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
           <End Role="Page" Type="Self.Page" Multiplicity="*" />
@@ -260,6 +321,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="WarhammerModelStoreContainer">
+          <EntitySet Name="Award" EntityType="Self.Award" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChangeLog" EntityType="Self.ChangeLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageView" EntityType="Self.PageView" Schema="dbo" store:Type="Tables" />
@@ -269,6 +331,19 @@
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SessionLog" EntityType="Self.SessionLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trophy" EntityType="Self.Trophy" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Award_Person" Association="Self.FK_Award_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Award" EntitySet="Award" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Award_Player" Association="Self.FK_Award_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Award" EntitySet="Award" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Award_Trophy" Association="Self.FK_Award_Trophy">
+            <End Role="Trophy" EntitySet="Trophy" />
+            <End Role="Award" EntitySet="Award" />
+          </AssociationSet>
           <AssociationSet Name="FK_Page_Person" Association="Self.FK_Page_Person">
             <End Role="Player" EntitySet="Player" />
             <End Role="Page" EntitySet="Page" />
@@ -375,7 +450,21 @@
             <End Role="Player" EntitySet="Players" />
             <End Role="PageView" EntitySet="PageViews" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Awards" EntityType="WarhammerModel.Award" />
+          <AssociationSet Name="FK_Award_Person" Association="WarhammerModel.FK_Award_Person">
+            <End Role="Person" EntitySet="Pages" />
+            <End Role="Award" EntitySet="Awards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Award_Player" Association="WarhammerModel.FK_Award_Player">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="Award" EntitySet="Awards" />
+          </AssociationSet>
+          <EntitySet Name="Trophies" EntityType="WarhammerModel.Trophy" />
+          <AssociationSet Name="FK_Award_Trophy" Association="WarhammerModel.FK_Award_Trophy">
+            <End Role="Trophy" EntitySet="Trophies" />
+            <End Role="Award" EntitySet="Awards" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Page">
           <Key>
             <PropertyRef Name="Id" />
@@ -406,6 +495,9 @@
           <Property Name="PlayerId" Type="Int32" />
           <NavigationProperty Name="Pages" Relationship="WarhammerModel.FK_Page_Person" FromRole="Person" ToRole="Page" />
           <NavigationProperty Name="Player" Relationship="WarhammerModel.FK_Person_Player" FromRole="Person" ToRole="Player" />
+          <Property Name="CauseOfDeath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsInMainParty" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Awards" Relationship="WarhammerModel.FK_Award_Person" FromRole="Person" ToRole="Award" />
         </EntityType>
         <EntityType Name="Session" BaseType="WarhammerModel.Page">
           <Property Name="DateTime" Type="DateTime" Precision="3" />
@@ -459,6 +551,7 @@
           <NavigationProperty Name="People" Relationship="WarhammerModel.FK_Person_Player" FromRole="Player" ToRole="Person" />
           <NavigationProperty Name="Pages1" Relationship="WarhammerModel.FK_Page_Person1" FromRole="Player" ToRole="Page" />
           <NavigationProperty Name="PageViews" Relationship="WarhammerModel.FK_PageView_Player" FromRole="Player" ToRole="PageView" />
+          <NavigationProperty Name="Awards" Relationship="WarhammerModel.FK_Award_Player" FromRole="Player" ToRole="Award" />
         </EntityType>
         <Association Name="FK_Page_Person">
           <End Type="WarhammerModel.Person" Role="Person" Multiplicity="1" />
@@ -569,7 +662,70 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="Award">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="TrophyId" Type="Int32" Nullable="false" />
+          <Property Name="Reason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AwardedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NominatedById" Type="Int32" />
+          <Property Name="NominatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Person" Relationship="WarhammerModel.FK_Award_Person" FromRole="Award" ToRole="Person" />
+          <NavigationProperty Name="NominatedBy" Relationship="WarhammerModel.FK_Award_Player" FromRole="Award" ToRole="Player" />
+          <NavigationProperty Name="Trophy" Relationship="WarhammerModel.FK_Award_Trophy" FromRole="Award" ToRole="Trophy" />
+        </EntityType>
+        <Association Name="FK_Award_Person">
+          <End Type="WarhammerModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="WarhammerModel.Award" Role="Award" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Award">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Award_Player">
+          <End Type="WarhammerModel.Player" Role="Player" Multiplicity="0..1" />
+          <End Type="WarhammerModel.Award" Role="Award" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Award">
+              <PropertyRef Name="NominatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Trophy">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="MimeType" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="PointsValue" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Awards" Relationship="WarhammerModel.FK_Award_Trophy" FromRole="Trophy" ToRole="Award" />
+        </EntityType>
+        <Association Name="FK_Award_Trophy">
+          <End Type="WarhammerModel.Trophy" Role="Trophy" Multiplicity="1" />
+          <End Type="WarhammerModel.Award" Role="Award" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trophy">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Award">
+              <PropertyRef Name="TrophyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -595,6 +751,8 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(WarhammerModel.Person)">
               <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="IsInMainParty" ColumnName="IsInMainParty" />
+                <ScalarProperty Name="CauseOfDeath" ColumnName="CauseOfDeath" />
                 <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IsDead" ColumnName="IsDead" />
@@ -657,6 +815,31 @@
                 <ScalarProperty Name="Viewed" ColumnName="Viewed" />
                 <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
                 <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Awards">
+            <EntityTypeMapping TypeName="WarhammerModel.Award">
+              <MappingFragment StoreEntitySet="Award">
+                <ScalarProperty Name="NominatedDate" ColumnName="NominatedDate" />
+                <ScalarProperty Name="NominatedById" ColumnName="NominatedById" />
+                <ScalarProperty Name="AwardedOn" ColumnName="AwardedOn" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="TrophyId" ColumnName="TrophyId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trophies">
+            <EntityTypeMapping TypeName="WarhammerModel.Trophy">
+              <MappingFragment StoreEntitySet="Trophy">
+                <ScalarProperty Name="PointsValue" ColumnName="PointsValue" />
+                <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

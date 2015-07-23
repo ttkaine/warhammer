@@ -18,14 +18,18 @@ namespace Warhammer.Core.Entities
         {
             this.SessionLogs = new HashSet<SessionLog>();
             this.Pages = new HashSet<Page>();
+            this.Awards = new HashSet<Award>();
         }
     
         public bool IsDead { get; set; }
         public string Obiturary { get; set; }
         public Nullable<int> PlayerId { get; set; }
+        public string CauseOfDeath { get; set; }
+        public bool IsInMainParty { get; set; }
     
         public virtual ICollection<SessionLog> SessionLogs { get; set; }
         public virtual ICollection<Page> Pages { get; set; }
         public virtual Player Player { get; set; }
+        public virtual ICollection<Award> Awards { get; set; }
     }
 }

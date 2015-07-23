@@ -79,6 +79,9 @@
     <Compile Include="Concrete\InlineHtmlImage.cs" />
     <Compile Include="Concrete\ModelFactory.cs" />
     <Compile Include="Concrete\Repository.cs" />
+    <Compile Include="Entities\Award.cs">
+      <DependentUpon>PageEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\ChangeLog.cs">
       <DependentUpon>PageEntities.tt</DependentUpon>
     </Compile>
@@ -116,6 +119,9 @@
       <DependentUpon>PageEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SessionLog.cs">
+      <DependentUpon>PageEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Trophy.cs">
       <DependentUpon>PageEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\_Page.cs" />

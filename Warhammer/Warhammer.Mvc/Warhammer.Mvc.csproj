@@ -195,6 +195,7 @@
     <Compile Include="Models\EditLinksViewModel.cs" />
     <Compile Include="Models\HomePageViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageAwardsViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -205,6 +206,9 @@
     <Content Include="Content\DbUpdateScripts\0003.sql" />
     <Content Include="Content\DbUpdateScripts\0004.sql" />
     <Content Include="Content\DbUpdateScripts\0005.sql" />
+    <Content Include="Content\DbUpdateScripts\0006.sql" />
+    <Content Include="Content\DbUpdateScripts\0007.sql" />
+    <Content Include="Content\DbUpdateScripts\0008.sql" />
     <Content Include="Content\Images\bg-large.jpg" />
     <Content Include="Content\Images\bg-medium.jpg" />
     <Content Include="Content\Images\bg-small.jpg" />
@@ -415,6 +419,9 @@
     <Content Include="Views\Home\Graveyard.cshtml" />
     <Content Include="Views\Admin\KillPerson.cshtml" />
     <Content Include="Views\Home\People.cshtml" />
+    <Content Include="Views\Admin\EditTrophy.cshtml" />
+    <Content Include="Views\Home\Trophies.cshtml" />
+    <Content Include="Views\Admin\ManageAwards.cshtml" />
     <None Include="Web.MURRAY.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

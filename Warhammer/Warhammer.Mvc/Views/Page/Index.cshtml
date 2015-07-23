@@ -18,11 +18,24 @@
         </div>
         <div class="main-content">
             <div class="content-block">
-
+                @if (Model is Person)
+                {
+                    Person person = Model as Person;
+                    if (person.Awards.Any())
+                    {
+                        <ul class="awardBar">
+                            @foreach (Award award in person.Awards)
+                            {
+                                <li><img src="@Url.Action("TrophyImage", "Home", new { id = award.Trophy.Id }, null)" title="@award.Trophy.Name @award.Reason" alt="Picture of @award.Trophy.Name" class="mini-trophy-image" /></li>
+                            }
+                        </ul>
+                    }
+                }
                 @if (Model is Person || Model.HasImage)
                 {
                     <img class="profile-image" src="@Url.Action("Image", "Page", new {id = Model.Id})" title="@Model.FullName" alt="Picture of @Model.FullName" height="200" width="200" />
                 }
+
                 <h2 id="shortName" class="editable page-content-heading">@Model.ShortName</h2>
                 <div id="description" class="editable">
                     @Html.Raw(Model.Description)
@@ -212,6 +225,9 @@
                         if (Model is Person)
                         {
                             Person person = Model as Person;
+                            
+                            @Html.ActionLink("Manage Awards", "ManageAwards", "Admin", new { id = Model.Id }, new { @class = "btn btn-success btn-block" }) 
+                             <hr/>
                             if (person.IsDead)
                             {
                                @Html.ActionLink("Resurrect", "KillPerson", "Admin", new { id = Model.Id }, new { @class = "btn btn-warning btn-block" }) 

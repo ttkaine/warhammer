@@ -77,11 +77,25 @@ div.session-container{
 {
     font-size: @font-size-large;
 }
+
+.awardBar ul,
 .session-block ul,
 .core-content ul,
 .side-bar ul{
      list-style-type: none;
      padding: 0
+}
+
+.awardBar li
+{
+    display: inline;
+}
+
+.awardBar
+{
+    margin-left: -30px;
+    margin-top: -15px;
+    margin-bottom: 0;
 }
 
 .session-block ul{
@@ -155,11 +169,18 @@ font: 800 @font-size-h2 'Great Vibes', Helvetica, sans-serif;
 }
 
 .score-box,
+.trophy-image,
 .mini-profile-image{
         width: 80px;
     height: 80px;
         margin: 8px;
         margin-top: 0;
+    }
+
+.mini-trophy-image{
+        width: 50px;
+    height: 50px;
+        margin: 0;
     }
 
 .profile-image{
@@ -249,6 +270,7 @@ table.graveyard
     padding: 10px;
 }
 
+table.trophy td,
 table.people td,
 table.graveyard td
 {

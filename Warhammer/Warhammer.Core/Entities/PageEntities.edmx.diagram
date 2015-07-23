@@ -27,6 +27,11 @@
         <EntityTypeShape EntityType="WarhammerModel.PageView" Width="1.5" PointX="6.5" PointY="5.625" />
         <AssociationConnector Association="WarhammerModel.FK_PageView_Page" />
         <AssociationConnector Association="WarhammerModel.FK_PageView_Player" />
+        <EntityTypeShape EntityType="WarhammerModel.Award" Width="1.5" PointX="9.5" PointY="5.375" />
+        <AssociationConnector Association="WarhammerModel.FK_Award_Person" />
+        <AssociationConnector Association="WarhammerModel.FK_Award_Player" />
+        <EntityTypeShape EntityType="WarhammerModel.Trophy" Width="1.5" PointX="5.375" PointY="9" />
+        <AssociationConnector Association="WarhammerModel.FK_Award_Trophy" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

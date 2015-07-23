@@ -12,27 +12,20 @@ namespace Warhammer.Core.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Player
+    public partial class Trophy
     {
-        public Player()
+        public Trophy()
         {
-            this.Pages = new HashSet<Page>();
-            this.People = new HashSet<Person>();
-            this.Pages1 = new HashSet<Page>();
-            this.PageViews = new HashSet<PageView>();
             this.Awards = new HashSet<Award>();
         }
     
         public int Id { get; set; }
-        public string UserName { get; set; }
-        public string DisplayName { get; set; }
-        public byte[] ImageData { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
+        public byte[] ImageData { get; set; }
+        public string MimeType { get; set; }
+        public int PointsValue { get; set; }
     
-        public virtual ICollection<Page> Pages { get; set; }
-        public virtual ICollection<Person> People { get; set; }
-        public virtual ICollection<Page> Pages1 { get; set; }
-        public virtual ICollection<PageView> PageViews { get; set; }
         public virtual ICollection<Award> Awards { get; set; }
     }
 }

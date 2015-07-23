@@ -57,6 +57,32 @@ namespace Warhammer.Core.Concrete
             _entities.SaveChanges();
         }
 
+        public IQueryable<Trophy> Trophies()
+        {
+            return _entities.Trophies;
+        }
+
+        public int Save(Trophy trophy)
+        {
+            if (trophy.Id == 0)
+            {
+                _entities.Trophies.Add(trophy);
+            }
+            else
+            {
+                _entities.Entry(trophy).State = EntityState.Modified;
+            }
+            _entities.SaveChanges();
+
+            return trophy.Id;
+        }
+
+        public void Delete(Award award)
+        {
+            _entities.Awards.Remove(award);
+            _entities.SaveChanges();
+        }
+
         #endregion
 
         #region Save

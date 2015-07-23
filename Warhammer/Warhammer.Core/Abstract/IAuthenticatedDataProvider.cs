@@ -38,5 +38,12 @@ namespace Warhammer.Core.Abstract
         void MarkAsSeen(int id);
         void ResurrectPerson(int id);
         void KillPerson(int id, string obiturary);
+        Trophy GetTrophy(int id);
+        int AddTrophy(string name, string description, int pointsValue, byte[] imageData, string mimeType);
+        void UpdateTrophy(int id, string name, string description, int pointsValue, byte[] imageData, string mimeType);
+        void UpdateTrophy(int id, string name, string description, int pointsValue);
+        ICollection<Trophy> Trophies();
+        void AwardTrophy(int personId, int trophyId, string reason);
+        void RemoveAward(int personId, int awardId);
     }
 }

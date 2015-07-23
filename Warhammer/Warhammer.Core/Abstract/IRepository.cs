@@ -16,5 +16,8 @@ namespace Warhammer.Core.Abstract
         int Save(Page page);
         IQueryable<Page> Pages();
         void Delete(Page page);
+        IQueryable<Trophy> Trophies();
+        int Save(Trophy trophy);
+        void Delete(Award award);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using Warhammer.Core.Abstract;
@@ -39,6 +40,12 @@ namespace Warhammer.Mvc.Controllers
             return PartialView(pages);
         }
 
+        public ActionResult Trophies()
+        {
+            List<Trophy> trophies = DataProvider.Trophies().ToList();
+            return View(trophies);
+        }
+
         public ActionResult CharacterLeague()
         {
             List<Person> people = DataProvider.People().OrderByDescending(s => s.PointsValue).ThenByDescending(s => s.Modified).ToList();
@@ -69,6 +76,23 @@ namespace Warhammer.Mvc.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult TrophyImage(int id)
+        {
+            Trophy trophy = DataProvider.GetTrophy(id);
+            var defaultDir = Server.MapPath("/Content/Images");
+
+            if (trophy != null)
+            {
+                if (trophy.ImageData != null && trophy.ImageData.Length > 100 && !string.IsNullOrWhiteSpace(trophy.MimeType))
+                {
+                    return File(trophy.ImageData, trophy.MimeType);
+                }
+            }
+
+            var defaultImagePath = Path.Combine(defaultDir, "no-image.jpg");
+            return File(defaultImagePath, "image/jpeg");
         }
     }
 }

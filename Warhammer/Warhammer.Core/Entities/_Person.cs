@@ -30,9 +30,11 @@ namespace Warhammer.Core.Entities
                 double score = base.BaseScore;
                 List<SessionLog> logs = SessionLogs.ToList();
                 List<Page> relatedPages = Related.ToList();
+                
                 relatedPages.AddRange(Related1.ToList());
                 score = score + relatedPages.Where(s => !logs.Contains(s)).Sum(l => l.BaseScore);
                 score = score + logs.Sum(l => l.BaseScore);
+                score = score + Awards.Sum(a => a.Trophy.PointsValue);
                 if (HasImage)
                 {
                     score = score + 10;
