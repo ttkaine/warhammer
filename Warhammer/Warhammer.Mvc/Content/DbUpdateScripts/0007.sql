@@ -23,7 +23,7 @@ CREATE TABLE [dbo].[Trophy](
 	[Description] [nvarchar](max) NULL,
 	[ImageData] [varbinary](max) NULL,
 	[MimeType] [nvarchar](150) NULL,
-	[PointsValue] [int] NOT NULL CONSTRAINT DF_Person_IsInMainParty DEFAULT 0,
+	[PointsValue] [int] NOT NULL CONSTRAINT DF_Person_PointsValue DEFAULT 0,
  CONSTRAINT [PK_Trophy] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
