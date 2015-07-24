@@ -6872,6 +6872,7 @@ div.session-container {
 }
 .awardBar li {
   display: inline;
+  margin-left: -10px;
 }
 .awardBar {
   margin-left: -30px;
